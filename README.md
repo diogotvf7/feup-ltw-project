@@ -3,4 +3,4 @@
 
 [[Draw.io](https://drive.google.com/file/d/1V9zeEeKRvb6EU6ABVyRBxIe-xR3d5K--/view?usp=sharing)]
 
-https://www.figma.com/file/ycLt5Mj5aN8CZQu5VXV7vY/Untitled?node-id=0%3A1&t=ej839c6LV0KjofDK-1
+[[Figma](https://www.figma.com/file/ycLt5Mj5aN8CZQu5VXV7vY/Untitled?node-id=0%3A1&t=ej839c6LV0KjofDK-1)]
