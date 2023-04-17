@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Open+Sans:wght@300&family=Source+Sans+Pro:wght@200&display=swap');
+
+.hide {
+    display: none;
+}
+
+body {  
+    --green: #3BA782;
+    --white: #F2F2F2;
+    --light-grey: #EDEDF3;
+    --grey: #6F717D;
+    --yellow: #F8B009;
+    display: grid;
+    grid-template-columns: 20% 80%; 
+    grid-template-rows: 6em calc(100% - 6em); 
+    gap: 0px 0px;
+    height: 100vh;
+    margin: 0%;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "header header header header"
+      "aside main main main"
+      "footer footer footer footer";
+}
+  
+header { 
+    grid-area: header;
+    background: var(--white);
+    box-shadow: 0px 10px 20px var(--grey);
+    text-align: left;
+    font-weight: 600;
+    overflow: hidden;
+    text-indent: 5vh;
+    z-index: 2;
+}
+
+header a {
+    text-decoration: none;
+    color: var(--green);
+    font-family: "Montserrat", sans-serif;
+    font-size: 2em;
+    letter-spacing: 0.5em;
+}
+
+footer { 
+    grid-area: footer;
+    text-align: center;
+}
+  
+main { 
+    grid-area: main;
+}
+
+aside { 
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10%;
+    z-index: 1;
+    background-color: var(--light-grey);
+    border-right: var(--grey) 1px solid;
+}
+
+.slogan {
+    margin-right: 0.5em;
+    text-align: right;
+    font-family: "Montserrat", sans-serif;
+    font-size: 2em;
+    font-weight: 600;
+    color: var(--green);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--white);
+    color: var(--green);
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 2em;
+}
+
+input {
+    height: 50px;
+    width: calc(80% - 1em);
+    border-bottom-left-radius: 1em;
+    border-top-left-radius: 1em;
+    border-bottom: 0;
+    border-right: 0;
+    margin-left: 20%;
+    margin-top: 8px;
+    font-size: 14px;
+    padding-left: 1em;
+}
+
+input:focus {
+    outline: none;
+}
+
+form button {
+    align-self: center;
+    height: 50px;
+    width: 20%;
+    margin: 2em;
+    border: 1px solid var(--green);
+    border-radius: 1em;
+    background-color: var(--white);
+    font-size: 14px;
+    color: var(--grey);
+    cursor: pointer;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+form button:hover {
+    background-color: var(--green);
+    color: var(--white);
+}

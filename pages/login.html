@@ -4,14 +4,15 @@
     <title>UP Tickets</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../javascript/script.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <header>
       <h1>
         <a href="./test.html">
-          <i class="fa fa-user"></i>UP Tickets
+          <i class="fa fa-exchange"></i>UP Tickets
         </a>
       </h1>
     </header>
@@ -24,14 +25,26 @@
       <img class="sphere" src="../docs/sphere.svg">
     </aside>
     <main>
-      <section id="login">
-        <h2>Login | Register</h2>
-        <form action="../actions/action_login.php" method="post">
+      <form action="../actions/action_login.php" id="sign_in_form" method="post">
+        <h2>Login</h2>
         <input type="email_or_username" name="email_or_username" placeholder="email or username">
         <input type="password" name="password" placeholder="password">
-        <button type="submit">Login</button>
-        </form>
-      </section>
+        <div class="buttons">
+          <button type="submit">Login</button>
+          <button type="button" id="hide_sign_in">Switch to Sign Up</button>
+        </div>
+      </form>
+      <form action="../actions/action_sign_up.php" id="sign_up_form" class="hide" method="post">
+        <h2>Sign Up</h2>
+        <input type="email" name="email" placeholder="email">
+        <input type="username" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <input type="password" name="hide_sign_up" placeholder="repeat password">
+        <div class="buttons">
+          <button type="submit">Sign Up</button>
+          <button type="button" id="hide_sign_up">Switch to Login</button>
+        </div>
+      </form>
     </main>
   </body>
 </html>
