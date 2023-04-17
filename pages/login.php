@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <title>UP Tickets</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../javascript/script.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="./test.html">
-          <i class="fa fa-exchange"></i>UP Tickets
-        </a>
-      </h1>
-    </header>
+<?php
+  declare(strict_types = 1);
+
+  require_once(__DIR__ . '/../utils/session.php');
+  $session = new Session();
+
+  require_once(__DIR__ . '/../database/connection.db.php');
+
+  require_once(__DIR__ . '/../templates/common.tpl.php');
+
+  $db = getDatabaseConnection();
+
+  drawHeader();
+?>
     <aside>
       <div class="slogan">
         <p>Your</p>
@@ -46,6 +42,6 @@
         </div>
       </form>
     </main>
-  </body>
-</html>
-
+<?php
+  drawFooter();
+?>
