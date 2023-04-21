@@ -1,3 +1,4 @@
+
 <?php
   declare(strict_types = 1);
 
@@ -9,6 +10,10 @@
   require_once(__DIR__ . '/../templates/common.tpl.php');
 
   $db = getDatabaseConnection();
+
+  if (!$db.isConnected()) {
+    echo "Error: Unable to connect to database.";
+  }
 
   drawHeader($session);
 ?>

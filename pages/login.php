@@ -11,7 +11,7 @@
   $db = getDatabaseConnection();
 
   drawHeader();
-?>
+?> 
     <aside>
       <div class="slogan">
         <p>Your</p>

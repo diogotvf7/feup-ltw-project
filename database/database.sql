@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS Ticket_Tag;
 
 CREATE TABLE Admin 
 (
-    AdminID int NOT NULL,
+    Admin ID int NOT NULL,
     Name varchar(255) NOT NULL,
     Username varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
