@@ -16,8 +16,10 @@
   }
 
   drawHeader($session);
+  drawHeader(["script"]);
 ?>
-<a href="../pages/login.php">LOGIN</a
+<a href="../pages/login.php">LOGIN</a>
+<a href="../pages/display_tickets.php">DISPLAY TICKETS</a>
 <?php
   drawFooter();
 ?>

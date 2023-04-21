@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Open+Sans:wght@300&family=Source+Sans+Pro:wght@200&display=swap');
 
+/* State */
+
 .hide {
     display: none;
 }
+
+/* General pages */
 
 body {  
     --green: #3BA782;
@@ -10,17 +14,17 @@ body {
     --light-grey: #EDEDF3;
     --grey: #6F717D;
     --yellow: #F8B009;
+    --black: #222222;
     display: grid;
     grid-template-columns: 20% 80%; 
-    grid-template-rows: 6em calc(100% - 6em); 
+    grid-template-rows: min(20%, 8em) calc(100% - min(20%, 8em));
     gap: 0px 0px;
     height: 100vh;
     margin: 0%;
     grid-auto-flow: row;
     grid-template-areas:
-      "header header header header"
-      "aside main main main"
-      "footer footer footer footer";
+      "header header"
+      "aside main";
 }
   
 header { 
@@ -42,17 +46,49 @@ header a {
     font-size: 2em;
     letter-spacing: 0.5em;
 }
-
-footer { 
-    grid-area: footer;
-    text-align: center;
-}
   
 main { 
     grid-area: main;
 }
 
-aside { 
+#sidebar {
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5em;
+    color: var(--black);
+    z-index: 1;
+    background-color: var(--light-grey);
+    border-right: var(--grey) 1px solid;
+    line-height: 2em;
+}
+
+#sidebar ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+#sidebar a {
+    text-decoration: none;
+    color: var(--black);
+}
+
+#sidebar li:hover a {
+    color: var(--light-grey);
+}
+
+#sidebar li:hover {
+    background-color: #222222;
+}
+
+
+/* Login - Register page */
+
+#login_sidebar { 
     grid-area: aside;
     display: flex;
     flex-direction: column;
