@@ -1,19 +1,26 @@
 <?php
-require_once(__DIR__ . 'connection.db.php');
+require_once(__DIR__ . '/connection.db.php');
 
-function signUpUser($email,$username,$password){
+function checkIfUserExists($db,$username,$email){
     $db = getDatabaseConnection();
 
-    $stmt = $db->prepare('INSERT INTO Client(Username,Email, password) VALUES(?,?,?)');
-    $stmt->execute((array($email,$username,$password)));
+    $stmt = $db->prepare('SELECT * FROM Client WHERE Email = ? or Username = ?');
+    $stmt->execute((array($email,$username)));
+    return empty($stmt->fetch());
 }
 
-function checkUserCredentials($email,$password){
+function signUpUser($db,$name,$email,$username,$password){
     $db = getDatabaseConnection();
 
-    $stmt = $db->prepare('SELECT * FROM Client WHERE Email = ?');
-    $stmt->execute()(array($email));
-    return $stmt->fetch()['password'] == $password;
+    $stmt = $db->prepare('INSERT INTO Client(Name,Email,Username, Password) VALUES(?,?,?,?)');
+    $stmt->execute((array($name,$email,$username,$password)));
 }
 
+function checkUserCredentials($db,$userid,$password){
+    $db = getDatabaseConnection();
+
+    $stmt = $db->prepare('SELECT * FROM Client WHERE Email = ? or Username = ?');
+    $stmt->execute((array($userid,$userid)));
+    return $stmt->fetch()['Password'] == $password;
+}
 ?>

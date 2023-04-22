@@ -4,11 +4,14 @@
   include_once('../database/connection.db.php');
 
 
-  $userid = $_POST['userid'];
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $name = $_POST['name'];
   $password = $_POST['password'];
   $db = getDatabaseConnection();
 
-  if (checkUserCredentials($db, $userid, $password)) {
+  if (checkIfUserExists($db, $username, $email)) {
+    signUpUser($db,$name, $email,$username,$password);
     $_SESSION['userid'] = $userid;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     header('Location: /pages/display_tickets.php');

@@ -1,4 +1,3 @@
-
 <?php
   declare(strict_types = 1);
 
@@ -11,9 +10,10 @@
 
   $db = getDatabaseConnection();
 
+  /*
   if (!$db.isConnected()) {
-    echo "Error: Unable to connect to database.";
-  }
+  echo "Error: Unable to connect to database.";}
+    */
 
   drawHeader($session);
   drawHeader(["script"]);

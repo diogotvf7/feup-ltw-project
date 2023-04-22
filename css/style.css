@@ -125,15 +125,15 @@ form {
 
 input {
     height: 50px;
-    width: calc(80% - 1em);
+    width: 20em;
     border-bottom-left-radius: 1em;
     border-top-left-radius: 1em;
     border-bottom: 0;
-    border-right: 0;
-    margin-left: 20%;
+    border-bottom-right-radius: 1em;
+    border-top-right-radius: 1em;
     margin-top: 8px;
     font-size: 14px;
-    padding-left: 1em;
+    padding-left: 1.5em;
 }
 
 input:focus {

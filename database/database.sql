@@ -11,40 +11,28 @@ DROP TABLE IF EXISTS Ticket_Tag;
 
 CREATE TABLE Admin 
 (
-<<<<<<< HEAD
-    Admin ID int NOT NULL,
-    Name varchar(255) NOT NULL,
-    Username varchar(255) NOT NULL,
-    Email varchar(255) NOT NULL,
-    Password NVARCHAR(40) NOT NULL,
-    CONSTRAINT PK_Admin PRIMARY KEY (AdminID)
-=======
-    AdminID int NOT NULL,
-    CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
+    AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
     FOREIGN KEY (AdminID) REFERENCES Client(ClientID)
->>>>>>> 6211fdc4ccd7d3b588fb900520df475167920d44
 );
 
 CREATE TABLE Agent 
 (
-    AgentID int NOT NULL,
-    CONSTRAINT PK_Agent PRIMARY KEY (AgentID),
+    AgentID INTEGER PRIMARY KEY AUTOINCREMENT,
     FOREIGN KEY (AgentID) REFERENCES Client(ClientID)
 );
 
 CREATE TABLE Client 
 (
-    ClientID int NOT NULL,
-    Name varchar(255) NOT NULL,
+    ClientID INTEGER PRIMARY KEY AUTOINCREMENT, 
+    Name varchar(255),
     Username varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
-    Password NVARCHAR(40) NOT NULL,
-    CONSTRAINT PK_Client PRIMARY KEY (ClientID)
+    Password NVARCHAR(40) NOT NULL
 );
 
 CREATE TABLE Ticket 
 (
-    TicketID int NOT NULL,
+    TicketID INTEGER PRIMARY KEY AUTOINCREMENT,
     Title varchar(255) NOT NULL,
     Description varchar(255) NOT NULL,
     Status varchar(255) NOT NULL,
@@ -52,7 +40,6 @@ CREATE TABLE Ticket
     AgentID int NOT NULL,
     DepartmentID int NOT NULL,
     Date datetime NOT NULL,
-    CONSTRAINT PK_Ticket PRIMARY KEY (TicketID),
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID),
     FOREIGN KEY (AgentID) REFERENCES Agent(AgentID),
     FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
@@ -60,9 +47,8 @@ CREATE TABLE Ticket
 
 CREATE TABLE Department 
 (   
-    DepartmentID int NOT NULL,
-    Name varchar(255) NOT NULL,
-    CONSTRAINT PK_Department PRIMARY KEY (DepartmentID)
+    DepartmentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name varchar(255) NOT NULL
 );
 
 CREATE TABLE Agent_Department 
@@ -75,9 +61,8 @@ CREATE TABLE Agent_Department
 
 CREATE TABLE Tag 
 (
-    TagID int NOT NULL,
-    Name varchar(255) NOT NULL,
-    CONSTRAINT PK_Tag PRIMARY KEY (TagID)
+    TagID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name varchar(255) NOT NULL
 );
 
 CREATE TABLE Ticket_Tag  
