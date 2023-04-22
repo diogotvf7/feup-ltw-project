@@ -21,6 +21,6 @@ function checkUserCredentials($db,$userid,$password){
 
     $stmt = $db->prepare('SELECT * FROM Client WHERE Email = ? or Username = ?');
     $stmt->execute((array($userid,$userid)));
-    return $stmt->fetch()['Password'] == $password;
+    return ($stmt->fetch()['Password'] == $password && !empty($stmt->fetch()));
 }
 ?>
