@@ -44,7 +44,7 @@
   // echo 'Ticket object created!<br>';
 
 
-  drawHeader(['ticket_colors']);
+  drawHeader(['ticket_colors'], ['style']);
   $user1 = new Admin(1, 'Admin', 'admin', 'admin@admin.com', '123456');
   $user2 = new Agent(2, 'Agent', 'agent', 'agent@agent.com', '123456');
   $user3 = new Client(3, 'Client', 'client', 'client@client.com', '123456');
