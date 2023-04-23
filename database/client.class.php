@@ -65,5 +65,24 @@
       );
     }
 
+    static function getClientByEmailUsername(PDO $db, string $userid) : Client {
+      $stmt = $db->prepare('
+        SELECT ClientID, Name, Username, Email, Password
+        FROM Client 
+        WHERE Email = ? or Username = ?
+      ');
+
+      $stmt->execute(array($userid,$userid));
+      $client = $stmt->fetch();
+      
+      return new Client(
+        $client['ClientID'],
+        $client['Name'],
+        $client['Username'],
+        $client['Email'],
+        $client['Password']
+      );
+    }
+
   }
 ?>

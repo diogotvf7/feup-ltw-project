@@ -8,9 +8,9 @@
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
   
-  if (isset($_SESSION['username'])) {
+  if (isset($_SESSION['IDUSER'])) {
     // Redirect to home page if user is already logged in
-    die(header('Location: ../pages/list.php'));
+    die(header('Location: ../pages/display_tickets.php'));
   }
 
   $db = getDatabaseConnection();

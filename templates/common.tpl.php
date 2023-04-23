@@ -1,5 +1,6 @@
 <?php 
     require_once(__DIR__ . '/../utils/util_funcs.php');
+    include_once('../utils/session.php');
 ?>
 <?php function drawHeader($scripts = [], $cssFiles = []) { ?>
     <!DOCTYPE html>
@@ -46,7 +47,7 @@
                     drawClientNavBar($user);
             } ?>
             <li class="nav-item">
-                <a href="../pages/faq.php" class="nav-link">
+                <a href="../actions/action_logout.php" class="nav-link">
                     <i class="fa-solid fa-right-from-bracket fa-lg"></i>
                     <span class="link-text">Logout</span>
                 </a>
