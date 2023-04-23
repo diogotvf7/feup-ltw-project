@@ -27,7 +27,7 @@ body {
     grid-auto-flow: row;
     grid-template-areas:
       "header header"
-      "aside main";
+      "nav-bar main";
 }
   
 header { 
@@ -54,8 +54,8 @@ main {
     grid-area: main;
 }
 
-#sidebar {
-    grid-area: aside;
+#nav-bar {
+    grid-area: nav-bar;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,22 +69,40 @@ main {
     line-height: 2em;
 }
 
-#sidebar ul {
+.fa-2x {
+    font-size: 2em;
+}
+
+.fa {
+    position: relative;
+    display: table-cell;
+    width: 60px;
+    height: 36px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+#nav-bar li {
+    display: block ruby;
+}
+
+#nav-bar ul {
     padding: 0;
     list-style-type: none;
     text-align: center;
 }
 
-#sidebar a {
+#nav-bar a {
     text-decoration: none;
     color: var(--black);
 }
 
-#sidebar li:hover a {
+#nav-bar a:hover li {
     color: var(--light-grey);
 }
 
-#sidebar li:hover {
+#nav-bar a:hover li {
     background-color: #222222;
 }
 
@@ -93,7 +111,7 @@ main {
 /* -- -- -- -- -- -- -- -- -- -- -- -- */
 
 #login_sidebar { 
-    grid-area: aside;
+    grid-area: nav-bar;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

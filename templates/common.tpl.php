@@ -18,7 +18,7 @@
         <header>
         <h1>
             <a href="../pages/index.php">
-            <i class="fa fa-exchange"></i>UP Tickets
+                UP Tickets
             </a>
         </h1>
         </header>
@@ -29,40 +29,89 @@
     </html>
 <?php } ?>
 
-<?php function drawSideBar($user) { 
+<?php function drawNavBar($user) { 
     $userType = getUserType($user);
 
-    ?> <aside id="sidebar"> <?php 
+    ?> <nav id="nav-bar"> <?php 
     switch($userType) {
         case 'Admin':
-            drawAdminSideBar($user);
+            drawAdminNavBar($user);
         case 'Agent':
-            drawAgentSideBar($user);
+            drawAgentNavBar($user);
         case 'Client':
-            drawClientSideBar($user);
+            drawClientNavBar($user);
     }
-    ?> </aside> <?php 
+    ?> </nav> <?php 
 
 } ?>
 
-<?php function drawAdminSideBar() { ?>
+<?php function drawAdminNavBar() { ?>
     <ul>
-        <li><a href="../pages/users.php">Admin</a></li>
-        <li><a href="../pages/departaments.php">Agents</a></li>
-        <li><a href="../pages/system.php">Clients</a></li>
+        <a href="../pages/users.php">
+            <li>
+                <i class="fa fa-wrench" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    Users
+                </div>
+            </li>
+        </a>
+        <a href="../pages/departaments.php">
+            <li>
+                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    Agents
+                </div>
+            </li>
+        </a>
+        <a href="../pages/system.php">
+            <li>
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    Clients
+                </div>
+            </li>
+        </a>
     </ul>
 <?php } ?>
 
-<?php function drawAgentSideBar() { ?>
+<?php function drawAgentNavBar() { ?>
     <ul>
-        <li><a href="../pages/display_tickets"> Tickets queues</a></li>
+        <a href="../pages/display_tickets">
+            <li>
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    Tickets queues
+                </div>
+            </li>
+        </a>
     </ul>
 <?php } ?>
 
-<?php function drawClientSideBar() { ?>
+<?php function drawClientNavBar() { ?>
     <ul>
-        <li><a href="../pages/account_settings.php">My account</a></li>
-        <li><a href="../pages/display_tickets?filter=user">My tickets</a></li>
-        <li><a href="../pages/faq.php">FAQ</a></li>
+        <a href="../pages/account_settings.php">
+            <li>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    My account
+                </div>
+            </li>
+        </a>
+        <a href="../pages/display_tickets?filter=user">
+            <li>
+                <i class="fa fa-archive" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    My tickets
+                </div>
+            </li>
+        </a>
+        <a href="../pages/faq.php">
+            <li>
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                <div class="sidebar-text">
+                    FAQ
+                </div>
+            </li>
+        </a>
     </ul>
 <?php } ?>
