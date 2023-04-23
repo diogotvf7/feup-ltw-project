@@ -17,7 +17,6 @@
     header('Location: /pages/login.php');
   } 
   else if (checkUserCredentials($db, $userid, $password)) {
-    $_SESSION['emailUsername'] = $userid;
     $client = Client::getClientByEmailUsername($db,$userid);
     $_SESSION['IDUSER'] = $client->id;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');

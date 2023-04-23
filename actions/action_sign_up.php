@@ -12,7 +12,7 @@
 
   if (checkUserNotRegistered($db, $username, $email)) { // we should create restrictions for the username and password
     signUpUser($db,$name, $email,$username,$password);
-    $_SESSION['emailUsername'] = $userid;
+    $_SESSION['IDUSER'] = Client::getClientByEmailUsername($db,$username)->id;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     header('Location: /pages/display_tickets.php');
   } else {
