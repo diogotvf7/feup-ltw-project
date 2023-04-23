@@ -10,7 +10,7 @@
   $password = $_POST['password'];
   $db = getDatabaseConnection();
 
-  if (checkIfUserExists($db, $username, $email) && !empty($username) && !empty($email) && !empty($name) && !empty($password)) { // we should create restrictions for the username and password
+  if (checkUserNotRegistered($db, $username, $email)) { // we should create restrictions for the username and password
     signUpUser($db,$name, $email,$username,$password);
     $_SESSION['userid'] = $userid;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
