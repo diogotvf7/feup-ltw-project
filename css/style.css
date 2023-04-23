@@ -181,6 +181,10 @@ form button:hover {
     color: var(--white);
 }
 
+#sidebar > ul:nth-child(4) > li:hover{
+    background-color: red;
+}
+
 /* -- -- -- -- -- -- -- -- -- -- -- -- */
 /* -- -- -- -- -- Tickets  -- -- -- -- */
 /* -- -- -- -- -- -- -- -- -- -- -- -- */

@@ -65,4 +65,11 @@
         <li><a href="../pages/display_tickets?filter=user">My tickets</a></li>
         <li><a href="../pages/faq.php">FAQ</a></li>
     </ul>
+<?php drawLogout();}
+?>
+
+<?php function drawLogout() { ?>
+    <ul>
+        <li><a id="logout" href="../actions/action_logout.php">Logout</a></li>
+    </ul>
 <?php } ?>
