@@ -1,199 +1,127 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Open+Sans:wght@300&family=Source+Sans+Pro:wght@200&display=swap');
 
-/* State */
+/*          State          */
 
 .hide {
     display: none;
 }
 
+/*          General          */
 
-/* -- -- -- -- -- -- -- -- -- -- -- -- */
-/* -- -- -- - General Pages - -- -- -- */
-/* -- -- -- -- -- -- -- -- -- -- -- -- */
-
-body {  
+:root {
+    --dark-blue: #324871;
     --green: #3BA782;
     --white: #F2F2F2;
     --light-grey: #EDEDF3;
     --grey: #6F717D;
-    --yellow: #F8B009;
+    --yellow: #FFC53D;
+    --orange: #F0791D;
     --black: #222222;
-    display: grid;
-    grid-template-columns: 20% 80%; 
-    grid-template-rows: min(20%, 8em) calc(100% - min(20%, 8em));
-    gap: 0px 0px;
+}
+
+html {
     height: 100vh;
-    margin: 0%;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "header header"
-      "nav-bar main";
-}
-  
-header { 
-    grid-area: header;
-    background: var(--white);
-    box-shadow: 0px 10px 20px var(--grey);
-    text-align: left;
-    font-weight: 600;
-    overflow: hidden;
-    text-indent: 5vh;
-    z-index: 2;
-    user-select: none;
 }
 
-header a {
-    text-decoration: none;
-    color: var(--green);
-    font-family: "Montserrat", sans-serif;
-    font-size: 2em;
-    letter-spacing: 0.5em;
-}
-  
-main { 
-    grid-area: main;
-}
-
-#nav-bar {
-    grid-area: nav-bar;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.5em;
-    color: var(--black);
-    z-index: 1;
-    background-color: var(--light-grey);
-    border-right: var(--grey) 1px solid;
-    line-height: 2em;
-}
-
-.fa-2x {
-    font-size: 2em;
-}
-
-.fa {
-    position: relative;
-    display: table-cell;
-    width: 60px;
-    height: 36px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 20px;
-}
-
-#nav-bar li {
-    display: block ruby;
-}
-
-#nav-bar ul {
+body {  
+    background-color: var(--white);
+    margin: 0;
     padding: 0;
-    list-style-type: none;
-    text-align: center;
+    height: 100vh;
 }
 
-#nav-bar a {
-    text-decoration: none;
-    color: var(--black);
+main {
+    margin-left: 5rem;
+    padding: 1rem;
+    height: 100vh;
 }
 
-#nav-bar a:hover li {
-    color: var(--light-grey);
+/*          Nav Bar          */
+
+.navbar {
+    width: 5rem;
+    height: 100vh;
+    position: fixed;
+    background-color: var(--dark-blue);
+    transition: width 200ms ease;
+    font-family: 'Open Sans', sans-serif;
 }
 
-#nav-bar a:hover li {
-    background-color: #222222;
-}
-
-/* -- -- -- -- -- -- -- -- -- -- -- -- */
-/* -- -- - Login - Register page -- -- */
-/* -- -- -- -- -- -- -- -- -- -- -- -- */
-
-#login_sidebar { 
-    grid-area: nav-bar;
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: 10%;
-    z-index: 1;
-    background-color: var(--light-grey);
-    border-right: var(--grey) 1px solid;
-}
-
-.slogan {
-    margin-right: 0.5em;
-    text-align: right;
-    font-family: "Montserrat", sans-serif;
-    font-size: 2em;
-    font-weight: 600;
-    color: var(--green);
-    user-select: none;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.nav-item {
     width: 100%;
-    background-color: var(--white);
-    color: var(--green);
-    font-family: "Source Sans Pro", sans-serif;
-    font-size: 2em;
-    user-select: none;
 }
 
-input {
-    height: 50px;
-    width: 30em;
-    border-bottom-left-radius: 1em;
-    border-top-left-radius: 1em;
-    border-bottom: 0;
-    border-bottom-right-radius: 1em;
-    border-top-right-radius: 1em;
-    margin-top: 8px;
-    font-size: 14px;
-    padding-left: 1.5em;
+.nav-item:first-child {
+    padding-top: 1rem;
 }
 
-input:focus {
-    outline: none;
+.nav-item:last-child {
+    margin-top: auto;
 }
 
-form button {
-    align-self: center;
-    height: 50px;
-    width: 15%;
-    margin: 2em;
-    border: 1px solid var(--green);
-    border-radius: 1em;
-    background-color: var(--white);
-    font-size: 14px;
-    color: var(--grey);
-    cursor: pointer;
-}
-
-.buttons {
-    width: 100%;
+.nav-link {
     display: flex;
-    flex-direction: row;
+    align-items: center; 
     justify-content: center;
+    height: 5rem;
+    color: var(--light-grey);
+    text-decoration: none;
+    filter: grayscale(100%) opacity(0.7);
+    transition: var(200ms);
 }
 
-form button:hover {
-    background-color: var(--green);
-    color: var(--white);
+.link-text {
+    display: none;
+    margin-left: 1rem;
 }
 
-/* -- -- -- -- -- -- -- -- -- -- -- -- */
-/* -- -- -- -- -- Tickets  -- -- -- -- */
-/* -- -- -- -- -- -- -- -- -- -- -- -- */
+.logo-text {
+    display: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.nav-link .fa {
+    min-width: 2rem;
+    margin: 0 1.5rem;
+}
+
+.navbar:hover {
+    width: 16rem;
+}
+
+.navbar:hover .link-text {
+    display: block;
+}
+
+.navbar:hover .logo-text {
+    display: block;
+}
+
+.nav-link:hover {
+    filter: grayscale(0%) opacity(1);
+    background-color: var(--light-grey);
+    color: var(--dark-blue);
+}
+
+
+/*          Ticket          */
 
 #tickets-list {
-    margin: 2em auto;
-    height: auto;
+    margin: 0 auto;
+    height: 45em;
     width: 45em;
     border: #222222 1px double;
     display: flex;

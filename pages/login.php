@@ -17,14 +17,13 @@
 
   drawHeader(['login_register_switch']);
 ?>
-  <aside id="login_sidebar">
-    <div class="slogan">
-      <p>Your</p>
-      <p>Feedback</p>
-      <p>Matters</p>
-    </div>
-    <img class="sphere" src="../docs/sphere.svg">
-  </aside>
+  <header>
+    <h1>
+        <a href="../pages/index.php">
+            UP Tickets
+        </a>
+    </h1>
+  </header>
   <main>
     <form action="../actions/action_login.php" id="sign_in_form" method="post">
       <h2>Login</h2>

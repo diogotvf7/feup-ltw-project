@@ -12,16 +12,9 @@
         <?php foreach ($scripts as $script) { 
           echo '<script src="../javascript/', $script, '.js" defer></script>';
         } ?>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header>
-        <h1>
-            <a href="../pages/index.php">
-                UP Tickets
-            </a>
-        </h1>
-        </header>
 <?php } ?>
 
 <?php function drawFooter() { ?>
@@ -31,87 +24,82 @@
 
 <?php function drawNavBar($user) { 
     $userType = getUserType($user);
+    ?> 
 
-    ?> <nav id="nav-bar"> <?php 
-    switch($userType) {
-        case 'Admin':
-            drawAdminNavBar($user);
-        case 'Agent':
-            drawAgentNavBar($user);
-        case 'Client':
-            drawClientNavBar($user);
-    }
-    ?> </nav> <?php 
+    <nav class="navbar"> 
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="../pages/index.php" class="nav-link">
+                    <img src="../docs/simple-logo.png" width="100%" />
+                    <span class="logo-text">UP Tickets</span>
+                </a>
+            </li>
+            <?php switch($userType) {
+                case 'Admin':
+                    drawAdminNavBar($user);
+                case 'Agent':
+                    drawAgentNavBar($user);
+                case 'Client':
+                    drawClientNavBar($user);
+            } ?>
+            <li class="nav-item">
+                <a href="../pages/faq.php" class="nav-link">
+                    <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                    <span class="link-text">Logout</span>
+                </a>
+            </li> 
+        </ul>
+    </nav> 
 
-} ?>
+<?php } ?>
 
 <?php function drawAdminNavBar() { ?>
-    <ul>
-        <a href="../pages/users.php">
-            <li>
-                <i class="fa fa-wrench" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    Users
-                </div>
-            </li>
+    <li class="nav-item">
+        <a href="../pages/users.php" class="nav-link">        
+            <i class="fa-solid fa-gear fa-lg"></i>
+            <span class="link-text">Users</span>
         </a>
-        <a href="../pages/departaments.php">
-            <li>
-                <i class="fa fa-briefcase" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    Agents
-                </div>
-            </li>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/departaments.php" class="nav-link">
+            <i class="fa-solid fa-briefcase fa-lg"></i>
+            <span class="link-text">Agents</span>
         </a>
-        <a href="../pages/system.php">
-            <li>
-                <i class="fa fa-users" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    Clients
-                </div>
-            </li>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/system.php" class="nav-link">
+            <i class="fa-solid fa-users fa-lg"></i>
+            <span class="link-text">Clients</span>
         </a>
-    </ul>
+    </li>
 <?php } ?>
 
 <?php function drawAgentNavBar() { ?>
-    <ul>
-        <a href="../pages/display_tickets">
-            <li>
-                <i class="fa fa-ticket" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    Tickets queues
-                </div>
-            </li>
+    <li class="nav-item">
+        <a href="../pages/display_tickets" class="nav-link">
+            <i class="fa-solid fa-list-check fa-lg"></i>
+            <span class="link-text">Tickets queues</span>
         </a>
-    </ul>
+    </li>
 <?php } ?>
 
 <?php function drawClientNavBar() { ?>
-    <ul>
-        <a href="../pages/account_settings.php">
-            <li>
-                <i class="fa fa-user-circle" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    My account
-                </div>
-            </li>
+    <li class="nav-item">
+        <a href="../pages/account_settings.php" class="nav-link">
+            <i class="fa-solid fa-user fa-lg"></i>
+            <span class="link-text">My account</span>
         </a>
-        <a href="../pages/display_tickets?filter=user">
-            <li>
-                <i class="fa fa-archive" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    My tickets
-                </div>
-            </li>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/display_tickets?filter=user" class="nav-link">
+            <i class="fa-solid fa-ticket fa-lg"></i>
+            <span class="link-text">My tickets</span>
         </a>
-        <a href="../pages/faq.php">
-            <li>
-                <i class="fa fa-question-circle" aria-hidden="true"></i>
-                <div class="sidebar-text">
-                    FAQ
-                </div>
-            </li>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/faq.php" class="nav-link">
+            <i class="fa-solid fa-circle-question fa-lg"></i>
+            <span class="link-text">FAQ</span>
         </a>
-    </ul>
+    </li>
 <?php } ?>
