@@ -24,7 +24,7 @@ tags.forEach(tag => {
 const statuses = document.querySelectorAll('.status');
 statuses.forEach(status => {
     if (status.textContent.trim() == "Open")
-        status.style.backgroundColor = "#FF6347";
-    else if (status.textContent.trim() == "Closed")
         status.style.backgroundColor = "#32CD32";
+    else if (status.textContent.trim() == "Closed")
+        status.style.backgroundColor = "#FF6347";
 });
