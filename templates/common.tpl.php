@@ -1,7 +1,7 @@
 <?php 
     require_once(__DIR__ . '/../utils/util_funcs.php');
 ?>
-<?php function drawHeader($scripts) { ?>
+<?php function drawHeader($scripts = []) { ?>
     <!DOCTYPE html>
     <html lang="en-US">
     <head>
@@ -21,17 +21,6 @@
             <i class="fa fa-exchange"></i>UP Tickets
             </a>
         </h1>
-        <?php
-        include_once('../includes/session.php');
-         if (isset($_SESSION['userid'])){ ?>
-        <h1 id="logout">
-            <form action="../actions/action_logout.php">
-            <a href="../pages/login.php">
-            <i class="fa fa-sign-out"></i>Logout
-            </a>
-            </form>
-        </h1>
-        <?php } ?>
         </header>
 <?php } ?>
 
