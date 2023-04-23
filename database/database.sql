@@ -124,16 +124,30 @@ INSERT INTO Tag (TagID, Name) VALUES (3, 'Product');
 INSERT INTO Tag (TagID, Name) VALUES (4, 'Sales');
 
 -- Populating Ticket table
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (1, 'Issue with product', 'I am having trouble with my product', 'Open', 1, 3, 1, '2022-01-01 12:00:00');
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (2, 'Billing inquiry', 'I have a question about my bill', 'Closed', 2, 3, 2, '2022-01-02 12:00:00');
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (3, 'Technical issue', 'My product is not working as expected', 'Open', 1, 5, 1, '2022-01-03 12:00:00');
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (4, 'Product feedback', 'I have a suggestion for a new product feature', 'Open', 2, 4, 3, '2022-01-04 12:00:00');
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (5, 'Sales inquiry', 'I want to know more about a product', 'Closed', 1, 7, 1, '2022-01-05 12:00:00');
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (6, 'JUNI vs. NI', 'O ni ganhou obviamente', 'Closed', 1, 6, 1, '2022-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (1, 'Issue with product', 'I am having trouble with my product', 'Open', 1, 3, 1, '2023-04-01 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (2, 'Billing inquiry', 'I have a question about my bill', 'Closed', 2, 3, 2, '2023-01-02 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (3, 'Technical issue', 'My product is not working as expected', 'Open', 4, 5, 1, '2023-01-03 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (4, 'Product feedback', 'I have a suggestion for a new product feature', 'Open', 2, 4, 3, '2023-01-04 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (5, 'Sales inquiry', 'I want to know more about a product', 'Closed', 7, 7, 1, '2023-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (7, 'JUNI vs. NI', 'O ni ganhou obviamente', 'Closed', 1, 6, 1, '2022-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (8, 'JUNI vs. NI rematch', 'O ni ganhou outra vez!', 'Closed', 12, 6, 1, '2022-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (9, 'T01', 'Texto do T01', 'Closed', 5, 4, 1, '2023-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (10, 'T02', 'Texto do T02', 'Open', 13, 5, 1, '2022-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (11, 'T03', 'Texto do T03', 'Open', 6, 6, 1, '2023-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (12, 'T04', 'Texto do T04', 'Closed', 5, 7, 1, '2023-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (13, 'T05', 'Texto do T05', 'Closed', 4, 4, 1, '2019-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (14, 'T06', 'Texto do T06', 'Open', 6, 7, 1, '2017-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (15, 'T07', 'Texto do T07', 'Closed', 2, 3, 1, '2022-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (16, 'T08', 'Texto do T08', 'Closed', 3, 4, 1, '2023-04-23 03:50:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (17, 'T09', 'Texto do T09', 'Open', 9, 5, 1, '2023-04-23 02:44:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (18, 'T10', 'Texto do T10', 'Open', 8, 6, 1, '2023-04-23 02:40:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (19, 'T11', 'Texto do T11', 'Closed', 11, 7, 1, '2023-04-23 01:50:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES (20, 'T12', 'Texto do T12', 'Open', 12, 5, 1, '2022-01-05 12:00:00');
 
 -- Populating Ticket_Tag table
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (1, 1);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (1, 2);
+INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (1, 3);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (2, 2);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (3, 1);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (4, 3);

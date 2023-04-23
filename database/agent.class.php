@@ -20,7 +20,7 @@
     function save($db) {
       $stmt = $db->prepare('
         UPDATE Agent SET Username = ?
-        WHERE AgentId = ?
+        WHERE AgentID = ?
       ');
 
       $stmt->execute(array($this->username, $this->id));
@@ -28,7 +28,7 @@
     
     static function getAgentWithPassword(PDO $db, string $email, string $password) : ?Agent {
       $stmt = $db->prepare('
-        SELECT AgentId, Name, Username, Email, Password
+        SELECT AgentID, Name, Username, Email, Password
         FROM Agent 
         WHERE (lower(email) = ? AND password = ?) OR (lower(username) = ? AND password = ?)
       ');
@@ -37,7 +37,7 @@
   
       if ($agent = $stmt->fetch()) {
         return new Agent(
-          $agent['AgentId'],
+          $agent['AgentID'],
           $agent['Name'],
           $agent['Username'],
           $agent['Email'],
@@ -48,22 +48,22 @@
 
     static function getAgent(PDO $db, int $id) : Agent {
       $stmt = $db->prepare('
-        SELECT AgentId, Name, Username, Email, Password
-        FROM Agent 
-        WHERE AgentId = ?
+        SELECT AgentID, Name, Username, Email, Password
+        FROM Agent JOIN Client 
+        ON AgentID = ClientID
+        WHERE AgentID = ?
       ');
 
       $stmt->execute(array($id));
       $agent = $stmt->fetch();
       
       return new Agent(
-        $agent['AgentId'],
+        $agent['AgentID'],
         $agent['Name'],
         $agent['Username'],
         $agent['Email'],
         $agent['Password']
       );
     }
-
   }
 ?>

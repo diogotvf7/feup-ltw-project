@@ -1,7 +1,7 @@
 <?php 
     require_once(__DIR__ . '/../utils/util_funcs.php');
 ?>
-<?php function drawHeader($scripts) { ?>
+<?php function drawHeader($scripts = []) { ?>
     <!DOCTYPE html>
     <html lang="en-US">
     <head>

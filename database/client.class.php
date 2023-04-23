@@ -20,7 +20,7 @@
     function save($db) {
       $stmt = $db->prepare('
         UPDATE Client SET Username = ?
-        WHERE ClientId = ?
+        WHERE ClientID = ?
       ');
 
       $stmt->execute(array($this->username, $this->id));
@@ -28,7 +28,7 @@
     
     static function getClientWithPassword(PDO $db, string $email, string $password) : ?Client {
       $stmt = $db->prepare('
-        SELECT ClientId, Name, Username, Email, Password
+        SELECT ClientID, Name, Username, Email, Password
         FROM Client 
         WHERE (lower(email) = ? AND password = ?) OR (lower(username) = ? AND password = ?)
       ');
@@ -37,7 +37,7 @@
   
       if ($client = $stmt->fetch()) {
         return new Client(
-          $client['ClientId'],
+          $client['ClientID'],
           $client['Name'],
           $client['Username'],
           $client['Email'],
@@ -48,16 +48,16 @@
 
     static function getClient(PDO $db, int $id) : Client {
       $stmt = $db->prepare('
-        SELECT ClientId, Name, Username, Email, Password
+        SELECT ClientID, Name, Username, Email, Password
         FROM Client 
-        WHERE ClientId = ?
+        WHERE ClientID = ?
       ');
 
       $stmt->execute(array($id));
       $client = $stmt->fetch();
       
       return new Client(
-        $client['ClientId'],
+        $client['ClientID'],
         $client['Name'],
         $client['Username'],
         $client['Email'],
