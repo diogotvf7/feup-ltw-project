@@ -18,5 +18,6 @@
   $user2 = new Agent(2, 'Agent', 'agent', 'agent@agent.com', '123456');
   $user3 = new Client(3, 'Client', 'client', 'client@client.com', '123456');
   drawSideBar($user1);
+  drawHeader([]);
   drawFooter();
 ?>

@@ -15,12 +15,23 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <header>
-        <h1>
+        <header> 
+        <h1 id="logo">
             <a href="../pages/index.php">
             <i class="fa fa-exchange"></i>UP Tickets
             </a>
         </h1>
+        <?php
+        include_once('../includes/session.php');
+         if (isset($_SESSION['userid'])){ ?>
+        <h1 id="logout">
+            <form action="../actions/action_logout.php">
+            <a href="../pages/login.php">
+            <i class="fa fa-sign-out"></i>Logout
+            </a>
+            </form>
+        </h1>
+        <?php } ?>
         </header>
 <?php } ?>
 

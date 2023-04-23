@@ -6,7 +6,7 @@ function checkIfUserExists($db,$username,$email){
 
     $stmt = $db->prepare('SELECT * FROM Client WHERE Email = ? or Username = ?');
     $stmt->execute((array($email,$username)));
-    return empty($stmt->fetch());
+    return !empty($stmt->fetch());
 }
 
 function signUpUser($db,$name,$email,$username,$password){
@@ -21,6 +21,7 @@ function checkUserCredentials($db,$userid,$password){
 
     $stmt = $db->prepare('SELECT * FROM Client WHERE Email = ? or Username = ?');
     $stmt->execute((array($userid,$userid)));
-    return ($stmt->fetch()['Password'] == $password && !empty($stmt->fetch()));
+    if (!checkIfUserExists($db,$userid,$userid)) return false;
+    return (($stmt->fetch()['Password'] == $password));
 }
 ?>

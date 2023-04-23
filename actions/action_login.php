@@ -14,7 +14,7 @@
     header('Location: /pages/display_tickets.php');
   } else {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
-    header('Location: '.$_SERVER['HTTP_REFERER']);
+    header('Location: /pages/login.php');
   }
 
 ?>

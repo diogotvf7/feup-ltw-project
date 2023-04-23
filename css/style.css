@@ -37,15 +37,27 @@ header {
     text-indent: 5vh;
     z-index: 2;
     user-select: none;
+    display: flex;
+    justify-content: space-between;
 }
 
 header a {
     text-decoration: none;
     color: var(--green);
     font-family: "Montserrat", sans-serif;
-    font-size: 2em;
-    letter-spacing: 0.5em;
+    font-size: 1.5em;
+    letter-spacing: 0.2em;
 }
+
+#logout > form > a{
+    text-decoration: none;
+    color: var(--green);
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.2em;
+}
+
+
   
 main { 
     grid-area: main;
