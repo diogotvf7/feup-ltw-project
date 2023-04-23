@@ -2,7 +2,7 @@
   declare(strict_types = 1);
 
   require_once(__DIR__ . '/../utils/session.php');
-  $session = new Session();
+  session_start();
 
   require_once(__DIR__ . '/../database/connection.db.php');
 
@@ -19,7 +19,7 @@
 
     drawHeader(['ticket_colors']);
     $db = getDatabaseConnection();
-    $tickets = Ticket::getAgentTickets($db,7);
+    $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
     //$tickets = Ticket::getAllTickets($db);
     if ($tickets == null) {echo 'No tickets found!' . '<br>';}
     else {drawTicketsList($db,$tickets);}
@@ -30,3 +30,4 @@
 <ul class="tickets_queues">
         <li><a href="../pages/tickets_queues.php">Assigned to me</a></li>
 </ul>
+</aside>
