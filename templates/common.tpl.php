@@ -1,5 +1,6 @@
 <?php 
     require_once(__DIR__ . '/../utils/util_funcs.php');
+    include_once('../utils/session.php');
 ?>
 <?php function drawHeader($scripts = []) { ?>
     <!DOCTYPE html>
@@ -31,8 +32,9 @@
 
 <?php function drawSideBar($user) { 
     $userType = getUserType($user);
-
-    ?> <aside id="sidebar"> <?php 
+    ?>
+    <aside id="sidebar">
+     <?php 
     switch($userType) {
         case 'Admin':
             drawAdminSideBar($user);
@@ -46,7 +48,7 @@
 } ?>
 
 <?php function drawAdminSideBar() { ?>
-    <ul>
+    <ul class="admin">
         <li><a href="../pages/users.php">Admin</a></li>
         <li><a href="../pages/departaments.php">Agents</a></li>
         <li><a href="../pages/system.php">Clients</a></li>
@@ -54,13 +56,13 @@
 <?php } ?>
 
 <?php function drawAgentSideBar() { ?>
-    <ul>
+    <ul class="agent">
         <li><a href="../pages/display_tickets"> Tickets queues</a></li>
     </ul>
 <?php } ?>
 
 <?php function drawClientSideBar() { ?>
-    <ul>
+    <ul class="client">
         <li><a href="../pages/account_settings.php">My account</a></li>
         <li><a href="../pages/display_tickets?filter=user">My tickets</a></li>
         <li><a href="../pages/faq.php">FAQ</a></li>
@@ -69,7 +71,7 @@
 ?>
 
 <?php function drawLogout() { ?>
-    <ul>
-        <li><a id="logout" href="../actions/action_logout.php">Logout</a></li>
+    <ul class="logout">
+        <li><a href="../actions/action_logout.php">Logout </a></li>
     </ul>
 <?php } ?>

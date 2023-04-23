@@ -17,6 +17,9 @@
     header('Location: /pages/display_tickets.php');
   } else {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
+    echo '<script type="text/javascript">';
+    echo 'alert("There is already an account with that username/email. Sign in!")';
+    echo '</script>';
     header('Location: '.$_SERVER['HTTP_REFERER']);
   }
 

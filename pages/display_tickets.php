@@ -43,7 +43,6 @@
   // $ticket = new Ticket(1, 'Issue with product', 'I am having trouble with my product', 'Open', 1, 3, 1, '2022-01-01 12:00:00');
   // echo 'Ticket object created!<br>';
 
-
   drawHeader(['ticket_colors']);
   $user1 = new Admin(1, 'Admin', 'admin', 'admin@admin.com', '123456');
   $user2 = new Agent(2, 'Agent', 'agent', 'agent@agent.com', '123456');

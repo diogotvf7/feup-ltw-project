@@ -5,6 +5,7 @@
 
   session_start();
   if (session_destroy()) {
+    unset($_SESSION['userid']);
     //$_SESSION['userid'] = null;
     //$_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged out successfully!');
     header("Location: ../pages/login.php");
