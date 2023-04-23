@@ -65,7 +65,7 @@
       );
     }
 
-    static function getClientByUsername(PDO $db, string $userid) : Client {
+    static function getClientByEmailUsername(PDO $db, string $userid) : Client {
       $stmt = $db->prepare('
         SELECT ClientID, Name, Username, Email, Password
         FROM Client 

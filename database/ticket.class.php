@@ -114,5 +114,39 @@
       } else return null;
     }
 
+    static function getUserTickets(PDO $db, $userID) {
+      $stmt = $db->prepare('
+        SELECT DISTINT TicketID
+        FROM Ticket JOIN Client ON Client.ClientID = Ticket.ClientID');
+      $stmt->execute([$userID]);
+      if ($tickets = $stmt->fetchAll()) {
+        return $tickets;
+      } else return null;
+    }
+
+    static function getAgentTickets(PDO $db, $userID) {
+      $stmt = $db->prepare('
+        SELECT DISTINCT TicketID
+        FROM Ticket JOIN Agent ON Ticket.AgentID = ?');
+      if ($stmt->execute([$userID]));
+      if ($tickets = $stmt->fetchAll()) {
+        $tickets = Ticket::sortTicketsMostRecent($db, $tickets);
+        return $tickets;
+      } else return null;
+    }
+
+    static function sortTicketsMostRecent(PDO $db, $tickets) {
+      $ticket_ids = array_column($tickets, 'TicketID');
+      $ticketsPlaceholders = implode(',', $ticket_ids);
+      $stmt = $db->prepare('
+        SELECT TicketID
+        FROM Ticket
+        WHERE TicketID IN (' . $ticketsPlaceholders . ')
+        ORDER BY Date DESC');
+      if ($stmt->execute());
+      if ($tickets = $stmt->fetchAll()) {
+        return $tickets;
+      } else {return null;}
+    }
   }
 ?>

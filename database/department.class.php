@@ -11,20 +11,40 @@
         $this->name = $name;
     }
 
-    static function getDepartment(PDO $db, int $id) : Department {
+    static function getDepartment(PDO $db, string $name) : Department {
       $stmt = $db->prepare('
-        SELECT DepartmentID, Name
+        SELECT *
         FROM Department
-        WHERE DepartmentID = ?
+        WHERE Name = ?
       ');
 
-      $stmt->execute([$id]);
+      $stmt->execute([$name]);
       $agent = $stmt->fetch();
       
       return new Department(
         $agent['DepartmentID'],
         $agent['Name']
       );
+    }
+    
+    static function addDepartment(PDO $db, string $name){
+      if (self::getDepartment($db, $name) != null) return false; // already exists
+      $stmt = $db->prepare('
+        INSERT INTO Department(Name)
+        VALUES (?)
+      ');
+
+      $stmt->execute([$name]);
+    }
+
+    static function removeDepartment(PDO $db, string $name) : bool{
+      if (self::getDepartment($db, $name) == null) return false; // doesnt exist
+      $stmt = $db->prepare('
+        DELETE FROM Department
+        WHERE Name = ?');
+
+      $stmt->execute([$name]);
+      return true;
     }
   }
 ?>

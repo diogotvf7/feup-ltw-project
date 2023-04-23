@@ -57,7 +57,7 @@
 
 <?php function drawAgentSideBar() { ?>
     <ul class="agent">
-        <li><a href="../pages/display_tickets"> Tickets queues</a></li>
+        <li><a href="../pages/tickets_queues.php"> Tickets queues</a></li>
     </ul>
 <?php } ?>
 
