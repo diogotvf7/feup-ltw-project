@@ -5,11 +5,11 @@
   include_once('../database/client.class.php');
 
   session_start();
-  $userid = $_POST['userid'];
+  $username = $_POST['userid'];
   $password = $_POST['password'];
   $db = getDatabaseConnection();
   
-  if (checkUserNotRegistered($db,$userid,$userid)) {
+  if (checkUserNotRegistered($db,$username)) {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
     echo '<script type="text/javascript">';
     echo 'alert("No account with such username/email. Sign up!")';
@@ -17,7 +17,7 @@
     header('Location: /pages/login.php');
   } 
   else if (checkUserCredentials($db, $userid, $password)) {
-    $client = Client::getClientByEmailUsername($db,$userid);
+    $client = Client::getClientByUsername($db,$userid);
     $_SESSION['IDUSER'] = $client->id;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     header('Location: /pages/display_tickets.php');
@@ -28,5 +28,4 @@
     echo '</script>';
     header('Location: /pages/login.php');
   }
-
 ?>
