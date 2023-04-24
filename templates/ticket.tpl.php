@@ -35,9 +35,11 @@
 <?php } ?>
 
 <?php function drawTicketsList($db, $tickets) { ?>
-    <ul id="tickets-list">
-        <?php foreach ($tickets as $ticket) {
-            drawTicket($db, $ticket["TicketID"]);
-        } ?>
-    </ul>
+    <main>
+        <ul id="tickets-list">
+            <?php foreach ($tickets as $ticket) {
+                drawTicket($db, $ticket["TicketID"]);
+            } ?>
+        </ul>
+    </main>
 <?php } ?>

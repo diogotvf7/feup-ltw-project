@@ -2,27 +2,23 @@
     require_once(__DIR__ . '/../utils/util_funcs.php');
     include_once('../utils/session.php');
 ?>
-<?php function drawHeader($scripts = []) { ?>
+<?php function drawHeader($scripts = [], $cssFiles = []) { ?>
     <!DOCTYPE html>
     <html lang="en-US">
     <head>
         <title>UP Tickets</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/style.css">
+        <!-- <link rel="stylesheet" href="../css/style.css"> -->
+        <?php foreach ($cssFiles as $css) { 
+          echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
+        } ?>
         <?php foreach ($scripts as $script) { 
           echo '<script src="../javascript/', $script, '.js" defer></script>';
         } ?>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header> 
-        <h1 id="logo">
-            <a href="../pages/index.php">
-            <i class="fa fa-exchange"></i>UP Tickets
-            </a>
-        </h1>
-        </header>
 <?php } ?>
 
 <?php function drawFooter() { ?>
@@ -30,48 +26,84 @@
     </html>
 <?php } ?>
 
-<?php function drawSideBar($user) { 
+<?php function drawNavBar($user) { 
     $userType = getUserType($user);
-    ?>
-    <aside id="sidebar">
-     <?php 
-    switch($userType) {
-        case 'Admin':
-            drawAdminSideBar($user);
-        case 'Agent':
-            drawAgentSideBar($user);
-        case 'Client':
-            drawClientSideBar($user);
-    }
-    ?> </aside> <?php 
+    ?> 
 
-} ?>
+    <nav class="navbar"> 
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="../pages/index.php" class="nav-link">
+                    <img src="../docs/simple-logo.png" width="100%" />
+                    <span class="logo-text">UP Tickets</span>
+                </a>
+            </li>
+            <?php switch($userType) {
+                case 'Admin':
+                    drawAdminNavBar($user);
+                case 'Agent':
+                    drawAgentNavBar($user);
+                case 'Client':
+                    drawClientNavBar($user);
+            } ?>
+            <li class="nav-item">
+                <a href="../actions/action_logout.php" class="nav-link">
+                    <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                    <span class="link-text">Logout</span>
+                </a>
+            </li> 
+        </ul>
+    </nav> 
 
-<?php function drawAdminSideBar() { ?>
-    <ul class="admin">
-        <li><a href="../pages/users.php">Admin</a></li>
-        <li><a href="../pages/departaments.php">Agents</a></li>
-        <li><a href="../pages/system.php">Clients</a></li>
-    </ul>
 <?php } ?>
 
-<?php function drawAgentSideBar() { ?>
-    <ul class="agent">
-        <li><a href="../pages/tickets_queues.php"> Tickets queues</a></li>
-    </ul>
+<?php function drawAdminNavBar() { ?>
+    <li class="nav-item">
+        <a href="../pages/users.php" class="nav-link">        
+            <i class="fa-solid fa-gear fa-lg"></i>
+            <span class="link-text">Users</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/departaments.php" class="nav-link">
+            <i class="fa-solid fa-briefcase fa-lg"></i>
+            <span class="link-text">Agents</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/system.php" class="nav-link">
+            <i class="fa-solid fa-users fa-lg"></i>
+            <span class="link-text">Clients</span>
+        </a>
+    </li>
 <?php } ?>
 
-<?php function drawClientSideBar() { ?>
-    <ul class="client">
-        <li><a href="../pages/account_settings.php">My account</a></li>
-        <li><a href="../pages/display_tickets?filter=user">My tickets</a></li>
-        <li><a href="../pages/faq.php">FAQ</a></li>
-    </ul>
-<?php drawLogout();}
-?>
+<?php function drawAgentNavBar() { ?>
+    <li class="nav-item">
+        <a href="../pages/display_tickets" class="nav-link">
+            <i class="fa-solid fa-list-check fa-lg"></i>
+            <span class="link-text">Tickets queues</span>
+        </a>
+    </li>
+<?php } ?>
 
-<?php function drawLogout() { ?>
-    <ul class="logout">
-        <li><a href="../actions/action_logout.php">Logout </a></li>
-    </ul>
+<?php function drawClientNavBar() { ?>
+    <li class="nav-item">
+        <a href="../pages/account_settings.php" class="nav-link">
+            <i class="fa-solid fa-user fa-lg"></i>
+            <span class="link-text">My account</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/display_tickets?filter=user" class="nav-link">
+            <i class="fa-solid fa-ticket fa-lg"></i>
+            <span class="link-text">My tickets</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="../pages/faq.php" class="nav-link">
+            <i class="fa-solid fa-circle-question fa-lg"></i>
+            <span class="link-text">FAQ</span>
+        </a>
+    </li>
 <?php } ?>

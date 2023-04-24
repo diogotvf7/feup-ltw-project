@@ -15,38 +15,24 @@
 
   $db = getDatabaseConnection();
 
-  drawHeader(['login_register_switch']);
+  drawHeader(['login_register_switch'], ['login-register']);
 ?>
-  <aside id="login_sidebar">
-    <div class="slogan">
-      <p>Your</p>
-      <p>Feedback</p>
-      <p>Matters</p>
-    </div>
-    <img class="sphere" src="../docs/sphere.svg">
-  </aside>
   <main>
-    <form action="../actions/action_login.php" id="sign_in_form" method="post">
+    <h1 class="up">Welcome to</h1>
+    <form action="../actions/action_login.php" class="form-box" method="post">
       <h2>Login</h2>
-      <input type="email_or_username" name="userid" placeholder="email or username" required>
-      <input type="password" name="password" placeholder="password" required>
-      <div class="buttons">
-        <button type="submit">Login</button>
-        <button type="button" id="hide_sign_in">Switch to Sign Up</button>
-      </div>
+      <input type="email" name="email" placeholder="Email" hidden>
+      <input type="name" name="name" placeholder="Name" hidden>
+      <input type="username" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="confirm-password" placeholder="Confirm password" hidden>
+      <button type="submit">Login</button>
+      <span>
+        <p>Don't have an account yet?</p>
+        <button type="button" id="switch-state">Sign Up</button>
+      </span>
     </form>
-    <form action="../actions/action_sign_up.php" id="sign_up_form" class="hide" method="post">
-      <h2>Sign Up</h2>
-      <input type="email" name="email" placeholder="email" required>
-      <input type="name" name="name" placeholder="name" required>
-      <input type="username" name="username" placeholder="username" required>
-      <input type="password" name="password" placeholder="password" required>
-      <input type="password" name="hide_sign_up" placeholder="repeat password" required>
-      <div class="buttons">
-        <button type="submit">Sign Up</button>
-        <button type="button" id="hide_sign_up">Switch to Login</button>
-      </div>
-    </form>
+    <h1 class="down">UP Tickets</h1>
   </main>
 <?php
   drawFooter();

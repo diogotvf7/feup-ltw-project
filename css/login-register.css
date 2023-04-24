@@ -1,0 +1,122 @@
+:root {
+    --dark-blue: #324871;
+    --green: #3BA782;
+    --white: #F2F2F2;
+    --light-grey: #EDEDF3;
+    --grey: #6F717D;
+    --yellow: #FFC53D;
+    --orange: #F0791D;
+    --black: #222222;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.form-box {
+    width: 25rem;
+    height: 25rem;
+    background-color: rgba(255,255,255,0.05);
+    box-shadow: 5px 20px 30px var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3em;
+    font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+    color: var(--white);
+    font-size: 5em;
+    letter-spacing: 10px;
+    font-family: "Montserrat", sans-serif;
+    transition: .6s;
+    user-select: none;
+    transition: 0.6s;
+}
+
+.up {
+    writing-mode: sideways-lr;
+}
+
+.up:hover {
+    transform:translate(-10px,-10px);
+}
+
+.down {
+    writing-mode: vertical-rl;
+}
+
+.down:hover {
+    transform:translate(10px,10px);
+}  
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+    cursor: pointer;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--light-grey);
+    width: 100%;
+    height: 3rem;
+    margin: 0.5em;
+    transition : border 500ms ease-out;
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 1px solid var(--green);
+}
+
+button[type=submit] {
+    margin-top: 1em;
+    width: 100%;
+    height: 2em;
+    background-color: transparent;
+    border: 1px solid var(--light-grey);
+    border-radius: 1em;
+    color: var(--white);
+    transition: .6s;
+}
+
+button[type=submit]:hover {
+    background-color: var(--white);
+    color: var(--white);
+    border: 0;
+    color: var(--black);
+}
+
+form span {
+    display: inline ruby;
+}
+
+form span button {
+    background-color: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: underline;
+}
