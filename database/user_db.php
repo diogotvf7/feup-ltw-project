@@ -16,11 +16,11 @@ function signUpUser($db,$name,$email,$username,$password){
     $stmt->execute((array($name,$email,$username,$password)));
 }
 
-function checkUserCredentials($db,$userid,$password){
+function checkUserCredentials($db,$username,$password){
     $db = getDatabaseConnection();
-    if (checkUserNotRegistered($db,$userid,$userid)) return false; // no user with such username/email
-    $stmt = $db->prepare('SELECT * FROM Client WHERE or Username = ?');
-    $stmt->execute(array($userid));
+    if (checkUserNotRegistered($db,$username)) return false; // no user with such username/email
+    $stmt = $db->prepare('SELECT * FROM Client WHERE Username = ?');
+    $stmt->execute(array($username));
     return (($stmt->fetch()['Password'] == $password));
 }
 ?>

@@ -5,7 +5,7 @@
   include_once('../database/client.class.php');
 
   session_start();
-  $username = $_POST['userid'];
+  $username = $_POST['username'];
   $password = $_POST['password'];
   $db = getDatabaseConnection();
   
@@ -16,8 +16,9 @@
     echo '</script>';
     header('Location: /pages/login.php');
   } 
-  else if (checkUserCredentials($db, $userid, $password)) {
-    $client = Client::getClientByUsername($db,$userid);
+
+  else if (checkUserCredentials($db, $username, $password)) {
+    $client = Client::getClientByUsername($db,$username);
     $_SESSION['IDUSER'] = $client->id;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     header('Location: /pages/display_tickets.php');
