@@ -81,19 +81,19 @@ INSERT INTO Department (DepartmentID, Name) VALUES (2, 'Mecância');
 INSERT INTO Department (DepartmentID, Name) VALUES (3, 'Minas');
 
 -- Populating Client table
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (1, 'John Doe', 'johndoe', 'johndoe@example.com', 'mypassword123');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (2, 'Jane Smith', 'janesmith', 'janesmith@example.com', 'abc123');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (3, 'Triple H', 'tripleHHH', 'hhh@gmail.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (4, 'admin', 'admin', 'admin@admin.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (5, 'Bob Johnson', 'bjohnson', 'bjohnson@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (6, 'Alice Lee', 'alee', 'alee@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (7, 'David Kim', 'dkim', 'dkim@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (8, 'Sarah Park', 'spark', 'spark@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (9, 'Tom Davis', 'tdavis', 'tdavis@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (10, 'Emily Brown', 'ebrown', 'ebrown@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (11, 'Mike Wilson', 'mwilson', 'mwilson@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (12, 'Olivia Green', 'ogreen', 'ogreen@example.com', '123456');
-INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (13, 'Sophie Taylor', 'staylor', 'staylor@example.com', '123456');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (1, 'John Doe', 'johndoe', 'johndoe@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (2, 'Jane Smith', 'janesmith', 'janesmith@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (3, 'Triple H', 'tripleHHH', 'hhh@gmail.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (4, 'admin', 'admin', 'admin@admin.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (5, 'Bob Johnson', 'bjohnson', 'bjohnson@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (6, 'Alice Lee', 'alee', 'alee@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (7, 'David Kim', 'dkim', 'dkim@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (8, 'Sarah Park', 'spark', 'spark@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (9, 'Tom Davis', 'tdavis', 'tdavis@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (10, 'Emily Brown', 'ebrown', 'ebrown@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (11, 'Mike Wilson', 'mwilson', 'mwilson@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (12, 'Olivia Green', 'ogreen', 'ogreen@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (13, 'Sophie Taylor', 'staylor', 'staylor@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
 
 -- Populating Agent table
 INSERT INTO Agent (AgentID) VALUES (3);
