@@ -13,14 +13,16 @@ function signUpUser($db,$name,$email,$username,$password){
     $db = getDatabaseConnection();
 
     $stmt = $db->prepare('INSERT INTO Client(Name,Email,Username, Password) VALUES(?,?,?,?)');
-    $stmt->execute((array($name,$email,$username,$password)));
+    $options = ['cost' => 12]; 
+    $stmt->execute((array($name,$email,$username,password_hash($password,PASSWORD_DEFAULT,$options))));
 }
 
 function checkUserCredentials($db,$username,$password){
     $db = getDatabaseConnection();
     if (checkUserNotRegistered($db,$username)) return false; // no user with such username/email
-    $stmt = $db->prepare('SELECT * FROM Client WHERE Username = ?');
+    $stmt = $db->prepare('SELECT Password FROM Client WHERE Username = ?');
     $stmt->execute(array($username));
-    return (($stmt->fetch()['Password'] == $password));
+    $hashed_password = $stmt->fetch()['Password'];
+    return (password_verify($password, $hashed_password));
 }
 ?>

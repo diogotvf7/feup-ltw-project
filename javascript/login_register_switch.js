@@ -12,7 +12,7 @@ switchState.addEventListener('click', () => {
     switch (state) {
         case 0:
             state = 1;
-            form.setAttribute('action', '../actions/action_register.php');
+            form.setAttribute('action', '../actions/action_sign_up.php');
             h2.textContent = "Register";
             emailInput.toggleAttribute('hidden');
             nameInput.toggleAttribute('hidden');

@@ -11,9 +11,6 @@
   
   if (checkUserNotRegistered($db,$username)) {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
-    echo '<script type="text/javascript">';
-    echo 'alert("No account with such username/email. Sign up!")';
-    echo '</script>';
     header('Location: /pages/login.php');
   } 
 
@@ -24,9 +21,6 @@
     header('Location: /pages/display_tickets.php');
   } else {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
-    echo '<script type="text/javascript">';
-    echo 'alert("Incorrect credentials!")';
-    echo '</script>';
     header('Location: /pages/login.php');
   }
 ?>

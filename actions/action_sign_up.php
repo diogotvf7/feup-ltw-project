@@ -2,6 +2,7 @@
   include_once('../includes/session.php');
   include_once('../database/user_db.php');
   include_once('../database/connection.db.php');
+  include_once('../database/client.class.php');
 
   session_start();
   $username = $_POST['username'];
@@ -12,14 +13,11 @@
 
   if (checkUserNotRegistered($db, $username, $email)) { // we should create restrictions for the username and password
     signUpUser($db,$name, $email,$username,$password);
-    $_SESSION['IDUSER'] = Client::getClientByEmailUsername($db,$username)->id;
+    $_SESSION['IDUSER'] = Client::getClientByUsername($db,$username)->id;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     header('Location: /pages/display_tickets.php');
   } else {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
-    echo '<script type="text/javascript">';
-    echo 'alert("There is already an account with that username/email. Sign in!")';
-    echo '</script>';
     header('Location: '.$_SERVER['HTTP_REFERER']);
   }
 

@@ -21,7 +21,7 @@
   $user3 = new Client(3, 'Client', 'client', 'client@client.com', '123456');
   drawNavBar($user1);
   $tickets = Ticket::getAllTickets($db);
+  $tickets = Ticket::sortTicketsLeastRecent($db,$tickets);
   drawTicketsList($db, $tickets);
-  // drawTicket($db, 1);
   drawFooter();
 ?>

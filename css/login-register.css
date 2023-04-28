@@ -54,11 +54,12 @@ h1 {
 }
 
 .up {
-    writing-mode: sideways-lr;
+    writing-mode: vertical-lr;
+    rotate: 180deg;
 }
 
 .up:hover {
-    transform:translate(-10px,-10px);
+    transform:translate(10px,10px);
 }
 
 .down {

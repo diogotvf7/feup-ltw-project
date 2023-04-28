@@ -148,5 +148,19 @@
         return $tickets;
       } else {return null;}
     }
+
+    static function sortTicketsLeastRecent(PDO $db, $tickets) {
+      $ticket_ids = array_column($tickets, 'TicketID');
+      $ticketsPlaceholders = implode(',', $ticket_ids);
+      $stmt = $db->prepare('
+        SELECT TicketID
+        FROM Ticket
+        WHERE TicketID IN (' . $ticketsPlaceholders . ')
+        ORDER BY Date ASC');
+      if ($stmt->execute());
+      if ($tickets = $stmt->fetchAll()) {
+        return $tickets;
+      } else {return null;}
+    }
   }
 ?>
