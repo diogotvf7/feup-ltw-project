@@ -4,9 +4,7 @@
     require_once(__DIR__ . '/../database/client.class.php');
     require_once(__DIR__ . '/../database/agent.class.php');
     require_once(__DIR__ . '/../database/ticket.class.php');
-    require_once(__DIR__ . '/../vendor/autoload.php');
     require_once(__DIR__ . '/../utils/util_funcs.php');
-    use Carbon\Carbon;
 ?>
 
 <?php function drawTicketPreview($db, $id) { 
@@ -20,7 +18,7 @@
             <?=$ticket->title?>
         </h3>
         <p class="time">
-            <?=Carbon::create($ticket->date)->diffForHumans()?>
+            <?=timeAgo($ticket->date)?>
         </p>
         <p class="description">
             <?=removeOverflow($ticket->description, 60)?>

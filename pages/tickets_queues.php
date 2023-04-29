@@ -13,14 +13,11 @@
   require_once (__DIR__ . '/../database/client.class.php');
   require_once (__DIR__ . '/../database/ticket.class.php');
   require_once(__DIR__ . '/../database/tag.class.php');
-    require_once(__DIR__ . '/../vendor/autoload.php');
-    use Carbon\Carbon;
 
-
-    drawHeader(['ticket_colors']);
-    $db = getDatabaseConnection();
-    $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
-    if ($tickets == null) {echo 'No tickets found!' . '<br>';}
-    else {drawTicketsList($db,$tickets);}
-    drawFooter();
+  drawHeader(['ticket_colors']);
+  $db = getDatabaseConnection();
+  $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
+  if ($tickets == null) {echo 'No tickets found!' . '<br>';}
+  else {drawTicketsList($db,$tickets);}
+  drawFooter();
 ?>
