@@ -86,6 +86,10 @@
                 </ul>
             <?php } ?>
         </div>
+        <div class="date">
+            <p>Created: <?=displayDate($ticket->date);?></p>
+            <!-- <p>Last updated: <?=''#timeAgo($ticket->lastUpdate);?></p> -->
+        </div>
     </div>
     
 <?php } ?>

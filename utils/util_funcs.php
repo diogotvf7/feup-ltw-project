@@ -21,4 +21,8 @@
         if ($diff->s > 0) return $diff->s . ' second' .  ($diff->s > 1 ? 's' : '') . ' ago';
         return 'just now';
     }
+
+    function displayDate(DateTime $date) {
+        return $date->format('l, j F Y H:i');
+    }
 ?>

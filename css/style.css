@@ -283,3 +283,7 @@ main {
     transform: scale(1.25);
 }
 
+.date {
+    align-self: flex-end;
+    padding: 2em;
+}
