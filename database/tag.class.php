@@ -11,20 +11,20 @@
         $this->name = $name;
     }
 
-    static function getTag(PDO $db, int $id) : Tag {
-      $stmt = $db->prepare('
-        SELECT TagID, Name
-        FROM Tag
-        WHERE TagID = ?
-      ');
+    // static function getTag(PDO $db, int $id) : Tag {
+    //   $stmt = $db->prepare('
+    //     SELECT TagID, Name
+    //     FROM Tag
+    //     WHERE TagID = ?
+    //   ');
 
-      $stmt->execute([$id]);
-      $agent = $stmt->fetch();
+    //   $stmt->execute([$id]);
+    //   $agent = $stmt->fetch();
       
-      return new Tag(
-        $agent['TagID'],
-        $agent['Name']
-      );
-    }
+    //   return new Tag(
+    //     $agent['TagID'],
+    //     $agent['Name']
+    //   );
+    // }
   }
 ?>

@@ -180,11 +180,13 @@ main {
     padding: 1em;
     grid-auto-flow: row;
     grid-template-areas: 
-        "title time"
-        "description description"
-        "tags author"; 
+    "title time"
+    "description description"
+    "tags author"; 
     font-family: "Open Sans", sans-serif;
     scroll-snap-align: start;
+    text-decoration: none;
+    color: var(--black);
 }
 
 .ticket .title {

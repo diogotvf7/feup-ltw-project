@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Department;
 DROP TABLE IF EXISTS Agent_Department;
 DROP TABLE IF EXISTS Tag;
 DROP TABLE IF EXISTS Ticket_Tag;
+DROP TABLE IF EXISTS Ticket_Document;
 
 -- database schema
 
@@ -71,6 +72,13 @@ CREATE TABLE Ticket_Tag
     TagID int NOT NULL,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID),
     FOREIGN KEY (TagID) REFERENCES Tag(TagID)
+);
+
+CREATE TABLE Ticket_Document
+(
+    TicketID int NOT NULL,
+    Path varchar NOT NULL,
+    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
 );
 
 -- populate database
@@ -152,3 +160,27 @@ INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (2, 2);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (3, 1);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (4, 3);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (5, 4);
+
+-- Populating Ticket_Document table
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (1, 'docs/tickets-docs/CNV000009.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (3, 'docs/tickets-docs/CNV000010.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (10, 'docs/tickets-docs/CNV000011.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (12, 'docs/tickets-docs/CNV000020.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (4, 'docs/tickets-docs/CNV000023.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (5, 'docs/tickets-docs/CNV000025.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (7, 'docs/tickets-docs/CNV000030.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (7, 'docs/tickets-docs/CNV000031.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (1, 'docs/tickets-docs/CNV000032.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (1, 'docs/tickets-docs/CNV000033.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (1, 'docs/tickets-docs/CNV000035.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (6, 'docs/tickets-docs/CNV000036.JPG');
+INSERT INTO Ticket_Document (TicketID, Path) VALUES (6, 'docs/tickets-docs/CNV000037.JPG');
+
+
+
+
+
+
+
+
+
