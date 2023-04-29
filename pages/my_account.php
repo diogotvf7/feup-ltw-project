@@ -25,9 +25,3 @@
     else {drawTicketsList($db,$tickets);}
     drawFooter();
 ?>
-
-<aside id="sidebar">
-<ul class="tickets_queues">
-        <li><a href="../pages/tickets_queues.php">Assigned to me</a></li>
-</ul>
-</aside>

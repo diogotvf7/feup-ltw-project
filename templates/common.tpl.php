@@ -4,25 +4,25 @@
 ?>
 <?php function drawHeader($scripts = [], $cssFiles = []) { ?>
     <!DOCTYPE html>
-    <html lang="en-US">
-    <head>
-        <title>UP Tickets</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="../css/style.css"> -->
-        <?php foreach ($cssFiles as $css) { 
-          echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
-        } ?>
-        <?php foreach ($scripts as $script) { 
-          echo '<script src="../javascript/', $script, '.js" defer></script>';
-        } ?>
-        <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
+        <html lang="en-US">
+            <head>
+                <title>UP Tickets</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <!-- <link rel="stylesheet" href="../css/style.css"> -->
+                <?php foreach ($cssFiles as $css) { 
+                echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
+                } ?>
+                <?php foreach ($scripts as $script) { 
+                echo '<script src="../javascript/', $script, '.js" defer></script>';
+                } ?>
+                <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
+            </head>
+            <body>
 <?php } ?>
 
 <?php function drawFooter() { ?>
-    </body>
+        </body>
     </html>
 <?php } ?>
 

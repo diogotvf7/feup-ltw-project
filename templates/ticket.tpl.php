@@ -5,6 +5,7 @@
     require_once(__DIR__ . '/../database/agent.class.php');
     require_once(__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../vendor/autoload.php');
+    require_once(__DIR__ . '/../utils/util_funcs.php');
     use Carbon\Carbon;
 ?>
 
@@ -14,7 +15,7 @@
     $author = Client::getClient($db, $ticket->clientId);
     // $department = Department::getDepartment($db, $ticket->departmentId);
 ?>
-    <a class="ticket" href="ticket_page.php?id=<?=$id;?>">
+    <a class="ticket-list-element" href="ticket_page.php?id=<?=$id;?>">
         <h3 class="title">
             <?=$ticket->title?>
         </h3>
@@ -22,7 +23,7 @@
             <?=Carbon::create($ticket->date)->diffForHumans()?>
         </p>
         <p class="description">
-            <?=$ticket->description?>
+            <?=removeOverflow($ticket->description, 60)?>
         </p>
         <div class="tags">
         <p class="status">
@@ -64,22 +65,29 @@
         <p id="description"> 
             <?=$ticket->description;?>
         </p>
-        <?php
-            foreach ($documents as $document) {
-                var_dump($document);
-                echo  '<img href="' . __DIR__ . '/../' . $document['Path'] . '><br>';
-                echo $document['Path'] . '<br><br>';
-            }   
-        ?>
-        <p> 
-            <?=$ticket->status;?>
-            <?php foreach ($tags as $tag)
-                echo '<p class="tag">' . $tag['Name'] . '</p>';
-            ?>
-            Department: <?=$department->name;?>
-            By: <?='@' . $author->username;?>
-            Currently assigned to: <?='@' . $agent->username;?>
-        </p>
+        <div id="info"> 
+            <p class="status"><?=$ticket->status;?></p>
+            <div class="tags">
+                <?php foreach ($tags as $tag) {
+                    echo '<p class="tag">' . $tag['Name'] . '</p>';
+                }?>
+            </div>
+            <p>Department: <?=$department->name;?></p>
+            <p>By: <?='@' . $author->username;?></p>
+            <p>Currently assigned to: <?='@' . $agent->username;?></p>
+        </div>
+        <div id="documents">
+            <?php if ($documents != null) { ?>
+                <h2> 
+                    Documents 
+                </h2>
+                <ul id="image-list">
+                    <?php foreach ($documents as $document)
+                        echo  '<img class="image-list-element" height="300" src="../' . $document['Path'] . '">';
+                    ?>
+                </ul>
+            <?php } ?>
+        </div>
     </div>
     
 <?php } ?>
