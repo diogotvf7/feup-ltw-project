@@ -1,7 +1,19 @@
 <?php 
 
-    function getUserType($user) {
-        return $user == null ? null : get_class($user);
+    function getUserType(PDO $db, $id) {
+        $stmt = $db->prepare("
+            SELECT 
+            CASE 
+                WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
+                WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
+                ELSE 'Client'
+            END AS UserType
+            FROM Client
+            WHERE ClientID = ?;
+        ");
+        $stmt->execute(array($id, $id, $id));
+        $userType = $stmt->fetch();
+        return $userType['UserType'];
     }
 
     function removeOverflow($string, $maxSize) {

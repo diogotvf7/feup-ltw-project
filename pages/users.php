@@ -9,14 +9,18 @@
 
     require_once(__DIR__ . '/../templates/common.tpl.php');
     require_once(__DIR__ . '/../templates/ticket.tpl.php');
+    require_once(__DIR__ . '/../templates/user_lists.tpl.php');
     require_once (__DIR__ . '/../database/admin.class.php');
+    require_once (__DIR__ . '/../database/agent.class.php');
+    require_once (__DIR__ . '/../database/client.class.php');
+    require_once (__DIR__ . '/../database/ticket.class.php');
+    require_once(__DIR__ . '/../database/tag.class.php');
 
-
-    drawHeader(['ticket_colors'], ['style']);
-    $admin = new Admin(1, 'admin', 'admin', 'admin@gmail.com', 'admin');
+    drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
-    echo '<main>';
-    drawTicket($db, $_GET['id']);
-    echo '</main>';
+    ?><main><?php
+
+    drawUsersList($db);
+    ?></main><?php
     drawFooter();
 ?>

@@ -1,7 +1,9 @@
 <?php 
     require_once(__DIR__ . '/../utils/util_funcs.php');
     include_once('../utils/session.php');
+    include_once('../database/connection.db.php');
 ?>
+
 <?php function drawHeader($scripts = [], $cssFiles = []) { ?>
     <!DOCTYPE html>
         <html lang="en-US">
@@ -25,9 +27,9 @@
     </html>
 <?php } ?>
 
-<?php function drawNavBar($user) { 
-    $userType = getUserType($user);
-    ?> 
+<?php function drawNavBar($db, $userId) { 
+    $userType = getUserType($db, $userId);
+?> 
 
     <nav class="navbar"> 
         <ul class="navbar-nav">
@@ -39,11 +41,11 @@
             </li>
             <?php switch($userType) {
                 case 'Admin':
-                    drawAdminNavBar($user);
+                    drawAdminNavBar();
                 case 'Agent':
-                    drawAgentNavBar($user);
+                    drawAgentNavBar();
                 case 'Client':
-                    drawClientNavBar($user);
+                    drawClientNavBar();
             } ?>
             <li class="nav-item">
                 <a href="../actions/action_logout.php" class="nav-link">

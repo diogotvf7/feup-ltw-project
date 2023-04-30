@@ -84,5 +84,36 @@
       );
     }
 
+    static function getAllClientsInfo(PDO $db) {
+      $stmt = $db->prepare('
+        SELECT A.ClientID, A.Name, A.Username, A.Email, Tickets_made, Tickets_in_charge
+        FROM (
+            SELECT *
+            FROM Client 
+            LEFT JOIN (
+              SELECT ClientID, COUNT(*) Tickets_made
+              FROM Client JOIN Ticket
+              USING(ClientID)
+              GROUP BY ClientID)
+            USING(ClientID) 
+            ) as A
+        LEFT JOIN
+          (
+            SELECT *
+            FROM Client 
+            LEFT JOIN (
+              SELECT Agent.ClientID, COUNT(*) Tickets_in_charge
+              FROM Agent JOIN Ticket
+              ON Agent.ClientID = Ticket.AgentID
+              GROUP BY AgentID)
+            USING(ClientID)
+            ) as B
+        USING(ClientID)
+      ');
+      $stmt->execute();
+      $clients = $stmt->fetchAll();
+      
+      return $clients;
+    }
   }
 ?>

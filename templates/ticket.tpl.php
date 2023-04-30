@@ -27,8 +27,10 @@
         <p class="status">
             <?=$ticket->status?>
         </p>
-        <?php foreach ($tags as $tag)
-            echo '<p class="tag">' . $tag['Name'] . '</p>';
+        <?php 
+            if ($tags != null)
+                foreach ($tags as $tag)
+                    echo '<p class="tag">' . $tag['Name'] . '</p>';
         ?>
         </div>
         <p class="author">

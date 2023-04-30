@@ -12,14 +12,14 @@ DROP TABLE IF EXISTS Ticket_Document;
 
 CREATE TABLE Admin 
 (
-    AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
-    FOREIGN KEY (AdminID) REFERENCES Client(ClientID)
+    ClientID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
 );
 
 CREATE TABLE Agent 
 (
-    AgentID INTEGER PRIMARY KEY AUTOINCREMENT,
-    FOREIGN KEY (AgentID) REFERENCES Client(ClientID)
+    ClientID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
 );
 
 CREATE TABLE Client 
@@ -42,7 +42,7 @@ CREATE TABLE Ticket
     DepartmentID int NOT NULL,
     Date datetime NOT NULL,
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID),
-    FOREIGN KEY (AgentID) REFERENCES Agent(AgentID),
+    FOREIGN KEY (AgentID) REFERENCES Agent(ClientID),
     FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE Agent_Department
 (
     AgentID int NOT NULL,
     DepartmentID int NOT NULL,
-    FOREIGN KEY (AgentID) REFERENCES Agent(AgentID),
+    FOREIGN KEY (AgentID) REFERENCES Agent(ClientID),
     FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
 );
 
@@ -104,15 +104,15 @@ INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (12, 'Oliv
 INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (13, 'Sophie Taylor', 'staylor', 'staylor@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
 
 -- Populating Agent table
-INSERT INTO Agent (AgentID) VALUES (3);
-INSERT INTO Agent (AgentID) VALUES (4);
-INSERT INTO Agent (AgentID) VALUES (5);
-INSERT INTO Agent (AgentID) VALUES (6);
-INSERT INTO Agent (AgentID) VALUES (7);
+INSERT INTO Agent (ClientID) VALUES (3);
+INSERT INTO Agent (ClientID) VALUES (4);
+INSERT INTO Agent (ClientID) VALUES (5);
+INSERT INTO Agent (ClientID) VALUES (6);
+INSERT INTO Agent (ClientID) VALUES (7);
 
 -- Populating Admin table
-INSERT INTO Admin (AdminID) VALUES (3);
-INSERT INTO Admin (AdminID) VALUES (4);
+INSERT INTO Admin (ClientID) VALUES (3);
+INSERT INTO Admin (ClientID) VALUES (4);
 
 -- Populating Agent_Department table
 INSERT INTO Agent_Department (AgentID, DepartmentID) VALUES (3, 1);
