@@ -11,14 +11,14 @@
         $this->name = $name;
     }
 
-    static function getDepartment(PDO $db, string $name) : Department {
+    static function getDepartment(PDO $db, string $id) : Department {
       $stmt = $db->prepare('
         SELECT *
         FROM Department
-        WHERE Name = ?
+        WHERE DepartmentID = ?
       ');
 
-      $stmt->execute([$name]);
+      $stmt->execute([$id]);
       $agent = $stmt->fetch();
       
       return new Department(

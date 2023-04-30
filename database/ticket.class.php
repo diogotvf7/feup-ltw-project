@@ -104,13 +104,26 @@
 
     static function getTicketTags(PDO $db, $ticketID) {
       $stmt = $db->prepare('
-        SELECT TagID
-        FROM Ticket_Tag
+        SELECT Name
+        FROM Ticket_Tag JOIN Tag
+        USING(TagID)
         WHERE TicketID = ?
         ');
       if ($stmt->execute([$ticketID]));
       if ($tickets = $stmt->fetchAll()) {
         return $tickets;
+      } else return null;
+    }
+    
+    static function getDocuments(PDO $db, $ticketId) {
+      $stmt = $db->prepare('
+        SELECT Path
+        FROM Ticket_Document
+        WHERE TicketID = ?
+      ');
+      $stmt->execute(array($ticketId));
+      if ($paths = $stmt->fetchAll()) {
+        return $paths;
       } else return null;
     }
 
