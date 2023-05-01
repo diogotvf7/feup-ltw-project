@@ -5,6 +5,7 @@
   $session = new Session();
 
   require_once(__DIR__ . '/../database/connection.db.php');
+  $db = getDatabaseConnection();
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
   require_once(__DIR__ . '/../templates/ticket.tpl.php');
@@ -13,13 +14,9 @@
   require_once (__DIR__ . '/../database/client.class.php');
   require_once (__DIR__ . '/../database/ticket.class.php');
 
-  $db = getDatabaseConnection();
 
   drawHeader(['ticket_colors'], ['style']);
-  $user1 = new Admin(1, 'Admin', 'admin', 'admin@admin.com', '123456');
-  $user2 = new Agent(2, 'Agent', 'agent', 'agent@agent.com', '123456');
-  $user3 = new Client(3, 'Client', 'client', 'client@client.com', '123456');
-  drawNavBar($user1);
+  drawNavBar($db, $_SESSION['IDUSER']);
   $tickets = Ticket::getAllTickets($db);
   $tickets = Ticket::sortTicketsLeastRecent($db,$tickets);
   drawTicketsList($db, $tickets);

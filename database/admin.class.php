@@ -17,27 +17,30 @@
         $this->password = $password;
     }
 
-    function save($db) {
-      $stmt = $db->prepare('
-        UPDATE Client SET Username = ?
-        WHERE AdminID = ClientID AND AdminID = ?
-      ');
+    // function save($db) {
+    //   $stmt = $db->prepare('
+    //     UPDATE Client 
+    //     SET Username = ?
+    //     WHERE AdminID = ClientID 
+    //     AND AdminID = ?
+    //   ');
 
-      $stmt->execute(array($this->username, $this->id));
-    }
+    //   $stmt->execute(array($this->username, $this->id));
+    // }
     
     static function getAdminWithPassword(PDO $db, string $email, string $password) : ?Admin {
       $stmt = $db->prepare('
-        SELECT AdminID, Name, Username, Email, Password
+        SELECT ClientID, Name, Username, Email, Password
         FROM Admin JOIN Client
-        WHERE AdminID = ClientID AND (lower(email) = ? AND password = ?) OR (lower(username) = ? AND password = ?)
+        USING(ClientID)
+        WHERE (lower(email) = ? AND password = ?) OR (lower(username) = ? AND password = ?)
       ');
 
       $stmt->execute(array(strtolower($email), sha1($password)));
   
       if ($admin = $stmt->fetch()) {
         return new Admin(
-          $admin['AdminID'],
+          $admin['ClientID'],
           $admin['Name'],
           $admin['Username'],
           $admin['Email'],
@@ -48,17 +51,17 @@
 
     static function getAdmin(PDO $db, int $id) : Admin {
       $stmt = $db->prepare('
-        SELECT AdminID, Name, Username, Email, Password
+        SELECT ClientID, Name, Username, Email, Password
         FROM Admin JOIN Client 
-        ON AdminID = ClientID
-        WHERE AdminID = ?
+        USING(ClientID)
+        WHERE ClientID = ?
       ');
 
       $stmt->execute(array($id));
       $admin = $stmt->fetch();
       
       return new Admin(
-        $admin['AdminID'],
+        $admin['ClientID'],
         $admin['Name'],
         $admin['Username'],
         $admin['Email'],
