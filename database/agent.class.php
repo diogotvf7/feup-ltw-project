@@ -65,5 +65,12 @@
         $agent['Password']
       );
     }
+
+    static function getAllAgents(PDO $db){
+      $stmt = $db->prepare('SELECT * from Client join Admin on Client.ClientID = Agent.AgentID');
+      $stmt->execute();
+      $agents = $stmt->fetchAll();
+      return $agents;
+    }
   }
 ?>
