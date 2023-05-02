@@ -81,7 +81,7 @@
 
 <?php function drawAgentNavBar() { ?>
     <li class="nav-item">
-        <a href="../pages/display_tickets" class="nav-link">
+        <a href="../pages/display_tickets.php" class="nav-link">
             <i class="fa-solid fa-list-check fa-lg"></i>
             <span class="link-text">Tickets queues</span>
         </a>
@@ -96,7 +96,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="../pages/display_tickets?filter=user" class="nav-link">
+        <a href="../pages/my_tickets.php" class="nav-link">
             <i class="fa-solid fa-ticket fa-lg"></i>
             <span class="link-text">My tickets</span>
         </a>

@@ -18,10 +18,13 @@
 
   drawHeader($session);
   drawHeader(["script"]);
+  header('Location: ../pages/login.php');
 ?>
+<!--
 <a href="../pages/login.php">LOGIN</a>
 <a href="../pages/display_tickets.php">DISPLAY TICKETS</a>
-
+  -->
+<!-- 
 <?=getUserType($db, 1)?><br>
 <?=getUserType($db, 2)?><br>
 <?=getUserType($db, 3)?><br>
@@ -34,7 +37,7 @@
 <?=getUserType($db, 10)?><br>
 <?=getUserType($db, 11)?><br>
 <?=getUserType($db, 12)?><br>
-<?=getUserType($db, 13)?><br>
+<?=getUserType($db, 13)?><br> -->
 
 <?php
   drawFooter();
