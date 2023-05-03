@@ -111,9 +111,7 @@
         USING(ClientID)
       ');
       $stmt->execute();
-      $clients = $stmt->fetchAll();
-      
-      return $clients;
+      return $stmt->fetchAll();
     }
   }
 ?>
