@@ -68,5 +68,12 @@
         $admin['Password']
       );
     }
+
+    static function getAllAdmins(PDO $db){
+      $stmt = $db->prepare('SELECT * from Client join Admin on Client.ClientID = Admin.AdminID');
+      $stmt->execute();
+      $admins = $stmt->fetchAll();
+      return $admins;
+    }
   }
 ?>
