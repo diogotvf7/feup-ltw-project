@@ -18,12 +18,11 @@
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
+    $users = Agent::getAllAgents($db);
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
     ?><main><?php
-    $users = Client::getAllClientsInfo($db);
     drawUsersList($db,$users);
-
     ?></main><?php
     drawFooter();
 ?>

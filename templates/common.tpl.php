@@ -60,19 +60,21 @@
 
 <?php function drawAdminNavBar() { ?>
     <li class="nav-item">
-        <a href="../pages/users.php" class="nav-link">        
+        <!-- <a href="../pages/users.php" class="nav-link">         -->
+            <a href="../pages/admins.php" class="nav-link">
             <i class="fa-solid fa-gear fa-lg"></i>
-            <span class="link-text">Users</span>
+            <!-- <span class="link-text">Users</span> -->
+            <span class="link-text">Admins</span>
         </a>
     </li>
     <li class="nav-item">
-        <a href="../pages/departaments.php" class="nav-link">
+        <a href="../pages/agents.php" class="nav-link">
             <i class="fa-solid fa-briefcase fa-lg"></i>
             <span class="link-text">Agents</span>
         </a>
     </li>
     <li class="nav-item">
-        <a href="../pages/system.php" class="nav-link">
+        <a href="../pages/users.php" class="nav-link">
             <i class="fa-solid fa-users fa-lg"></i>
             <span class="link-text">Clients</span>
         </a>
@@ -81,7 +83,7 @@
 
 <?php function drawAgentNavBar() { ?>
     <li class="nav-item">
-        <a href="../pages/display_tickets" class="nav-link">
+        <a href="../pages/display_tickets.php" class="nav-link">
             <i class="fa-solid fa-list-check fa-lg"></i>
             <span class="link-text">Tickets queues</span>
         </a>
@@ -96,7 +98,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="../pages/display_tickets?filter=user" class="nav-link">
+        <a href="../pages/my_tickets.php" class="nav-link">
             <i class="fa-solid fa-ticket fa-lg"></i>
             <span class="link-text">My tickets</span>
         </a>

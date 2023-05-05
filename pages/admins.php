@@ -21,9 +21,8 @@
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
     ?><main><?php
-    $users = Client::getAllClientsInfo($db);
+    $users = Admin::getAllAdmins($db);
     drawUsersList($db,$users);
-
     ?></main><?php
     drawFooter();
 ?>

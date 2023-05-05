@@ -129,8 +129,8 @@
 
     static function getUserTickets(PDO $db, $userID) {
       $stmt = $db->prepare('
-        SELECT DISTINT TicketID
-        FROM Ticket JOIN Client ON Client.ClientID = Ticket.ClientID');
+        SELECT DISTINCT TicketID
+        FROM Ticket JOIN Client ON Client.ClientID = Ticket.ClientID WHERE Client.ClientID = ?');
       $stmt->execute([$userID]);
       if ($tickets = $stmt->fetchAll()) {
         return $tickets;
@@ -163,6 +163,7 @@
     }
 
     static function sortTicketsLeastRecent(PDO $db, $tickets) {
+      if (empty($tickets)) return null;
       $ticket_ids = array_column($tickets, 'TicketID');
       $ticketsPlaceholders = implode(',', $ticket_ids);
       $stmt = $db->prepare('
