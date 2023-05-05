@@ -16,17 +16,11 @@
     require_once (__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../database/tag.class.php');
 
-    if (!$session->isLoggedIn())
-        die(header('Location: /pages/login.php'));
+    $users = Agent::getAllAgents($db);
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
     ?><main><?php
-<<<<<<< HEAD
-    drawUsersList($db);
-=======
-    $users = Client::getAllClientsInfo($db);
     drawUsersList($db,$users);
->>>>>>> main
     ?></main><?php
     drawFooter();
 ?>
