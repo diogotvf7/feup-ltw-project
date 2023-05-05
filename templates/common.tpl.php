@@ -60,19 +60,21 @@
 
 <?php function drawAdminNavBar() { ?>
     <li class="nav-item">
-        <a href="../pages/users.php" class="nav-link">        
+        <!-- <a href="../pages/users.php" class="nav-link">         -->
+            <a href="../pages/admins.php" class="nav-link">
             <i class="fa-solid fa-gear fa-lg"></i>
-            <span class="link-text">Users</span>
+            <!-- <span class="link-text">Users</span> -->
+            <span class="link-text">Admins</span>
         </a>
     </li>
     <li class="nav-item">
-        <a href="../pages/departaments.php" class="nav-link">
+        <a href="../pages/agents.php" class="nav-link">
             <i class="fa-solid fa-briefcase fa-lg"></i>
             <span class="link-text">Agents</span>
         </a>
     </li>
     <li class="nav-item">
-        <a href="../pages/system.php" class="nav-link">
+        <a href="../pages/users.php" class="nav-link">
             <i class="fa-solid fa-users fa-lg"></i>
             <span class="link-text">Clients</span>
         </a>

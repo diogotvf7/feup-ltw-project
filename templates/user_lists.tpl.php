@@ -5,8 +5,8 @@
     // require_once(__DIR__ . '/../database/Admin.class.php');
 ?>
 
-<?php function drawUsersList(PDO $db) {
-    $users = Client::getAllClientsInfo($db); 
+<?php function drawUsersList(PDO $db, $users) {
+    // $users = Client::getAllClientsInfo($db); 
     if ($users == null) {
         echo '<p class="Warning">There are no users yet!</p>';
         return;
