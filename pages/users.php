@@ -21,12 +21,9 @@
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
     ?><main><?php
-<<<<<<< HEAD
-    drawUsersList($db);
-=======
     $users = Client::getAllClientsInfo($db);
     drawUsersList($db,$users);
->>>>>>> main
+
     ?></main><?php
     drawFooter();
 ?>
