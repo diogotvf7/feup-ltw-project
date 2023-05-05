@@ -9,7 +9,7 @@
       unset($_SESSION['messages']);
     }
 
-    public function isLoggedIn() : bool {
+    public static function isLoggedIn() : bool {
       return isset($_SESSION['IDUSER']);    
     }
 

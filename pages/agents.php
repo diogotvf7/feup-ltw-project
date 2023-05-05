@@ -16,6 +16,8 @@
     require_once (__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../database/tag.class.php');
 
+    if (!Session::isLoggedIn())
+        die(header('Location: /pages/login.php'));
     $users = Agent::getAllAgents($db);
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
