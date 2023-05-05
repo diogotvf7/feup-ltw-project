@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Open+Sans:wght@300&family=Source+Sans+Pro:wght@200&display=swap');
 
+/*        1200x608         */
+
+
 /*          State          */
 
 .hide {
@@ -277,6 +280,7 @@ main {
 
 .image-list-element {
     transition: transform .2s;
+    max-width: 30%;
 }
 
 .image-list-element:hover {
@@ -353,4 +357,18 @@ main {
 
 #save-button {
     background-color: var(--green);
+}
+
+
+/*          FAQ Element             */
+
+.faq-element {
+
+}
+
+.faq-element-header {
+    background-color: var(--light-grey);
+    display: flex;
+    align-items: center;
+    gap: 2em;
 }
