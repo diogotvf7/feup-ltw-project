@@ -14,7 +14,7 @@
   require_once (__DIR__ . '/../database/ticket.class.php');
   require_once(__DIR__ . '/../database/tag.class.php');
 
-  if (!$session->isLoggedIn())
+  if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
   drawHeader(['ticket_colors']);
   $db = getDatabaseConnection();

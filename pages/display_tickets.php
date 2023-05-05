@@ -2,7 +2,7 @@
   declare(strict_types = 1);
 
   require_once(__DIR__ . '/../utils/session.php');
-  $session = new Session();
+  session_start();
 
   require_once(__DIR__ . '/../database/connection.db.php');
   $db = getDatabaseConnection();
@@ -14,7 +14,7 @@
   require_once (__DIR__ . '/../database/client.class.php');
   require_once (__DIR__ . '/../database/ticket.class.php');
 
-  if (!$session->isLoggedIn())
+  if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
   drawHeader(['ticket_colors'], ['style']);
   drawNavBar($db, $_SESSION['IDUSER']);
