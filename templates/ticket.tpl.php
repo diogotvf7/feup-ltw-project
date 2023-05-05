@@ -67,12 +67,21 @@
         </p>
         <div id="info"> 
             <p class="status"><?=$ticket->status;?></p>
+            <select class="status"> 
+                <option value="option1" ><?=$ticket->status;?> </option>
+                <option value="option2"> <?php echo ($ticket->status == "Open") ? "Closed" : "Open"; ?> </option>
+            </select>
             <div class="tags">
                 <?php foreach ($tags as $tag) {
                     echo '<p class="tag">' . $tag['Name'] . '</p>';
                 }?>
             </div>
             <p>Department: <?=$department->name;?></p>
+            <label for="departmentCh">Department</label>
+            <select name="departmentChoice" id="departmentCh" class="department"> 
+                <option value="option1" ><?=$department->name;?> </option>
+                <option value="option2"> Eventos </option>
+            </select>
             <p>By: <?='@' . $author->username;?></p>
             <p>Currently assigned to: <?='@' . $agent->username;?></p>
         </div>
@@ -95,3 +104,36 @@
     </div>
     
 <?php } ?>
+
+<?php function createNewTicket($db) { ?>
+
+    <div id="new-ticket">
+    <body>
+        <form> 
+        <label for="title">Title</label>
+        <br>
+        <input type="text" id="title" name="title" placeholder="Title" required>
+        <p><label for="department">Department</label></p>
+        <select name="departments">
+        <option value="" selected>Select a department</option>
+        <?php
+        $departments = Department::getAllDepartments($db);
+        foreach ($departments as $department) {
+            echo "<option value=\"" . $department['Name'] . "\">" . $department['Name'] . "</option>";
+        }
+        ?>
+        </select>
+        <form action="">    
+        <p><label for="new-ticket">Complaint</label></p>
+        <textarea id="text" name="text" rows="4" cols="50" required> </textarea>
+        <br>
+        <br>
+        <form action="/action_page.php">
+            <input type="file" id="myFile" name="filename">
+        </form>
+        <input type="submit" value="Submit">
+        </form>
+    </body>
+
+    </div>
+    <?php } ?>

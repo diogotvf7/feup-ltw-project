@@ -109,4 +109,10 @@
             <span class="link-text">FAQ</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a href="../pages/new_ticket.php" class="nav-link">
+            <i class="fa-solid fa-circle-question fa-lg"></i>
+            <span class="link-text">New Ticket</span>
+        </a>
+    </li>
 <?php } ?>

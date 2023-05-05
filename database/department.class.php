@@ -46,5 +46,12 @@
       $stmt->execute([$name]);
       return true;
     }
+
+    static function getAllDepartments(PDO $db){
+      $stmt = $db->prepare('
+        Select * FROM Department');
+      $stmt->execute();
+      return $stmt->fetchAll();
+    }
   }
 ?>

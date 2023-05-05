@@ -10,7 +10,7 @@
     }
 
     public function isLoggedIn() : bool {
-      return isset($_SESSION['id']);    
+      return isset($_SESSION['IDUSER']);    
     }
 
     public function logout() {

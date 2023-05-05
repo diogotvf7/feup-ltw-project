@@ -10,7 +10,7 @@
   
   if (isset($_SESSION['IDUSER'])) {
     // Redirect to home page if user is already logged in
-    die(header('Location: ../pages/display_tickets.php'));
+    header('Location: ../pages/display_tickets.php');
   }
 
   $db = getDatabaseConnection();
