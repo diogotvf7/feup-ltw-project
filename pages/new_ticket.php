@@ -11,8 +11,8 @@
     require_once(__DIR__ . '/../templates/ticket.tpl.php');
     require_once (__DIR__ . '/../database/admin.class.php');
 
+    drawHeader(['ticket_colors'], ['style']);
     createNewTicket($db);
-    // drawHeader(['ticket_colors'], ['style']);
     // $admin = new Admin(1, 'admin', 'admin', 'admin@gmail.com', 'admin');
     // drawNavBar($db, $_SESSION['IDUSER']);
     // echo '<main>';

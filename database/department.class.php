@@ -26,6 +26,19 @@
         $agent['Name']
       );
     }
+
+    static function getDepartmentbyName(PDO $db, string $name) : int {
+      $stmt = $db->prepare('
+        SELECT *
+        FROM Department
+        WHERE Name = ?
+      ');
+
+      $stmt->execute([$name]);
+      $department = $stmt->fetch();
+      
+      return $department['DepartmentID'];
+    }
     
     static function addDepartment(PDO $db, string $name){
       if (self::getDepartment($db, $name) != null) return false; // already exists

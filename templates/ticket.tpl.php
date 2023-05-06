@@ -54,36 +54,37 @@
     $tags = Ticket::getTicketTags($db, $ticketId);
     $documents = Ticket::getDocuments($db, $ticketId);
     $author = Client::getClient($db, $ticket->clientId);
-    $agent = Agent::getAgent($db, $ticket->agentId);
-    $department = Department::getDepartment($db, $ticket->departmentId);
+    if ($ticket->agentId != null) $agent = Agent::getAgent($db, $ticket->agentId);
+    if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
     ?>
 
     <div id="ticket">
         <h1> 
             <?=$ticket->title;?> 
         </h1>
+        <label id="description-label" for="description">Ticket description</label>
         <p id="description"> 
             <?=$ticket->description;?>
         </p>
         <div id="info"> 
             <p class="status"><?=$ticket->status;?></p>
-            <select class="status"> 
-                <option value="option1" ><?=$ticket->status;?> </option>
-                <option value="option2"> <?php echo ($ticket->status == "Open") ? "Closed" : "Open"; ?> </option>
-            </select>
+            <!-- <select class="status"> 
+                <option value="option1" > </*?=$ticket->status;?*/> </option>
+                <option value="option2"> </*?php echo ($ticket->status == "Open") ? "Closed" : "Open"; */?> </option>
+            </select> -->
             <div class="tags">
                 <?php foreach ($tags as $tag) {
                     echo '<p class="tag">' . $tag['Name'] . '</p>';
                 }?>
             </div>
-            <p>Department: <?=$department->name;?></p>
-            <label for="departmentCh">Department</label>
+            <?php if ($department != null) ?><p>Department: <?=$department->name;?></p>
+            <!-- <label for="departmentCh">Department</label>
             <select name="departmentChoice" id="departmentCh" class="department"> 
-                <option value="option1" ><?=$department->name;?> </option>
+                <option value="option1" ><?= $department == null ? "" : $department->name;?> </option>
                 <option value="option2"> Eventos </option>
-            </select>
+            </select> -->
             <p>By: <?='@' . $author->username;?></p>
-            <p>Currently assigned to: <?='@' . $agent->username;?></p>
+            <p>Currently assigned to: <?='@' . $agent == null ? "" : $agent->username;?></p>
         </div>
         <div id="documents">
             <?php if ($documents != null) { ?>
@@ -107,33 +108,34 @@
 
 <?php function createNewTicket($db) { ?>
 
-    <div id="new-ticket">
-    <body>
-        <form> 
-        <label for="title">Title</label>
-        <br>
-        <input type="text" id="title" name="title" placeholder="Title" required>
-        <p><label for="department">Department</label></p>
-        <select name="departments">
-        <option value="" selected>Select a department</option>
-        <?php
-        $departments = Department::getAllDepartments($db);
-        foreach ($departments as $department) {
-            echo "<option value=\"" . $department['Name'] . "\">" . $department['Name'] . "</option>";
-        }
-        ?>
-        </select>
-        <form action="">    
-        <p><label for="new-ticket">Complaint</label></p>
-        <textarea id="text" name="text" rows="4" cols="50" required> </textarea>
-        <br>
-        <br>
-        <form action="/action_page.php">
-            <input type="file" id="myFile" name="filename">
+    <body id = "ticket-page">
+    <div class= "container">
+        <form id="new-ticket" method="post" enctype="multipart/form-data" action="../actions/submit_ticket.php"> 
+            <h3>New Ticket</h3>
+            <h4 id = description>Fill in the following fields to create a new ticket</h4>
+            <fieldset>
+                <input placeholder="Title of ticket" type="text" name="ticket_title" tabindex="1" required autofocus>
+            </fieldset>
+            <fieldset>
+            <select id="department" name="ticket_department">
+            <option value="" selected>Select a department</option>
+            <?php
+            $departments = Department::getAllDepartments($db);
+            foreach ($departments as $department) {
+                echo "<option value=\"" . $department['Name'] . "\">" . $department['Name'] . "</option>";
+            }
+            ?>
+            </select>
+            </fieldset>
+            <fieldset>
+                <textarea placeholder="Type your Message Here...." name="ticket_description" tabindex="3" required></textarea>
+            </fieldset>
+            <fieldset>
+                <input type="file" id="submitted-files" name="files[]" multiple>
+            </fieldset> 
+            <fieldset>
+                <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
+            </fieldset>        
         </form>
-        <input type="submit" value="Submit">
-        </form>
-    </body>
-
     </div>
     <?php } ?>

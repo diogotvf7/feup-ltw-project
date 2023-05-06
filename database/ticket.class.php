@@ -7,11 +7,11 @@
     public string $description;
     public string $status;
     public int $clientId;
-    public int $agentId;
-    public int $departmentId;
+    public $agentId;
+    public $departmentId;
     public Datetime $date;
     
-    public function __construct(int $id, string $title, string $description, string $status, int $clientId, int $agentId, int $departmentId, string $date)
+    public function __construct(int $id, string $title, string $description, string $status, int $clientId, $agentId, $departmentId, string $date)
     {
       $this->id = $id;
       $this->title = $title;
@@ -114,6 +114,13 @@
         return $tickets;
       } else return null;
     }
+
+    static function addDocument(PDO $db, int $ticketId, string $path) {
+      $stmt = $db->prepare('
+        INSERT INTO Ticket_Document (TicketID, Path) VALUES(?,?)
+      ');
+      $stmt->execute(array($ticketId,$path));
+    }
     
     static function getDocuments(PDO $db, $ticketId) {
       $stmt = $db->prepare('
@@ -175,6 +182,25 @@
       if ($tickets = $stmt->fetchAll()) {
         return $tickets;
       } else {return null;}
+    }
+
+    static function addTicket(PDO $db, string $ticket_title,string $ticket_description, string $status,int $ClientID, $departmentID, string $now ) : string{
+      $stmt = $db->prepare('
+        INSERT INTO Ticket (Title, Description, Status, ClientID, DepartmentID, Date)
+        VALUES (?, ?, ?, ?, ?, ?)');
+      if ($stmt->execute([$ticket_title, $ticket_description, $status, $ClientID, $departmentID, $now]));
+      return $db->lastInsertId();
+    }
+
+    static function deleteTicket(PDO $db, int $TicketID){
+      $stmt = $db->prepare('
+        DELETE FROM Ticket_Document
+        WHERE TicketID = ?');
+      if ($stmt->execute([$TicketID]));
+      $stmt = $db->prepare('
+        DELETE FROM Ticket
+        WHERE TicketID = ?');
+      if ($stmt->execute([$TicketID]));
     }
   }
 ?>

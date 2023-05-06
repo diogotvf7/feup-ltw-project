@@ -56,7 +56,7 @@
 
       $stmt->execute(array($id));
       $agent = $stmt->fetch();
-      
+      if ($agent != null)
       return new Agent(
         $agent['ClientID'],
         $agent['Name'],
@@ -64,6 +64,7 @@
         $agent['Email'],
         $agent['Password']
       );
+      else return null;
     }
 
     static function getAllAgents(PDO $db){

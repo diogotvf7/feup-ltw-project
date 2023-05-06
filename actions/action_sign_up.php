@@ -15,7 +15,7 @@
     signUpUser($db,$name, $email,$username,$password);
     $_SESSION['IDUSER'] = Client::getClientByUsername($db,$username)->id;
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
-    header('Location: /pages/display_tickets.php');
+    header('Location: /pages/my_tickets.php');
   } else {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
     header('Location: '.$_SERVER['HTTP_REFERER']);
