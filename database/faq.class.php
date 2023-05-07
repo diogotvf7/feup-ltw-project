@@ -24,15 +24,25 @@
     
     static function fetchFAQs(PDO $db, int $ammount, int $page) {
       $stmt = $db->prepare('
-        SELECT FAQID
+        SELECT FAQID, Question, Answer
         FROM FAQ
         ORDER BY 1
         LIMIT ? OFFSET ?
       ');
 
-      $stmt->execute(array($ammount, $page * $ammount - 1));
+      $stmt->execute(array($ammount, $page * $ammount));
   
-      return $stmt->fetchAll();
+      $rawData = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+      $faqs = array();
+      foreach ($rawData as $faq)
+        array_push($faqs, new FAQ(
+          $faq->FAQID,
+          $faq->Question,
+          $faq->Answer,
+        ));
+
+      return $faqs;
     }
 
     static function getFAQ(PDO $db, int $id) : FAQ {

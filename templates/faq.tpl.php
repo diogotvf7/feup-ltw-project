@@ -4,27 +4,32 @@
     include_once('../database/faq.class.php');
 ?>
 
-<?php function drawFAQList(PDO $db) {   
-    $faqs = FAQ::fetchFAQs($db, 10, 0);
-    ?><main>
-        <ol id="faq-list"><?php
-            foreach($faqs as $faq)
-                drawFAQ($db, $faq['FAQID']);
-        ?></ol>
-    </main><?php
-} ?>
+<?php function drawFAQList($faqs) { ?>
+    <main>
+        <div id="faq-page">
+            <h1>Frequently Asked Questions</h1>
+            <ul id="faq-list">
+                <?php foreach($faqs as $faq)
+                    drawFAQ($faq);
+                ?>
+            </ul>
+            <button type="button" class="fetch-more">
+                Fetch more
+            </button>
+        </div>
+    </main>
+<?php } ?>
 
-<?php function drawFAQ($db, $id) {
-    $faq = FAQ::getFAQ($db, $id);
-?>
+<?php function drawFAQ($faq) { ?>
     <li class="faq-element">
-        <div class="faq-element-header">
+        <input id="cb<?=$faq->id?>" type="checkbox" class="faq-element-checkbox">
+        <label class="faq-element-header" for="cb<?=$faq->id?>">
             <i class="fa-solid fa-chevron-down"></i>
             <h2 class="faq-element-question">
                 <?=$faq->question?>
             </h2>
-        </div>
-        <p class="faq-element-answer" hidden>
+        </label>
+        <p class="faq-element-answer">
             <?=$faq->answer?>
         </p>
     </li>
