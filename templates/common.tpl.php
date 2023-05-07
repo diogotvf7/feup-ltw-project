@@ -12,10 +12,10 @@
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <?php foreach ($cssFiles as $css) { 
-                echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
+                    echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
                 } ?>
                 <?php foreach ($scripts as $script) { 
-                echo '<script src="../javascript/', $script, '.js" defer></script>';
+                    echo '<script src="../javascript/', $script, '.js" defer></script>';
                 } ?>
                 <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
             </head>

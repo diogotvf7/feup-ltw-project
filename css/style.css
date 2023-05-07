@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Open+Sans:wght@300&family=Source+Sans+Pro:wght@200&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Open+Sans&family=Poppins&display=swap');
 
+/*        1200x608         */
+
+
 /*          State          */
 
 .hide {
@@ -32,9 +35,9 @@ body {
 }
 
 main {
-    margin-left: 5rem;
+    margin-left: 12rem;
     padding: 1rem;
-    height: 100vh;
+    /* height: 100vh; */
     box-sizing: border-box;
 }
 
@@ -88,6 +91,10 @@ main {
     .navbar:hover .logo-text {
         display: inline;
     }
+
+    .nav-item:last-child {
+        margin-top: auto;
+    }
 }
 
 .navbar {
@@ -112,10 +119,6 @@ main {
 
 .nav-item:first-child {
     padding-top: 1rem;
-}
-
-.nav-item:last-child {
-    margin-top: auto;
 }
 
 .nav-link {
@@ -294,6 +297,7 @@ main {
 
 .image-list-element {
     transition: transform .2s;
+    max-width: 30%;
 }
 
 .image-list-element:hover {
@@ -372,10 +376,76 @@ main {
     background-color: var(--green);
 }
 
+
+/*          FAQ Element             */
+
+#faq-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* align-content: center; */
+    gap: 2em;
+    padding: 2em;
+}
+
+#faq-page h1 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#faq-list {
+    list-style-type: none;
+    margin: 0;
+}
+
+.faq-element-checkbox {
+    display: none;
+}
+
+.faq-element-header {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin: 0;
+    padding: 0 2em;
+    cursor: pointer;
+}
+
+.faq-element-answer {
+    border-left: 1px solid var(--grey);
+    margin: 0 2.5em;
+    height: 0;
+    opacity: 0;
+    transition: all .4s ease;
+}   
+
+.faq-element-checkbox:checked ~ .faq-element-answer {
+    padding: 1em;
+    height: auto;
+    opacity: 1;
+}
+
+.fetch-more {
+    background-color: var(--grey);
+    color: var(--white);
+    font-weight: 600;
+    border: none;
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 1em;
+}
+
+.fetch-more:hover {
+    background-color: var(--green);
+}
+
+.fetch-more:active {
+    transform: translateY(3px);
+}
+
 /*          New Ticket          */
 
-
-#ticket-page{
+#ticket-page {
     background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
     margin: 0;
     padding: 0;
@@ -393,14 +463,14 @@ body {
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 30px;
-  }
+}
 
 
 .container {
 	max-width: 400px;
-	width:100%;
-	margin:0 auto;
-	position:relative;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
 }
 
 
@@ -409,7 +479,7 @@ body {
     padding: 25px;
     margin: 150px auto;
     align-items: center;
-  }
+}
 
 
 #new-ticket h3 {
@@ -430,16 +500,16 @@ body {
 }
 
 
-#new-ticket fieldset{
+#new-ticket fieldset {
     border: medium none;
     margin: 0 0 10px;
     min-width: 90%;
     padding: 0;
     width: 100%;
-  } 
+} 
 
 
- #new-ticket input, select, textarea, button{
+#new-ticket input, select, textarea, button {
     width: 100%;
     border: 1px solid #ccc;
     background: #fff;
@@ -448,7 +518,7 @@ body {
 }
 
 
-#new-ticket textarea{
+#new-ticket textarea {
     height: 100px;
     max-width: 100%;
     resize: none;

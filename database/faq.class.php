@@ -22,24 +22,34 @@
     //   $stmt->execute(array($this->username, $this->id));
     // }
     
-    static function fetchFAQ(PDO $db, int $ammount, int $page) {
+    static function fetchFAQs(PDO $db, int $ammount, int $page) {
       $stmt = $db->prepare('
-        SELECT FAQID
+        SELECT FAQID, Question, Answer
         FROM FAQ
         ORDER BY 1
         LIMIT ? OFFSET ?
       ');
 
-      $stmt->execute(array($ammount, $page * $ammount - 1));
+      $stmt->execute(array($ammount, $page * $ammount));
   
-      $faqs = $stmt->fetchAll();
+      $rawData = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+      $faqs = array();
+      foreach ($rawData as $faq)
+        array_push($faqs, new FAQ(
+          $faq->FAQID,
+          $faq->Question,
+          $faq->Answer,
+        ));
+
+      return $faqs;
     }
 
-    static function getFAQInfo(PDO $db, int $id) : FAQ {
+    static function getFAQ(PDO $db, int $id) : FAQ {
       $stmt = $db->prepare('
         SELECT FAQID, Question, Answer
         FROM FAQ
-        WHERE ClientID = ?
+        WHERE FAQID = ?
       ');
 
       $stmt->execute(array($id));

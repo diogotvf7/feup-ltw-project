@@ -296,7 +296,26 @@ INSERT INTO FAQ (Question, Answer) VALUES ('What do I do if I need to change the
 INSERT INTO FAQ (Question, Answer) VALUES ('What is your company''s privacy policy?', 'Our company''s privacy policy can be found on our website.');
 INSERT INTO FAQ (Question, Answer) VALUES ('What forms of payment do you accept?', 'We accept all major credit cards and PayPal.');
 INSERT INTO FAQ (Question, Answer) VALUES ('What should I do if I have a complaint?', 'If you have a complaint, please contact our support team and we will do our best to address the issue.');    
-    
+INSERT INTO FAQ (Question, Answer) VALUES ('How can I access my account from multiple devices?', 'You can access your account from multiple devices by logging in with your username and password.');
+INSERT INTO FAQ (Question, Answer) VALUES ('What is your privacy policy?', 'Our privacy policy can be found on our website.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I update my email preferences?', 'You can update your email preferences by going to your account settings and selecting "notifications."');
+INSERT INTO FAQ (Question, Answer) VALUES ('What do I do if I am experiencing slow performance?', 'If you are experiencing slow performance, please contact our support team for assistance.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I customize my account?', 'You can customize your account by going to your account settings and selecting "profile."');
+INSERT INTO FAQ (Question, Answer) VALUES ('What is your customer support availability?', 'Our customer support is available 24/7 via email and phone.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I access my billing history?', 'You can access your billing history by going to your account settings and selecting "invoices."');
+INSERT INTO FAQ (Question, Answer) VALUES ('What is your refund policy?', 'Our refund policy can be found on our website.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I change my payment plan?', 'You can change your payment plan by going to your account settings and selecting "subscriptions."');
+INSERT INTO FAQ (Question, Answer) VALUES ('What do I do if I am having trouble with the website?', 'If you are having trouble with the website, please clear your cache and cookies or contact our support team for assistance.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I contact your sales team?', 'You can contact our sales team by going to our website and clicking "Contact Sales."');
+INSERT INTO FAQ (Question, Answer) VALUES ('What do I do if I am having trouble with the mobile app?', 'If you are having trouble with the mobile app, please contact our support team for assistance.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I share my account with others?', 'You can share your account with others by creating sub-accounts or by giving them your login credentials.');
+INSERT INTO FAQ (Question, Answer) VALUES ('What is your security policy?', 'Our security policy can be found on our website.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I activate my account?', 'Your account should be activated automatically upon registration. If you are having trouble, please contact our support team for assistance.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I download your mobile app?', 'You can download our mobile app from the App Store or Google Play Store.');
+INSERT INTO FAQ (Question, Answer) VALUES ('What is your company mission?', 'Our company mission is to provide the best possible service to our customers.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I update my company information?', 'You can update your company information by going to your account settings and selecting "company profile."');
+INSERT INTO FAQ (Question, Answer) VALUES ('What do I do if I am not receiving push notifications?', 'If you are not receiving push notifications, please check your settings or contact our support team for assistance.');
+INSERT INTO FAQ (Question, Answer) VALUES ('How do I change the language settings?', 'You can change the language settings by going to your account settings and selecting "language."');    
     
     
     
