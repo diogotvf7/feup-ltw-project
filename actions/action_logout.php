@@ -1,5 +1,5 @@
 <?php
-  include_once('../includes/session.php');
+  include_once('../utils/session.php');
   include_once('../database/user_db.php');
   include_once('../database/connection.db.php');
 

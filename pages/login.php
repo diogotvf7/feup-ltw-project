@@ -7,13 +7,19 @@
   require_once(__DIR__ . '/../database/connection.db.php');
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
+  include_once('../utils/util_funcs.php');
+  $db = getDatabaseConnection();
   
   if (isset($_SESSION['IDUSER'])) {
     // Redirect to home page if user is already logged in
-    die(header('Location: ../pages/display_tickets.php'));
+    if (getUserType($db,$_SESSION['IDUSER']) == 'Admin' || getUserType($db,$_SESSION['IDUSER']) == 'Agent'){
+      header('Location: /pages/display_tickets.php');
+    }
+    else{
+      header('Location: /pages/my_tickets.php');
+    }
   }
 
-  $db = getDatabaseConnection();
 
   drawHeader(['login_register_switch'], ['login-register']);
 ?>

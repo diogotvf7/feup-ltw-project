@@ -40,8 +40,8 @@ CREATE TABLE Ticket
     Description varchar(255) NOT NULL,
     Status varchar(255) NOT NULL,
     ClientID int NOT NULL,
-    AgentID int NOT NULL,
-    DepartmentID int NOT NULL,
+    AgentID int ,
+    DepartmentID int,
     Date datetime NOT NULL,
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID),
     FOREIGN KEY (AgentID) REFERENCES Agent(ClientID),
@@ -105,7 +105,7 @@ CREATE TABLE FAQ
 
 -- Populating Department table
 INSERT INTO Department (DepartmentID, Name) VALUES (1, 'Informática');
-INSERT INTO Department (DepartmentID, Name) VALUES (2, 'Mecância');
+INSERT INTO Department (DepartmentID, Name) VALUES (2, 'Mecânica');
 INSERT INTO Department (DepartmentID, Name) VALUES (3, 'Minas');
 
 -- Populating Client table

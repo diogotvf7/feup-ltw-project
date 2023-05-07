@@ -23,7 +23,7 @@
     }
 
     function timeAgo(DateTime $date) {
-        $now = new DateTime();
+        $now = new DateTime('now',new DateTimeZone('Europe/Lisbon'));
         $diff = $now->diff($date);
         if ($diff->y > 0) return $diff->y . ' year' .  ($diff->y > 1 ? 's' : '') . ' ago';
         if ($diff->m > 0) return $diff->m . ' month' .  ($diff->m > 1 ? 's' : '') . ' ago';
