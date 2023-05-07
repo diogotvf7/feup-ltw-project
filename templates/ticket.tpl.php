@@ -77,14 +77,9 @@
                     echo '<p class="tag">' . $tag['Name'] . '</p>';
                 }?>
             </div>
-            <?php if ($department != null) ?><p>Department: <?=$department->name;?></p>
-            <!-- <label for="departmentCh">Department</label>
-            <select name="departmentChoice" id="departmentCh" class="department"> 
-                <option value="option1" ><?= $department == null ? "" : $department->name;?> </option>
-                <option value="option2"> Eventos </option>
-            </select> -->
+            <?= $department == null ? '<p>No department</p>' : '<p>Department: ' . $department->name . '</p>';?>
             <p>By: <?='@' . $author->username;?></p>
-            <p>Currently assigned to: <?='@' . $agent == null ? "" : $agent->username;?></p>
+             <?= $agent == null ? 'This ticket isn\'t assigned' : '<p>Currently assigned to: @' . $agent->username . '</p>';?>
         </div>
         <div id="documents">
             <?php if ($documents != null) { ?>

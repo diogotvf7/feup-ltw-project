@@ -14,7 +14,6 @@
     if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
     drawHeader(['ticket_colors'], ['style']);
-    // $admin = new Admin(1, 'admin', 'admin', 'admin@gmail.com', 'admin');
     drawNavBar($db, $_SESSION['IDUSER']);
     echo '<main>';
     drawTicket($db, $_GET['id']);
