@@ -61,5 +61,9 @@
         $faq['Answer'],
       );
     }
+
+    function toJson() {
+      return json_encode($this);
+    }
   }
 ?>

@@ -11,10 +11,12 @@
     require_once(__DIR__ . '/../templates/ticket.tpl.php');
     require_once (__DIR__ . '/../database/admin.class.php');
 
+    $userType = getUserType($db, $_SESSION['IDUSER']);
+
     if (!Session::isLoggedIn())
-    die(header('Location: /pages/login.php'));
+        die(header('Location: /pages/login.php'));
     drawHeader(['ticket_colors'], ['style']);
-    drawNavBar($db, $_SESSION['IDUSER']);
+    drawNavBar($userType);
     echo '<main>';
     drawTicket($db, $_GET['id']);
     echo '</main>';

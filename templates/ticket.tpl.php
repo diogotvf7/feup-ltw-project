@@ -1,8 +1,7 @@
 <?php 
     require_once(__DIR__ . '/../database/tag.class.php');
     require_once(__DIR__ . '/../database/department.class.php');
-    require_once(__DIR__ . '/../database/client.class.php');
-    require_once(__DIR__ . '/../database/agent.class.php');
+    require_once(__DIR__ . '/../database/user.class.php');
     require_once(__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../utils/util_funcs.php');
 ?>
@@ -10,7 +9,7 @@
 <?php function drawTicketPreview($db, $id) { 
     $ticket = Ticket::getTicketData($db, $id);
     $tags = Ticket::getTicketTags($db, $ticket->id);
-    $author = Client::getClient($db, $ticket->clientId);
+    $author = User::getUser($db, $ticket->clientId);
     // $department = Department::getDepartment($db, $ticket->departmentId);
 ?>
     <a class="ticket-list-element" href="ticket_page.php?id=<?=$id;?>">
@@ -53,8 +52,8 @@
     $ticket = Ticket::getTicketData($db, $ticketId);
     $tags = Ticket::getTicketTags($db, $ticketId);
     $documents = Ticket::getDocuments($db, $ticketId);
-    $author = Client::getClient($db, $ticket->clientId);
-    if ($ticket->agentId != null) $agent = Agent::getAgent($db, $ticket->agentId);
+    $author = User::getUser($db, $ticket->clientId);
+    if ($ticket->agentId != null) $agent = User::getUser($db, $ticket->agentId);
     if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
     ?>
 

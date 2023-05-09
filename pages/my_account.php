@@ -8,9 +8,7 @@
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
   require_once(__DIR__ . '/../templates/ticket.tpl.php');
-  require_once (__DIR__ . '/../database/admin.class.php');
-  require_once (__DIR__ . '/../database/agent.class.php');
-  require_once (__DIR__ . '/../database/client.class.php');
+  require_once (__DIR__ . '/../database/user.class.php');
   require_once (__DIR__ . '/../database/ticket.class.php');
   require_once(__DIR__ . '/../database/tag.class.php');
 
@@ -19,7 +17,6 @@
   drawHeader(['ticket_colors']);
   $db = getDatabaseConnection();
   $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
-  //$tickets = Ticket::getAllTickets($db);
   if ($tickets == null) {echo 'No tickets found!' . '<br>';}
   else {drawTicketsList($db,$tickets);}
   drawFooter();

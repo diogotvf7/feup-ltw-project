@@ -30,94 +30,108 @@
 
     static function getUser(PDO $db, int $id) : User {
       $stmt = $db->prepare("
-        SELECT ClientID, Email, Name, Username, 
+        SELECT ClientID, Name, Username, Email,
         CASE 
           WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
           WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
           ELSE 'Client'
-        END AS Type
+        END AS Type, Password
         FROM Client
         WHERE ClientID = ?;
       ");
 
-      $stmt->execute(array($id));
-      $client = $stmt->fetch();
+      $stmt->execute(array($id, $id, $id));
+      $user = $stmt->fetch();
       
       return new User(
-        $client['ClientID'],
-        $client['Name'],
-        $client['Username'],
-        $client['Email'],
-        $client['Type'],
-        $client['Password']
+        $user['ClientID'],
+        $user['Name'],
+        $user['Username'],
+        $user['Email'],
+        $user['Type'],
+        $user['Password']
       );
     }
 
     static function getUsers(PDO $db) {
-      $stmt = $db->prepare('
-        SELECT ClientID, Name, Username, Email, Type, Password
-        FROM Client
-        USING(ClientID)
-      ');
+      $stmt = $db->prepare("
+      SELECT ClientID, Name, Username, Email,
+      CASE 
+        WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
+        WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
+        ELSE 'Client'
+      END AS Type, Password
+      FROM Client;
+    ");
 
       $stmt->execute();
-      $agents = $stmt->fetchAll();
+      $users = $stmt->fetchAll();
       $ret = array();
 
-      foreach ($agents as $agent) 
+      foreach ($users as $user) 
         array_push($ret, new User(
-          $agent['ClientID'],
-          $agent['Name'],
-          $agent['Username'],
-          $agent['Email'],
-          $agent['Type'],
-          $agent['Password']
+          $user['ClientID'],
+          $user['Name'],
+          $user['Username'],
+          $user['Email'],
+          $user['Type'],
+          $user['Password']
         ));
       
       return $ret;
     }
 
     static function getAgents(PDO $db) {
-      $stmt = $db->prepare('
-        SELECT ClientID, Name, Username, Email, Type, Password
+      $stmt = $db->prepare("
+        SELECT ClientID, Name, Username, Email,
+        CASE 
+          WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
+          WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
+          ELSE 'Client'
+        END AS Type, Password
         FROM Client JOIN Agent
-        USING(ClientID)
-      ');
+        USING(ClientID);
+      ");
 
       $stmt->execute();
-      $agents = $stmt->fetchAll();
+      $users = $stmt->fetchAll();
       $ret = array();
 
-      foreach ($agents as $agent) 
+      foreach ($users as $user) 
         array_push($ret, new User(
-          $agent['ClientID'],
-          $agent['Name'],
-          $agent['Username'],
-          $agent['Email'],
-          $agent['Type'],
-          $agent['Password']
+          $user['ClientID'],
+          $user['Name'],
+          $user['Username'],
+          $user['Email'],
+          $user['Type'],
+          $user['Password']
         ));
       
       return $ret;
     }
 
     static function getClientByUsername(PDO $db, string $username) : User {
-      $stmt = $db->prepare('
-        SELECT ClientID, Name, Username, Email, Password
-        FROM Client 
-        WHERE Username = ?
-      ');
+      $stmt = $db->prepare("
+        SELECT ClientID, Name, Username, Email,
+        CASE 
+          WHEN EXISTS (SELECT 1 FROM Admin WHERE Username = ?) THEN 'Admin'
+          WHEN EXISTS (SELECT 1 FROM Agent WHERE Username = ?) THEN 'Agent'
+          ELSE 'Client'
+        END AS Type, Password
+        FROM Client
+        WHERE Username = ?;
+      ");
 
-      $stmt->execute(array($username));
-      $client = $stmt->fetch();
+      $stmt->execute(array($username, $username, $username));
+      $user = $stmt->fetch();
       
       return new User(
-        $client['ClientID'],
-        $client['Name'],
-        $client['Username'],
-        $client['Email'],
-        $client['Type'],
-        $client['Password']
+        $user['ClientID'],
+        $user['Name'],
+        $user['Username'],
+        $user['Email'],
+        $user['Type'],
+        $user['Password']
       );
     }
 
