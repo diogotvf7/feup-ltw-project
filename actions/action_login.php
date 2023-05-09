@@ -22,7 +22,7 @@
     if (getUserType($db,$_SESSION['IDUSER']) == 'Admin' || getUserType($db,$_SESSION['IDUSER']) == 'Agent'){
       header('Location: /pages/display_tickets.php');
     }
-    else{
+    else {
       header('Location: /pages/my_tickets.php');
     }
   } else {

@@ -20,9 +20,5 @@
         die(header('Location: /pages/login.php'));
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
-    ?><main><?php
-    $users = Admin::getAllAdmins($db);
-    drawUsersList($db,$users);
-    ?></main><?php
     drawFooter();
 ?>

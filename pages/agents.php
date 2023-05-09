@@ -18,7 +18,7 @@
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
-    $users = Agent::getAllAgents($db);
+    $agents = User::getAgents($db);
     drawHeader(['users_list'], ['style']);
     drawNavBar($db, $_SESSION['IDUSER']);
     ?><main><?php
