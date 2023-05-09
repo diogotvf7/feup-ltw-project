@@ -24,5 +24,4 @@ function checkUserCredentials($db,$username,$password){
     $stmt->execute(array($username));
     $hashed_password = $stmt->fetch()['Password'];
     return (password_verify($password, $hashed_password));
-}
-?>
+} ?>

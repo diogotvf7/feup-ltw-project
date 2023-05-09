@@ -11,11 +11,6 @@
 
   $db = getDatabaseConnection();
 
-  /*
-  if (!$db.isConnected()) {
-  echo "Error: Unable to connect to database.";}
-    */
-
   drawHeader($session);
   drawHeader(["script"]);
   header('Location: ../pages/login.php');

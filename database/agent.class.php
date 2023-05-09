@@ -68,7 +68,12 @@
     }
 
     static function getAllAgents(PDO $db){
-      $stmt = $db->prepare('SELECT * from Client join Agent on Client.ClientID = Agent.ClientID');
+      $stmt = $db->prepare('
+        SELECT * 
+        FROM Client 
+        JOIN Agent 
+        USING(ClientID)
+      ');
       $stmt->execute();
       $agents = $stmt->fetchAll();
       return $agents;

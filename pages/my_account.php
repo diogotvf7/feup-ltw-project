@@ -19,7 +19,6 @@
   drawHeader(['ticket_colors']);
   $db = getDatabaseConnection();
   $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
-  //$tickets = Ticket::getAllTickets($db);
   if ($tickets == null) {echo 'No tickets found!' . '<br>';}
   else {drawTicketsList($db,$tickets);}
   drawFooter();

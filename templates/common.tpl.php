@@ -27,10 +27,7 @@
     </html>
 <?php } ?>
 
-<?php function drawNavBar($db, $userId) { 
-    $userType = getUserType($db, $userId);
-?> 
-
+<?php function drawNavBar($userType) { ?>
     <nav class="navbar"> 
         <ul class="navbar-nav">
             <li class="nav-item">
