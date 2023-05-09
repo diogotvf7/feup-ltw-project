@@ -26,7 +26,9 @@
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
-            <?= $agents ? '<th>Tickets in charge</th>' : '<th>Tickets made</th>' ?>
+            <?= $agents 
+            ? '<th>Tickets in charge</th><th>Tickets open</th><th>Tickets closed</th>' 
+            : '<th>Tickets made</th>' ?>
         </tr>
         <?php foreach($users as $user) { ?>
             <tr class="user-list-element">
@@ -37,6 +39,9 @@
                 <td><?= $user->email ?></td>
                 <td><?= $user->type ?></td>
                 <td> - </td>
+                <?= $agents 
+                ? '<td> - </td><td> - </td>'
+                : '' ?>
             </tr>
         <?php } ?>
     </table>

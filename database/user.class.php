@@ -164,5 +164,53 @@
       $stmt->execute();
       return $stmt->fetchAll();
     }
+
+    static function getTicketsMade(PDO $db, $id) {
+      $stmt = $db->prepare('
+        SELECT COUNT(*) Tickets_made
+        FROM Client JOIN Ticket
+        USING(ClientID)
+        WHERE ClientID = ?
+        GROUP BY ClientID;
+      ');
+      $stmt->execute(array($id));
+      return $stmt->fetch()['Tickets_made'];
+    }
+
+    static function getTicketsResponsible(PDO $db, $id) {
+      $stmt = $db->prepare('
+        SELECT COUNT(*) Tickets_responsible
+        FROM Agent JOIN Ticket
+        ON Agent.ClientID = Ticket.AgentID
+        WHERE Agent.ClientID = ?
+        GROUP BY Agent.ClientID;
+      ');
+      $stmt->execute(array($id));
+      return $stmt->fetch()['Tickets_responsible'];
+    }
+
+    static function getTicketsClosed(PDO $db, $id) {
+      $stmt = $db->prepare('
+        SELECT COUNT(*) Tickets_closed
+        FROM Agent JOIN Ticket
+        ON Agent.ClientID = Ticket.AgentID
+        WHERE Ticket.Status = "Closed" AND Agent.ClientID = ?
+        GROUP BY Agent.ClientID;
+      ');
+      $stmt->execute(array($id));
+      return $stmt->fetch()['Tickets_closed'];
+    }
+
+    static function getTicketsOpen(PDO $db, $id) {
+      $stmt = $db->prepare('
+        SELECT COUNT(*) Tickets_open
+        FROM Agent JOIN Ticket
+        ON Agent.ClientID = Ticket.AgentID
+        WHERE Ticket.Status = "Open" AND Agent.ClientID = ?
+        GROUP BY Agent.ClientID;
+      ');
+      $stmt->execute(array($id));
+      return $stmt->fetch()['Tickets_open'];
+    }
   }
 ?>
