@@ -155,14 +155,166 @@ main {
     margin: 0 1.5rem;
 }
 
+/*          FAQ Element             */
+
+#faq-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* align-content: center; */
+    gap: 2em;
+    padding: 2em;
+}
+
+#faq-page h1 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#faq-list {
+    list-style-type: none;
+    margin: 0;
+}
+
+.faq-element-checkbox {
+    display: none;
+}
+
+.faq-element-header {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin: 0;
+    padding: 0 2em;
+    cursor: pointer;
+}
+
+.faq-element-answer {
+    border-left: 1px solid var(--grey);
+    margin: 0 2.5em;
+    height: 0;
+    opacity: 0;
+    transition: all .4s ease;
+}   
+
+.faq-element-checkbox:checked ~ .faq-element-answer {
+    padding: 1em;
+    height: auto;
+    opacity: 1;
+}
+
+.fetch-more {
+    background-color: var(--grey);
+    color: var(--white);
+    font-weight: 600;
+    border: none;
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 1em;
+}
+
+.fetch-more:hover {
+    background-color: var(--green);
+}
+
+.fetch-more:active {
+    transform: translateY(3px);
+}
+
+/*          Users list          */
+
+#user-list-page {
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 0;
+    margin: 0 16em 0 5em;
+}
+
+#user-list {
+    width: 100%;
+    margin: 0;
+    overflow-y: scroll;
+    scroll-snap-type: y proximity;
+    text-align: center;
+}
+
+#table-header {
+    background-color: var(--grey);
+    color: var(--white);
+}
+
+.user-list-element td {
+    padding: 1em 1.5em;
+}
+
+.user-list-element:nth-child(odd) {
+    background-color: var(--light-grey);
+}
+
+.user-list-element:nth-child(even) {
+    background-color: var(--white);
+}
+
+#bottom-side button {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#bottom-side button:active {
+    transform: scale(0.95);
+}
+
+#bottom-side button:hover {
+    background-color: var(--grey);
+    color: var(--white);
+}
+
+/*              Options bar               */
+
+#options-bar {
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
+}
+
+#options-bar h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--white);
+    text-align: center;
+}
+
+#options-bar #bottom-side {
+    margin: 1em 2em;
+    display: flex;
+    flex-direction: column;
+    gap: .3em;
+}
+
+/* ------------------------------------------------------ TICKET ------------------------------------------------------ */
 
 /*          Ticket          */
 
-#tickets-list {
-    margin: 0 auto;
-    height: 45em;
-    width: 45em;
-    border: #222222 1px double;
+#ticket-list-page {
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 0;
+    margin: 0 16em 0 5em;
+    height: 100vh;
+}
+
+#ticket-list {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,6 +322,13 @@ main {
     scroll-snap-type: y proximity;
     scroll-padding-top: 1em;
 }
+
+/* #ticket-list {
+    margin: 0;
+    overflow-y: scroll;
+    scroll-snap-type: y proximity;
+    text-align: center;
+} */
 
 .ticket-list-element {
     width: fit-content;
@@ -249,7 +408,7 @@ main {
     align-items: center;
 }
 
-#ticket #description-label{
+#ticket #description-label {
     width: 80%;
     display: flex;
     flex-direction: row;
@@ -308,92 +467,38 @@ main {
     padding: 2em;
 }
 
-/*          FAQ Element             */
+/*              Options bar               */
 
-#faq-page {
+#filters-bar {
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 16rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* align-content: center; */
-    gap: 2em;
-    padding: 2em;
+    justify-content: space-between;
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
 }
 
-#faq-page h1 {
+#filters-bar h3 {
     font-family: 'Montserrat', sans-serif;
-}
-
-#faq-list {
-    list-style-type: none;
-    margin: 0;
-}
-
-.faq-element-checkbox {
-    display: none;
-}
-
-.faq-element-header {
-    display: flex;
-    align-items: center;
-    gap: 2em;
-    margin: 0;
-    padding: 0 2em;
-    cursor: pointer;
-}
-
-.faq-element-answer {
-    border-left: 1px solid var(--grey);
-    margin: 0 2.5em;
-    height: 0;
-    opacity: 0;
-    transition: all .4s ease;
-}   
-
-.faq-element-checkbox:checked ~ .faq-element-answer {
-    padding: 1em;
-    height: auto;
-    opacity: 1;
-}
-
-.fetch-more {
-    background-color: var(--grey);
     color: var(--white);
-    font-weight: 600;
-    border: none;
-    border-radius: 1em;
-    padding: 0.5em 1em;
+    text-align: center;
+}
+
+#filters-bar #bottom-side {
     font-family: "Source Sans Pro", sans-serif;
-    font-size: 1em;
-}
-
-.fetch-more:hover {
-    background-color: var(--green);
-}
-
-.fetch-more:active {
-    transform: translateY(3px);
+    color: var(--black);
+    margin: 1em 2em;
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    gap: .3em;
 }
 
 /*          New Ticket          */
-
-#new-ticket-button {
-    position: fixed;
-    bottom: 10%;
-    right: 10%;
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-#new-ticket-button i {
-    color: var(--white);
-    font-size: 2em;
-}
 
 #new-ticket-page {
     margin: 0 10rem;
@@ -470,82 +575,4 @@ main {
 #new-ticket #submit:hover {
     background-color: var(--grey);
     color: var(--white);
-}
-
-/*          Users list          */
-
-#user-list-page {
-    font-family: 'Source Sans Pro', sans-serif;
-    padding: 0;
-    margin: 0 16em 0 5em;
-}
-
-#table-header {
-    background-color: var(--grey);
-    color: var(--white);
-}
-
-#user-list {
-    width: 100%;
-    margin: 0;
-    overflow-y: scroll;
-    scroll-snap-type: y proximity;
-    text-align: center;
-}
-
-.user-list-element td {
-    padding: 1em 1.5em;
-}
-
-.user-list-element:nth-child(odd) {
-    background-color: var(--light-grey);
-}
-
-.user-list-element:nth-child(even) {
-    background-color: var(--white);
-}
-
-.list-button {
-    font-family: "Source Sans Pro", sans-serif;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.list-button:active {
-    transform: scale(0.95);
-}
-
-.list-button:hover {
-    background-color: var(--grey);
-    color: var(--white);
-}
-
-/*              Options bar               */
-
-#options-bar {
-    position: fixed;
-    z-index: 1;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    width: 16rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
-}
-
-#options-bar h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--white);
-    text-align: center;
-}
-
-#options-bar #bottom-side {
-    margin: 1em 2em;
-    display: flex;
-    flex-direction: column;
-    gap: .3em;
 }

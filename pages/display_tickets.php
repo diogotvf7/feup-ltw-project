@@ -18,6 +18,6 @@
   drawNavBar($_SESSION['PERMISSIONS']);
   $tickets = Ticket::getAllTickets($db);
   $tickets = Ticket::sortTicketsLeastRecent($db, $tickets);
-  drawTicketsList($db, $tickets);
+  drawTicketsListPage($db, $tickets);
   drawFooter();
 ?>

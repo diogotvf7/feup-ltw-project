@@ -6,6 +6,14 @@
     require_once(__DIR__ . '/../utils/util_funcs.php');
 ?>
 
+<?php function drawTicketsListPage(PDO $db, $tickets) {
+  
+  ?><main id="ticket-list-page"><?php
+  drawTicketsList($db, $tickets);
+  drawFiltersBar();
+  ?></main><?php
+} ?>
+
 <?php function drawTicketPreview($db, $id) { 
     $ticket = Ticket::getTicketData($db, $id);
     $tags = Ticket::getTicketTags($db, $ticket->id);
@@ -39,14 +47,11 @@
 <?php } ?>
 
 <?php function drawTicketsList($db, $tickets) { ?>
-    <main>
-        <ul id="tickets-list">
+        <ul id="ticket-list">
             <?php foreach ($tickets as $ticket) {
                 drawTicketPreview($db, $ticket["TicketID"]);
             } ?>
         </ul>
-        <a id="new-ticket-button" href="new_ticket.php"><i class="fa-solid fa-plus"></i></a>
-    </main>
 <?php } ?>
 
 <?php function drawTicket($db, $ticketId) {
@@ -125,4 +130,15 @@
             </fieldset>        
         </form>
     </main>
+<?php } ?>
+
+<?php function drawFiltersBar() { ?>
+    <div id="filters-bar">
+        <div id="top-side">
+            <h3>Filters</h3>
+        </div>
+        <div id="bottom-side">
+            <button id="new-ticket-button" onclick="window.location.href='new_ticket.php'"><i class="fa-solid fa-plus"></i> New ticket</button>
+        </div>
+    </div>
 <?php } ?>

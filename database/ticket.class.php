@@ -60,6 +60,18 @@
       } else return null;
     }
 
+    static function getTicketsBetween(PDO $db, $dateLowerBound, $dateUpperBound) {
+      $stmt = $db->prepare('
+        SELECT TicketID
+        FROM Ticket
+        WHERE Date BETWEEN ? AND ?
+      ');
+      if ($stmt->execute(array($dateLowerBound, $dateUpperBound)));
+      if ($tickets = $stmt->fetchAll()) {
+        return $tickets;
+      } else return null;
+    }
+
     static function getAllTickets(PDO $db) {
       $stmt = $db->prepare('
         SELECT TicketID
@@ -70,7 +82,7 @@
       } else return null;
     }
 
-    static function getTickets(PDO $db, $statuses, $tags, $departments) {
+    static function getTickets(PDO $db, $statuses, $tags, $departments, $dateLowerBound, $dateUpperBound) {
       $aux = Ticket::getAllTickets($db);
       $result = array();
       if (!empty($statuses))
