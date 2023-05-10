@@ -37,10 +37,10 @@
       $tagsPlaceholders = implode(',', array_fill(0, count($tags), '?'));
       $stmt = $db->prepare('
         SELECT DISTINCT TicketID
-        FROM Ticket JOIN TicketTag 
+        FROM Ticket JOIN Ticket_Tag 
         USING(TicketID) 
         WHERE TagID IN (' . $tagsPlaceholders . ')');
-      $stmt->execute(array($tags));
+      $stmt->execute($tags);
       return $stmt->fetchAll();
     }
 
@@ -50,7 +50,7 @@
         SELECT DISTINCT TicketID
         FROM Ticket
         WHERE DepartmentID IN (' . $departmentsPlaceholders . ')');
-      $stmt->execute(array($departments));
+      $stmt->execute($departments);
       return $stmt->fetchAll();
     }
 

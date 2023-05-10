@@ -1,4 +1,4 @@
-<?php
+    <?php
     header('Content-Type: application/json');
 
     require_once(__DIR__ . '/../utils/session.php');
@@ -27,12 +27,16 @@
                 $departments = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
                 $dateLowerBound = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
                 $dateUpperBound = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
+                $ticketsIds = Ticket::getTickets($db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound);
                 $ret['status'] = $status;
                 $ret['tags'] = $tags;
                 $ret['departments'] = $departments;
                 $ret['dateLowerBound'] = $dateLowerBound;
                 $ret['dateUpperBound'] = $dateUpperBound;
-                $ret['tickets'] = Ticket::getTickets($db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound);
+                $ret['tickets'] = $ticketsIds;
+                foreach ($tickets as $ticket) {
+                    // BUild all the ticket info and build the array for json_encode
+                }
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
