@@ -23,16 +23,14 @@
       $this->date = DateTime::createFromFormat('Y-m-d H:i:s', $date);
     }
 
-    static function filterTicketsByStatus(PDO $db, $statuses) {
-      $statusPlaceholders = implode(',', array_fill(0, count($statuses), '?'));
+    static function filterTicketsByStatus(PDO $db, $status) {
       $stmt = $db->prepare('
         SELECT DISTINCT TicketID
         FROM Ticket
-        WHERE Status IN (' . $statusPlaceholders . ')');
-      if ($stmt->execute($statuses));
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+        WHERE Status = ?
+      ');
+      $stmt->execute(array($status));
+      return $stmt->fetchAll();
     }
 
     static function filterTicketsByTags(PDO $db, $tags) {
@@ -42,10 +40,8 @@
         FROM Ticket JOIN TicketTag 
         USING(TicketID) 
         WHERE TagID IN (' . $tagsPlaceholders . ')');
-      if ($stmt->execute($tags));
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+      $stmt->execute(array($tags));
+      return $stmt->fetchAll();
     }
 
     static function filterTicketsByDeparments(PDO $db, $departments) {
@@ -54,43 +50,50 @@
         SELECT DISTINCT TicketID
         FROM Ticket
         WHERE DepartmentID IN (' . $departmentsPlaceholders . ')');
-      if ($stmt->execute($departments));
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+      $stmt->execute(array($departments));
+      return $stmt->fetchAll();
     }
 
-    static function getTicketsBetween(PDO $db, $dateLowerBound, $dateUpperBound) {
+    static function getTicketsAfter(PDO $db, $dateLowerBound) {
       $stmt = $db->prepare('
         SELECT TicketID
         FROM Ticket
-        WHERE Date BETWEEN ? AND ?
+        WHERE Date > ?
       ');
-      if ($stmt->execute(array($dateLowerBound, $dateUpperBound)));
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+      $stmt->execute(array($dateLowerBound));
+      return $stmt->fetchAll();
+    }
+
+    static function getTicketsBefore(PDO $db, $dateUpperBound) {
+      $stmt = $db->prepare('
+        SELECT TicketID
+        FROM Ticket
+        WHERE Date < ?
+      ');
+      $stmt->execute(array($dateUpperBound));
+      return $stmt->fetchAll();
     }
 
     static function getAllTickets(PDO $db) {
       $stmt = $db->prepare('
         SELECT TicketID
         FROM Ticket');
-      if ($stmt->execute());
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+      $stmt->execute();
+      return $stmt->fetchAll();
     }
 
-    static function getTickets(PDO $db, $statuses, $tags, $departments, $dateLowerBound, $dateUpperBound) {
-      $aux = Ticket::getAllTickets($db);
-      $result = array();
-      if (!empty($statuses))
-        $result = array_intersect($aux, Ticket::filterTicketsByStatus($db, $statuses));
+    static function getTickets(PDO $db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound) {
+      $result = array_column(Ticket::getAllTickets($db), 'TicketID');
+      if (!empty($status))
+        $result = array_intersect($result, array_column(Ticket::filterTicketsByStatus($db, $status), 'TicketID'));
       if (!empty($tags)) 
-        $result = array_intersect($aux, Ticket::filterTicketsByTags($db, $tags));
+        $result = array_intersect($result, array_column(Ticket::filterTicketsByTags($db, $tags), 'TicketID'));
       if (!empty($departments))
-        $result = array_intersect($aux, Ticket::filterTicketsByDeparments($db, $departments));
+        $result = array_intersect($result, array_column(Ticket::filterTicketsByDeparments($db, $departments), 'TicketID'));
+      if (!empty($dateLowerBound))
+        $result = array_intersect($result, array_column(Ticket::getTicketsAfter($db, $dateLowerBound), 'TicketID'));
+      if (!empty($dateUpperBound))
+        $result = array_intersect($result, array_column(Ticket::getTicketsBefore($db, $dateUpperBound), 'TicketID'));
       return $result;
     } 
 
@@ -99,7 +102,7 @@
         SELECT TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date
         FROM Ticket
         WHERE TicketID = ?');
-      if ($stmt->execute([$ticketID]));
+      $stmt->execute([$ticketID]);
       if ($ticket = $stmt->fetch()) {
         return new Ticket(
           $ticket['TicketID'],
@@ -121,10 +124,8 @@
         USING(TagID)
         WHERE TicketID = ?
         ');
-      if ($stmt->execute([$ticketID]));
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+      $stmt->execute([$ticketID]);
+      return $stmt->fetchAll();
     }
 
     static function addDocument(PDO $db, int $ticketId, string $path) {
@@ -141,9 +142,7 @@
         WHERE TicketID = ?
       ');
       $stmt->execute(array($ticketId));
-      if ($paths = $stmt->fetchAll()) {
-        return $paths;
-      } else return null;
+      return $stmt->fetchAll();
     }
 
     static function getUserTickets(PDO $db, $userID) {
@@ -151,16 +150,14 @@
         SELECT DISTINCT TicketID
         FROM Ticket JOIN Client ON Client.ClientID = Ticket.ClientID WHERE Client.ClientID = ?');
       $stmt->execute([$userID]);
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else return null;
+      return $stmt->fetchAll();
     }
 
     static function getAgentTickets(PDO $db, $userID) {
       $stmt = $db->prepare('
         SELECT DISTINCT TicketID
         FROM Ticket JOIN Agent ON Ticket.AgentID = ?');
-      if ($stmt->execute([$userID]));
+      $stmt->execute([$userID]);
       if ($tickets = $stmt->fetchAll()) {
         $tickets = Ticket::sortTicketsMostRecent($db, $tickets);
         return $tickets;
@@ -175,10 +172,8 @@
         FROM Ticket
         WHERE TicketID IN (' . $ticketsPlaceholders . ')
         ORDER BY Date DESC');
-      if ($stmt->execute());
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else {return null;}
+      $stmt->execute();
+      return $stmt->fetchAll();
     }
 
     static function sortTicketsLeastRecent(PDO $db, $tickets) {
@@ -190,17 +185,15 @@
         FROM Ticket
         WHERE TicketID IN (' . $ticketsPlaceholders . ')
         ORDER BY Date ASC');
-      if ($stmt->execute());
-      if ($tickets = $stmt->fetchAll()) {
-        return $tickets;
-      } else {return null;}
+      $stmt->execute();
+      return $tickets = $stmt->fetchAll();
     }
 
-    static function addTicket(PDO $db, string $ticket_title,string $ticket_description, string $status,int $ClientID, $departmentID, string $now ) : string{
+    static function addTicket(PDO $db, string $ticket_title, string $ticket_description, string $status, int $ClientID, $departmentID, string $now) : string {
       $stmt = $db->prepare('
         INSERT INTO Ticket (Title, Description, Status, ClientID, DepartmentID, Date)
         VALUES (?, ?, ?, ?, ?, ?)');
-      if ($stmt->execute([$ticket_title, $ticket_description, $status, $ClientID, $departmentID, $now]));
+      $stmt->execute([$ticket_title, $ticket_description, $status, $ClientID, $departmentID, $now]);
       return $db->lastInsertId();
     }
 
@@ -208,11 +201,11 @@
       $stmt = $db->prepare('
         DELETE FROM Ticket_Document
         WHERE TicketID = ?');
-      if ($stmt->execute([$TicketID]));
+      $stmt->execute([$TicketID]);
       $stmt = $db->prepare('
         DELETE FROM Ticket
         WHERE TicketID = ?');
-      if ($stmt->execute([$TicketID]));
+      $stmt->execute([$TicketID]);
     }
   }
 ?>
