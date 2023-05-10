@@ -27,10 +27,7 @@
     </html>
 <?php } ?>
 
-<?php function drawNavBar($db, $userId) { 
-    $userType = getUserType($db, $userId);
-?> 
-
+<?php function drawNavBar($userType) { ?>
     <nav class="navbar"> 
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -60,9 +57,8 @@
 
 <?php function drawAdminNavBar() { ?>
     <li class="nav-item">
-        <!-- <a href="../pages/users.php" class="nav-link">         -->
             <a href="../pages/admins.php" class="nav-link">
-            <i class="fa-solid fa-signal-bars fa-lg"></i>
+            <i class="fa-solid fa-gear fa-lg"></i>
             <!-- <span class="link-text">Users</span> -->
             <span class="link-text">Admins</span>
         </a>
@@ -107,12 +103,6 @@
         <a href="../pages/faq.php" class="nav-link">
             <i class="fa-solid fa-circle-question fa-lg"></i>
             <span class="link-text">FAQ</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="../pages/new_ticket.php" class="nav-link">
-            <i class="fa-solid fa-circle-question fa-lg"></i>
-            <span class="link-text">New Ticket</span>
         </a>
     </li>
 <?php } ?>

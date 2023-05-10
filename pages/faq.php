@@ -13,7 +13,7 @@
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
     drawHeader(['faq'], ['style']);
-    drawNavBar($db, $_SESSION['IDUSER']);
+    drawNavBar($_SESSION['PERMISSIONS']);
     $faqs = FAQ::fetchFAQs($db, 10, 0);
     drawFAQList($faqs);
 

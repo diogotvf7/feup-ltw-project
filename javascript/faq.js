@@ -29,9 +29,7 @@ faqElements.forEach((faqElement, i) => {
 
 fetchMore.addEventListener('click', () => {
     fetchFaqs().then((faqs) => {
-        console.log(faqs['result'].length);
         if (faqs['result'].length == 0) {
-            console.log('no more faqs');
             fetchMore.setAttribute('hidden', 'true');
         } else {
             counter++;

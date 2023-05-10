@@ -35,7 +35,7 @@ body {
 }
 
 main {
-    margin-left: 12rem;
+    margin-left: 10rem;
     padding: 1rem;
     box-sizing: border-box;
 }
@@ -308,74 +308,6 @@ main {
     padding: 2em;
 }
 
-
-/*          Users list          */
-
-#user-list-page {
-    font-family: 'Source Sans Pro', sans-serif;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2em
-}
-
-#table-header {
-    background-color: var(--grey);
-    color: var(--white);
-}
-
-#users-list {
-    margin: 0 auto;
-    overflow-y: scroll;
-    border: 1px solid;
-    scroll-snap-type: y proximity;
-    text-align: center;
-}
-
-.users-list-element td {
-    padding: 1em 1.5em;
-}
-
-.users-list-element:nth-child(odd) {
-    background-color: var(--light-grey);
-}
-
-.users-list-element:nth-child(even) {
-    background-color: var(--white);
-}
-
-#user-list-buttons button {
-    color: var(--white);
-    border: none;
-    border-radius: 1em;
-    padding: 0.5em 1em;
-    font-family: "Source Sans Pro", sans-serif;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 6px #999;
-    background-color: var(--grey);
-}
-
-#user-list-buttons button:active {
-    box-shadow: 0 3px #666;
-    transform: translateY(3px);
-}
-
-#user-list-buttons button:hover {
-    background-color: var(--green);
-}
-
-#save-button {
-    background-color: var(--green);
-}
-
-
 /*          FAQ Element             */
 
 #faq-page {
@@ -444,103 +376,176 @@ main {
 
 /*          New Ticket          */
 
-#ticket-page {
+#new-ticket-button {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
     background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
-    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+#new-ticket-button i {
+    color: var(--white);
+    font-size: 2em;
+}
+
+#new-ticket-page {
+    margin: 0 10rem;
     padding: 0;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-
-body {
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    line-height: 30px;
-}
-
-
-.container {
-	max-width: 400px;
-	width: 100%;
-	margin: 0 auto;
-	position: relative;
-}
-
 
 #new-ticket {
-    background: #f9f9f9;
-    padding: 25px;
-    margin: 150px auto;
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
+    width: 60%;
+    max-width: 40rem;
+    height: 30rem;
+    padding: 2em;
+    font-family: 'Monserrat', sans-serif;
+    color: var(--white);
+    font-weight: 600;
+    border-radius: 2em;
+}
+
+#new-ticket h3 {
+    text-align: center;
+    font-size: 2em;
+}
+
+#new-ticket fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
     align-items: center;
 }
 
-
-#new-ticket h3 {
-    margin-bottom: 0em;
-    color: var(--dark-blue);
-    text-align: center;
-    display: block;
-    font-size: 30px;
-    font-weight: 800;
+#new-ticket fieldset #horizontal {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
 }
 
-
-#new-ticket h4 {
-    margin-top: 1em;
-    color: var(--dark-blue);
-    font-size: medium;
-    font-weight: 800;
+#new-ticket fieldset #horizontal * {
+    width: 40%;
 }
 
-
-#new-ticket fieldset {
-    border: medium none;
-    margin: 0 0 10px;
-    min-width: 90%;
-    padding: 0;
-    width: 100%;
-} 
-
-
-#new-ticket input, select, textarea, button {
-    width: 100%;
-    border: 1px solid #ccc;
-    background: #fff;
+#new-ticket input, select, textarea {
+    color: var(--black);
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+    background: var(--white);
     padding: 10px;
-    font: 500 14px/16px "Open Sans", Helvetica, Arial, sans-serif;
+    font-style: "Open Sans", sans-serif;
 }
-
 
 #new-ticket textarea {
-    height: 100px;
-    max-width: 100%;
+    height: 5rem;
     resize: none;
 }
 
-
 #new-ticket #submit {
+    width: 30%;
     border: none;
     border-radius: 0.5em;
     padding: 0.5em 1em;
-    width: 100%;
     box-shadow: 0 3px #999;
-    
+    transition: all .5s;
 }
-
 
 #new-ticket #submit:active {
     box-shadow: 0 3px #666;
     transform: translateY(3px);
 }
 
-
 #new-ticket #submit:hover {
-    background-color: var(--green);
-    transition: .4s;
+    background-color: var(--grey);
+    color: var(--white);
+}
+
+/*          Users list          */
+
+#user-list-page {
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 0;
+    margin: 0 16em 0 5em;
+}
+
+#table-header {
+    background-color: var(--grey);
+    color: var(--white);
+}
+
+#user-list {
+    width: 100%;
+    margin: 0;
+    overflow-y: scroll;
+    scroll-snap-type: y proximity;
+    text-align: center;
+}
+
+.user-list-element td {
+    padding: 1em 1.5em;
+}
+
+.user-list-element:nth-child(odd) {
+    background-color: var(--light-grey);
+}
+
+.user-list-element:nth-child(even) {
+    background-color: var(--white);
+}
+
+.list-button {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.list-button:active {
+    transform: scale(0.95);
+}
+
+.list-button:hover {
+    background-color: var(--grey);
+    color: var(--white);
+}
+
+/*              Options bar               */
+
+#options-bar {
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
+}
+
+#options-bar h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--white);
+    text-align: center;
+}
+
+#options-bar #bottom-side {
+    margin: 1em 2em;
+    display: flex;
+    flex-direction: column;
+    gap: .3em;
 }

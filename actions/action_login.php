@@ -2,7 +2,7 @@
   include_once('../utils/session.php');
   include_once('../database/user_db.php');
   include_once('../database/connection.db.php');
-  include_once('../database/client.class.php');
+  include_once('../database/user.class.php');
   include_once('../utils/util_funcs.php');
 
   session_start();
@@ -16,13 +16,14 @@
   } 
 
   else if (checkUserCredentials($db, $username, $password)) {
-    $client = Client::getClientByUsername($db,$username);
-    $_SESSION['IDUSER'] = $client->id;
+    $user = User::getClientByUsername($db, $username);
+    $_SESSION['IDUSER'] = $user->id;
+    $_SESSION['PERMISSIONS'] = getUserType($db, $user->id);
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     if (getUserType($db,$_SESSION['IDUSER']) == 'Admin' || getUserType($db,$_SESSION['IDUSER']) == 'Agent'){
       header('Location: /pages/display_tickets.php');
     }
-    else{
+    else {
       header('Location: /pages/my_tickets.php');
     }
   } else {
