@@ -10,12 +10,10 @@
     require_once(__DIR__ . '/../templates/faq.tpl.php');
     require_once(__DIR__ . '/../templates/common.tpl.php');
 
-    $userType = getUserType($db, $_SESSION['IDUSER']);
-
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
     drawHeader(['faq'], ['style']);
-    drawNavBar($userType);
+    drawNavBar($_SESSION['PERMISSIONS']);
     $faqs = FAQ::fetchFAQs($db, 10, 0);
     drawFAQList($faqs);
 

@@ -11,9 +11,8 @@
     require_once(__DIR__ . '/../utils/util_funcs.php');
 
     $ret = array();
-    $userType = getUserType($db, $_SESSION['IDUSER']);
 
-    if ($userType != 'Admin' && $userType != 'Agent') $ret['error'] = 'You don\'t have permission to access this data!';
+    if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') $ret['error'] = 'You don\'t have permission to access this data!';
 
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
 
@@ -31,7 +30,7 @@
                 $ret['role'] = getUserType($db, $id);
                 break;
             case 'getAgentInfo':
-                if ($userType != 'Admin') {
+                if ($_SESSION['PERMISSIONS'] != 'Admin') {
                     $ret['error'] = 'You don\'t have permission to access this data!';
                     break;
                 }

@@ -18,6 +18,7 @@
   else if (checkUserCredentials($db, $username, $password)) {
     $user = User::getClientByUsername($db, $username);
     $_SESSION['IDUSER'] = $user->id;
+    $_SESSION['PERMISSIONS'] = getUserType($db, $user->id);
     $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged in successfully!');
     if (getUserType($db,$_SESSION['IDUSER']) == 'Admin' || getUserType($db,$_SESSION['IDUSER']) == 'Agent'){
       header('Location: /pages/display_tickets.php');

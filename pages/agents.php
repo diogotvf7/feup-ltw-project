@@ -14,17 +14,15 @@
     require_once (__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../database/tag.class.php');
 
-    $userType = getUserType($db, $_SESSION['IDUSER']);
-
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
     $agents = User::getAgents($db);
 
-    if ($userType != 'Admin') 
+    if ($_SESSION['PERMISSIONS'] != 'Admin') 
         die(header('Location: /pages/my_tickets.php'));
     
     drawHeader(['users_list'], ['style']);
-    drawNavBar($userType);
+    drawNavBar($_SESSION['PERMISSIONS']);
     $agents = User::getAgents($db);
     drawAgentsPage($agents);
     drawFooter();
