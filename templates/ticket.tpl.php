@@ -45,6 +45,7 @@
                 drawTicketPreview($db, $ticket["TicketID"]);
             } ?>
         </ul>
+        <a id="new-ticket-button" href="new_ticket.php"><i class="fa-solid fa-plus"></i></a>
     </main>
 <?php } ?>
 
@@ -101,7 +102,6 @@
 <?php } ?>
 
 <?php function createNewTicket($db) { ?>
-
     <main id="new-ticket-page">
         <form id="new-ticket" method="post" enctype="multipart/form-data" action="../actions/submit_ticket.php"> 
             <h3>New Ticket</h3>
