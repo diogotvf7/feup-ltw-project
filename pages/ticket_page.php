@@ -9,14 +9,11 @@
 
     require_once(__DIR__ . '/../templates/common.tpl.php');
     require_once(__DIR__ . '/../templates/ticket.tpl.php');
-    require_once (__DIR__ . '/../database/admin.class.php');
-
-    $userType = getUserType($db, $_SESSION['IDUSER']);
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
     drawHeader(['ticket_colors'], ['style']);
-    drawNavBar($userType);
+    drawNavBar($_SESSION['PERMISSIONS']);
     echo '<main>';
     drawTicket($db, $_GET['id']);
     echo '</main>';

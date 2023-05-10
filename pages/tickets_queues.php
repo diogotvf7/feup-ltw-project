@@ -9,17 +9,13 @@
 
   require_once(__DIR__ . '/../templates/common.tpl.php');
   require_once(__DIR__ . '/../templates/ticket.tpl.php');
-  require_once (__DIR__ . '/../database/admin.class.php');
-  require_once (__DIR__ . '/../database/agent.class.php');
-  require_once (__DIR__ . '/../database/client.class.php');
+  require_once (__DIR__ . '/../database/user.class.php');
   require_once (__DIR__ . '/../database/ticket.class.php');
   require_once(__DIR__ . '/../database/tag.class.php');
 
-  $userType = getUserType($db, $_SESSION['IDUSER']);
-
   if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
-  if ($userType != 'Admin' && $userType != 'Agent') 
+  if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') 
     die(header('Location: /pages/my_tickets.php'));
   drawHeader(['ticket_colors']);
   $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);

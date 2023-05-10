@@ -1,20 +1,18 @@
-<?php function drawUsersPage(PDO $db) {
+<?php function drawUsersPage($users) {
     ?><main id="user-list-page"><?php
-    $users = Client::getAllClientsInfo($db);
-    drawUsersList($db, $users);
+    drawUsersList($users);
     ?></main><?php
     drawOptionsBar();
 } ?>
 
-<?php function drawAgentsPage(PDO $db) {
+<?php function drawAgentsPage($agents) {
     ?><main id="user-list-page"><?php
-    $users = Agent::getAllAgents($db);
-    drawUsersList($db,$users);
+    drawUsersList($agents, true);
     ?></main><?php
     drawOptionsBar();
 } ?>
 
-<?php function drawUsersList(PDO $db, $users) {
+<?php function drawUsersList($users, $agents = false) {
     if ($users == null) {
         echo '<p class="Warning">There are no users yet!</p>';
         return;
@@ -28,19 +26,22 @@
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Tickets made</th>
-            <th>Tickets in charge</th>
+            <?= $agents 
+            ? '<th>Tickets in charge</th><th>Tickets open</th><th>Tickets closed</th>' 
+            : '<th>Tickets made</th>' ?>
         </tr>
         <?php foreach($users as $user) { ?>
             <tr class="user-list-element">
                 <td><input type="checkbox" name="select-user"></td>
-                <td><?= $user['ClientID'] ?></td>
-                <td><?= $user['Name'] ?></td>
-                <td><?= $user['Username'] ?></td>
-                <td><?= $user['Email'] ?></td>
-                <td><?= getUserType($db, $user['ClientID']) ?></td>
-                <td><?= $user['Tickets_made'] ?></td>
-                <td><?= $user['Tickets_in_charge'] == NULL ? '-' : $user['Tickets_in_charge'] ?></td>
+                <td><?= $user->id ?></td>
+                <td><?= $user->name ?></td>
+                <td><?= $user->username ?></td>
+                <td><?= $user->email ?></td>
+                <td><?= $user->type ?></td>
+                <td> - </td>
+                <?= $agents 
+                ? '<td> - </td><td> - </td>'
+                : '' ?>
             </tr>
         <?php } ?>
     </table>
