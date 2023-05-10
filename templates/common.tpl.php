@@ -62,7 +62,7 @@
     <li class="nav-item">
         <!-- <a href="../pages/users.php" class="nav-link">         -->
             <a href="../pages/admins.php" class="nav-link">
-            <i class="fa-solid fa-gear fa-lg"></i>
+            <i class="fa-solid fa-signal-bars fa-lg"></i>
             <!-- <span class="link-text">Users</span> -->
             <span class="link-text">Admins</span>
         </a>
