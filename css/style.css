@@ -376,84 +376,71 @@ main {
 
 /*          New Ticket          */
 
-#ticket-page {
-    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
-    margin: 0;
+#new-ticket-page {
+    margin: 0 10rem;
     padding: 0;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-}
-
-body {
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    line-height: 30px;
-}
-
-.container {
-	max-width: 400px;
-	width: 100%;
-	margin: 0 auto;
-	position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #new-ticket {
-    background: #f9f9f9;
-    padding: 25px;
-    margin: 150px auto;
-    align-items: center;
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
+    width: 60%;
+    max-width: 40rem;
+    height: 30rem;
+    padding: 2em;
+    font-family: 'Monserrat', sans-serif;
+    color: var(--white);
+    font-weight: 600;
+    border-radius: 2em;
 }
 
 #new-ticket h3 {
-    margin-bottom: 0em;
-    color: var(--dark-blue);
     text-align: center;
-    display: block;
-    font-size: 30px;
-    font-weight: 800;
-}
-
-#new-ticket h4 {
-    margin-top: 1em;
-    color: var(--dark-blue);
-    font-size: medium;
-    font-weight: 800;
+    font-size: 2em;
 }
 
 #new-ticket fieldset {
-    border: medium none;
-    margin: 0 0 10px;
-    min-width: 90%;
-    padding: 0;
-    width: 100%;
-} 
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+}
 
-#new-ticket input, select, textarea, button {
-    width: 100%;
-    border: 1px solid #ccc;
-    background: #fff;
+#new-ticket fieldset #horizontal {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+}
+
+#new-ticket fieldset #horizontal * {
+    width: 40%;
+}
+
+#new-ticket input, select, textarea {
+    color: var(--black);
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+    background: var(--white);
     padding: 10px;
-    font: 500 14px/16px "Open Sans", Helvetica, Arial, sans-serif;
+    font-style: "Open Sans", sans-serif;
 }
 
 #new-ticket textarea {
-    height: 100px;
-    max-width: 100%;
+    height: 5rem;
     resize: none;
 }
 
 #new-ticket #submit {
+    width: 30%;
     border: none;
     border-radius: 0.5em;
     padding: 0.5em 1em;
-    width: 100%;
     box-shadow: 0 3px #999;
-    
+    transition: all .5s;
 }
 
 #new-ticket #submit:active {
@@ -461,10 +448,9 @@ body {
     transform: translateY(3px);
 }
 
-
 #new-ticket #submit:hover {
-    background-color: var(--green);
-    transition: .4s;
+    background-color: var(--grey);
+    color: var(--white);
 }
 
 /*          Users list          */

@@ -102,34 +102,27 @@
 
 <?php function createNewTicket($db) { ?>
 
-    <body id = "ticket-page">
-    <div class= "container">
+    <main id="new-ticket-page">
         <form id="new-ticket" method="post" enctype="multipart/form-data" action="../actions/submit_ticket.php"> 
             <h3>New Ticket</h3>
-            <h4 id = description>Fill in the following fields to create a new ticket</h4>
             <fieldset>
-                <input placeholder="Title of ticket" type="text" name="ticket_title" tabindex="1" required autofocus>
-            </fieldset>
-            <fieldset>
-            <select id="department" name="ticket_department">
-            <option value="" selected>Select a department</option>
-            <?php
-            $departments = Department::getAllDepartments($db);
-            foreach ($departments as $department) {
-                echo "<option value=\"" . $department['Name'] . "\">" . $department['Name'] . "</option>";
-            }
-            ?>
-            </select>
-            </fieldset>
-            <fieldset>
+                <legend id = description>Fill in the following fields to create a new ticket</legend>
+                <input placeholder="Title" type="text" name="ticket_title" tabindex="1" required autofocus>
                 <textarea placeholder="Type your Message Here...." name="ticket_description" tabindex="3" required></textarea>
-            </fieldset>
-            <fieldset>
-                <input type="file" id="submitted-files" name="files[]" multiple>
-            </fieldset> 
-            <fieldset>
+                <span id="horizontal">
+                    <input type="file" id="submitted-files" name="files[]" multiple>
+                    <select id="department" name="ticket_department">
+                        <option value="" selected>Select a department</option>
+                        <?php
+                            $departments = Department::getAllDepartments($db);
+                            foreach ($departments as $department) 
+                                echo "<option value=\"" . $department['Name'] . "\">" . $department['Name'] . "</option>";
+                            
+                        ?>
+                    </select>
+                </span>
                 <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
             </fieldset>        
         </form>
-    </div>
-    <?php } ?>
+    </main>
+<?php } ?>
