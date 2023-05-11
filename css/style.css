@@ -10,6 +10,11 @@
     display: none;
 }
 
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
 /*          General          */
 
 :root {
@@ -254,7 +259,7 @@ main {
     background-color: var(--white);
 }
 
-#bottom-side button {
+#bottom-side button, #top-side button {
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 600;
     border-radius: 10px;
@@ -262,11 +267,11 @@ main {
     transition: 0.3s ease;
 }
 
-#bottom-side button:active {
+#bottom-side button:active, #top-side button:active{
     transform: scale(0.95);
 }
 
-#bottom-side button:hover {
+#bottom-side button:hover, #top-side button:hover {
     background-color: var(--grey);
     color: var(--white);
 }
@@ -322,13 +327,6 @@ main {
     scroll-snap-type: y proximity;
     scroll-padding-top: 1em;
 }
-
-/* #ticket-list {
-    margin: 0;
-    overflow-y: scroll;
-    scroll-snap-type: y proximity;
-    text-align: center;
-} */
 
 .ticket-list-element {
     width: fit-content;
@@ -467,7 +465,7 @@ main {
     padding: 2em;
 }
 
-/*              Options bar               */
+/*              Filters bar               */
 
 #filters-bar {
     position: fixed;
@@ -488,14 +486,44 @@ main {
     text-align: center;
 }
 
+#filters-bar #top-side {
+    font-family: "Source Sans Pro", sans-serif;
+    color: var(--white);
+    font-weight: 600;
+    margin: 1em 2em;
+}
+
+#filters-bar #top-side #filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: .3em;
+}
+
+#filters-bar #top-side select {
+    width: 100%;
+}
+
+#filters-bar #top-side #filter-form input {
+    border: none;
+    border-radius: 5px;
+}
+
 #filters-bar #bottom-side {
     font-family: "Source Sans Pro", sans-serif;
     color: var(--black);
+    font-weight: 600;
     margin: 1em 2em;
     display: flex;
     flex-direction: column;
-    font-weight: 600;
     gap: .3em;
+}
+
+#options-bar button, #filters-bar button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    height: 2em;
 }
 
 /*          New Ticket          */

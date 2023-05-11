@@ -11,6 +11,14 @@
         $this->name = $name;
     }
 
+    static function getTags(PDO $db) {
+      $stmt = $db->prepare('
+        SELECT * 
+        FROM Tag
+      ');
+      $stmt->execute();
+      return $stmt->fetchAll();
+    }
     // static function getTag(PDO $db, int $id) : Tag {
     //   $stmt = $db->prepare('
     //     SELECT TagID, Name

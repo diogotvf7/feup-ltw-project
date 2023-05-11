@@ -17,7 +17,7 @@
     die(header('Location: /pages/login.php'));
   if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') 
     die(header('Location: /pages/my_tickets.php'));
-  drawHeader(['ticket_colors']);
+  drawHeader(['ticket']);
   $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
   if ($tickets == null) {echo 'No tickets found!' . '<br>';}
   else {drawTicketsList($db,$tickets);}

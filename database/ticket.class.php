@@ -101,20 +101,10 @@
       $stmt = $db->prepare('
         SELECT TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date
         FROM Ticket
-        WHERE TicketID = ?');
+        WHERE TicketID = ?
+      ');
       $stmt->execute([$ticketID]);
-      if ($ticket = $stmt->fetch()) {
-        return new Ticket(
-          $ticket['TicketID'],
-          $ticket['Title'],
-          $ticket['Description'],
-          $ticket['Status'],
-          $ticket['ClientID'],
-          $ticket['AgentID'],
-          $ticket['DepartmentID'],
-          $ticket['Date']
-        );
-      } else return null;
+      return $stmt->fetch();
     }
 
     static function getTicketTags(PDO $db, $ticketID) {

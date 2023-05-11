@@ -7,9 +7,8 @@
   session_start();
   $db = getDatabaseConnection();
 
-  if ($_SERVER["REQUEST_METHOD"] != "POST") {
+  if ($_SERVER["REQUEST_METHOD"] != "POST")
     exit("POST request expected");
-  }
 
   $ticket_title = $_POST['ticket_title'];
   $ticket_description = $_POST['ticket_description'];
@@ -18,7 +17,7 @@
     $ticket_department = $_POST['ticket_department'];
     $departmentID = Department::getDepartmentbyName($db, $ticket_department);
   }
-  else{
+  else {
     $departmentID = null;
   }
 
@@ -71,7 +70,7 @@
     }
 
     for ($i = 0; $i < count($_FILES['files']['name']); $i++){
-        if (!file_exists(__DIR__ . "/../" . "docs/tickets-docs/" . $ticketID)) mkdir(__DIR__ . "/../" . "docs/tickets-docs/" . $ticketID,  0777, true);
+        if (!file_exists(__DIR__ . "/../docs/tickets-docs/" . $ticketID)) mkdir(__DIR__ . "/../docs/tickets-docs/" . $ticketID,  0777, true);
         $path = "docs/tickets-docs/" . $ticketID . "/" . $_FILES['files']['name'][$i];
         $destination = __DIR__ . "/../"  . $path;
         if (!move_uploaded_file($_FILES['files']['tmp_name'][$i], $destination)) exit("Error moving file");

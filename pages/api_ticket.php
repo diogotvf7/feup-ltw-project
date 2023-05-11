@@ -8,6 +8,7 @@
     $db = getDatabaseConnection();
 
     require_once(__DIR__ . '/../database/ticket.class.php');
+    require_once(__DIR__ . '/../database/user.class.php');
     require_once(__DIR__ . '/../utils/util_funcs.php');
 
     $ret = array();
@@ -22,27 +23,42 @@
                 if (!isset($_GET['id'])) $ret['error'] = 'No client id provided!';
                 break;
             case 'tickets-list':
-                $status = isset($_GET['status']) ? $_GET['status'] : '';
-                $tags = isset($_GET['tags']) ? explode(',', $_GET['tags']) : array();
-                $departments = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
-                $dateLowerBound = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
-                $dateUpperBound = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
-                $ticketsIds = Ticket::getTickets($db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound);
-                $ret['status'] = $status;
-                $ret['tags'] = $tags;
-                $ret['departments'] = $departments;
-                $ret['dateLowerBound'] = $dateLowerBound;
-                $ret['dateUpperBound'] = $dateUpperBound;
-                $ret['tickets'] = $ticketsIds;
-                foreach ($tickets as $ticket) {
-                    // BUild all the ticket info and build the array for json_encode
+                $tickets = array();
+                $ret['statusFilter'] = isset($_GET['status']) ? $_GET['status'] : '';
+                $ret['tagsFilter'] = isset($_GET['tags']) ? explode(',', $_GET['tags']) : array();
+                $ret['departmentsFilter'] = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
+                $ret['dateLowerBound'] = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
+                $ret['dateUpperBound'] = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
+                $ids = Ticket::getTickets($db, 
+                    $ret['statusFilter'], 
+                    $ret['tagsFilter'], 
+                    $ret['departmentsFilter'], 
+                    $ret['dateLowerBound'], 
+                    $ret['dateUpperBound']
+                );
+                foreach ($ids as $id) {
+                    $ticketData = Ticket::getTicketData($db, $id);
+                    $tickets[] = array(
+                        'id' => $ticketData['TicketID'],
+                        'title' => $ticketData['Title'],
+                        'description' => $ticketData['Description'],
+                        'status' => $ticketData['Status'],
+                        'clientId' => $ticketData['ClientID'],
+                        'agentId' => $ticketData['AgentID'],
+                        'departmentId' => $ticketData['DepartmentID'],
+                        'date' => $ticketData['Date'],
+                        'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
+                        'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
+                        'author' => User::getUser($db, $ticketData['ClientID'])->username,
+                        'assignee' => $ticketData['AgentID'] ? User::getUser($db, $ticketData['AgentID'])->username : '',
+                    );
                 }
+                $ret['tickets'] = $tickets;
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;
         }
-        
     }
 
     echo json_encode($ret);

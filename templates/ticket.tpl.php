@@ -6,10 +6,10 @@
     require_once(__DIR__ . '/../utils/util_funcs.php');
 ?>
 
-<?php function drawTicketsListPage(PDO $db, $tickets) {
+<?php function drawTicketsListPage() {
   
   ?><main id="ticket-list-page"><?php
-  drawTicketsList($db, $tickets);
+  drawTicketsList();
   drawFiltersBar();
   ?></main><?php
 } ?>
@@ -31,14 +31,14 @@
             <?=removeOverflow($ticket->description, 60)?>
         </p>
         <div class="tags">
-        <p class="status">
-            <?=$ticket->status?>
-        </p>
-        <?php 
-            if ($tags != null)
-                foreach ($tags as $tag)
-                    echo '<p class="tag">' . $tag['Name'] . '</p>';
-        ?>
+            <p class="status">
+                <?=$ticket->status?>
+            </p>
+            <?php 
+                if ($tags != null)
+                    foreach ($tags as $tag)
+                        echo '<p class="tag">' . $tag['Name'] . '</p>';
+            ?>
         </div>
         <p class="author">
             <?='@' . $author->username?>  
@@ -46,11 +46,8 @@
     </a>
 <?php } ?>
 
-<?php function drawTicketsList($db, $tickets) { ?>
+<?php function drawTicketsList() { ?>
         <ul id="ticket-list">
-            <?php foreach ($tickets as $ticket) {
-                drawTicketPreview($db, $ticket["TicketID"]);
-            } ?>
         </ul>
 <?php } ?>
 
@@ -106,7 +103,7 @@
     
 <?php } ?>
 
-<?php function createNewTicket($db) { ?>
+<?php function drawNewTicketPage($db) { ?>
     <main id="new-ticket-page">
         <form id="new-ticket" method="post" enctype="multipart/form-data" action="../actions/submit_ticket.php"> 
             <h3>New Ticket</h3>
@@ -136,6 +133,32 @@
     <div id="filters-bar">
         <div id="top-side">
             <h3>Filters</h3>
+            <form method="get" id="filter-form">
+                <div class="space-between">
+                    <label for="from">From: </label>
+                    <input id="date-input" type="date" id="from" name="dateLowerBound"
+                        value="2010-01-01">
+                </div>
+                <div class="space-between">
+                    <label for="to">To: </label>
+                    <input id="date-input" type="date" id="to" name="dateUpperBound"
+                        value="<?=Date('Y-m-d')?>">
+                </div>
+                <label for="status">Status:</label>
+                <select id="status-select" name="status">
+                    <option value="">All</option>
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                </select> 
+                <label for="department-select">Departments:</label>
+                <select id="department-select" name="department">
+                    <option value=""></option>
+                </select> 
+                <label for="tag-select">Tags:</label>
+                <select id="tag-select" name="tag" multiple>
+                </select> 
+                <button class="" type="submit"><i class="fa-solid fa-filter"></i>Filter</button>
+            </form>
         </div>
         <div id="bottom-side">
             <button id="new-ticket-button" onclick="window.location.href='new_ticket.php'"><i class="fa-solid fa-plus"></i> New ticket</button>

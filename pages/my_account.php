@@ -14,7 +14,7 @@
 
   if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
-  drawHeader(['ticket_colors']);
+  drawHeader(['ticket']);
   $db = getDatabaseConnection();
   $tickets = Ticket::getAgentTickets($db, $_SESSION['IDUSER']);
   if ($tickets == null) {echo 'No tickets found!' . '<br>';}
