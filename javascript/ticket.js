@@ -8,52 +8,36 @@ const match = pattern.exec(window.location.href);
 
 switch (match[1]) {
     case 'display_tickets': case 'my_tickets':
-        const filterForm = document.getElementById('filter-form');
-        filterForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const formData = new FormData(filterForm);
-            tickets = await fetchTickets(
-                formData.get('dateLowerBound'),
-                formData.get('dateUpperBound'),
-                formData.get('status'),
-                formData.get('department'),
-                formData.getAll('tag')
-            );
-            list.innerHTML = '';
-            for (const ticket of tickets['tickets'])
-                createTicketPreview(ticket);
-            
-            setTagsColor();
-        });   
         window.onload = async function() {
             loadDepartments();
             loadTags();
             const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
                 func: currentPage.substring(0, currentPage.length - 4),
+                sort: 'DESC'
             }));
             const tickets = await response.json();  
-            for (const ticket of tickets['tickets']) {
+            for (const ticket of tickets['tickets'])
                 createTicketPreview(ticket);
-            }
             setTagsColor();
         }
-    
+        const filterForm = document.getElementById('filter-form');    
         filterForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             const formData = new FormData(filterForm);
+            console.log(formData);
             tickets = await fetchTickets(
                 formData.get('dateLowerBound'),
                 formData.get('dateUpperBound'),
                 formData.get('status'),
                 formData.get('department'),
-                formData.getAll('tag')
+                formData.getAll('tag'),
+                formData.get('sort')
             );
             list.innerHTML = '';
             for (const ticket of tickets['tickets'])
                 createTicketPreview(ticket);
-            
             setTagsColor();
-        });             
+        });   
         break;
 
     case 'ticket_page':
@@ -168,14 +152,15 @@ async function fetchDepartments() {
     return departments;
 }
 
-async function fetchTickets(_dateLowerBound, _dateUpperBound, _status, _departments, _tags) {
+async function fetchTickets(_dateLowerBound, _dateUpperBound, _status, _departments, _tags, _sort) {
     const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
         func: currentPage.substring(0, currentPage.length - 4),
         dateLowerBound: _dateLowerBound,
         dateUpperBound: _dateUpperBound,
         status: _status ? _status : null,
         departments: _departments != '' ? _departments : null,
-        tags: _tags != '' ? _tags : null
+        tags: _tags != '' ? _tags : null,
+        sort: _sort != '' ? _sort : null
     }));
     const tickets = await response.json();
     return tickets;

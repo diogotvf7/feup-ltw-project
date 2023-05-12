@@ -67,7 +67,6 @@
             <!-- <p>Last updated: <?=''#timeAgo($ticket->lastUpdate);?></p> -->
         </div>
     </div>
-    
 <?php } ?>
 
 <?php function drawNewTicketPage($db) { ?>
@@ -125,6 +124,12 @@
                 </select> 
                 <label for="tag-select">Tags:</label>
                 <select id="tag-select" name="tag" multiple>
+                </select> 
+                <label for="sort">Sort by:</label>
+                <select id="sort" name="sort">
+                    <option value=""></option>
+                    <option value="DESC" selected>Most recent first</option>
+                    <option value="ASC">Oldest first</option>
                 </select> 
                 <button class="" type="submit"><i class="fa-solid fa-filter"></i>Filter</button>
             </form>

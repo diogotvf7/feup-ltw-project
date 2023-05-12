@@ -25,13 +25,15 @@
             $ret['dateLowerBound'] = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
             $ret['dateUpperBound'] = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
             $ret['userId'] = $_SESSION['IDUSER'];
+            $ret['sort'] = $_GET['sort'];
             $ids = Ticket::getTickets($db, 
                 $ret['statusFilter'], 
                 $ret['tagsFilter'], 
                 $ret['departmentsFilter'], 
                 $ret['dateLowerBound'], 
                 $ret['dateUpperBound'],
-                $_GET['func'] == 'my_tickets' ? $ret['userId'] : null
+                $_GET['func'] == 'my_tickets' ? $ret['userId'] : null,
+                isset($_GET['sort']) ? $_GET['sort'] : null
             );
             foreach ($ids as $id) {
                 $ticketData = Ticket::getTicketData($db, $id);

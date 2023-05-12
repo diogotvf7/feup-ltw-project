@@ -74,17 +74,26 @@
       return $stmt->fetchAll();
     }
 
-    static function getAllTickets(PDO $db, $author = null) {
-      $query = 'SELECT TicketID FROM Ticket';
-      $params = ($author !== null) ? [$author] : [];
-    
-      $stmt = $db->prepare($query . (($author !== null) ? ' WHERE ClientID = ?' : ''));
+    static function getAllTickets(PDO $db, $author = null, $sort = null) {
+      $query = 'SELECT * FROM Ticket';
+      $params = [];
+  
+      if ($author !== null) {
+          array_push($params, $author);
+          $query .= ' WHERE ClientID = ?';
+      }
+  
+      if ($sort !== null) {
+          $query .= ' ORDER BY Date ' . $sort;
+      }
+  
+      $stmt = $db->prepare($query);
       $stmt->execute($params);
       return $stmt->fetchAll();
     }
 
-    static function getTickets(PDO $db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound, $author = null) {
-      $result = array_column(Ticket::getAllTickets($db, $author), 'TicketID');
+    static function getTickets(PDO $db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound, $author = null, $sort = null) {
+      $result = array_column(Ticket::getAllTickets($db, $author, $sort), 'TicketID');
       if (!empty($status))
         $result = array_intersect($result, array_column(Ticket::filterTicketsByStatus($db, $status), 'TicketID'));
       if (!empty($tags)) 
