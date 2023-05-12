@@ -74,23 +74,13 @@
       return $stmt->fetchAll();
     }
 
-    static function getAllTickets(PDO $db, $author) {
-      if ($author != null) {
-        $stmt = $db->prepare('
-          SELECT TicketID
-          FROM Ticket
-          WHERE ClientID = ?
-        ');
-        $stmt->execute([$author]);
-        return $stmt->fetchAll();
-      } else {
-        $stmt = $db->prepare('
-          SELECT TicketID
-          FROM Ticket
-        ');
-        $stmt->execute();
-        return $stmt->fetchAll();
-      }
+    static function getAllTickets(PDO $db, $author = null) {
+      $query = 'SELECT TicketID FROM Ticket';
+      $params = ($author !== null) ? [$author] : [];
+    
+      $stmt = $db->prepare($query . (($author !== null) ? ' WHERE ClientID = ?' : ''));
+      $stmt->execute($params);
+      return $stmt->fetchAll();
     }
 
     static function getTickets(PDO $db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound, $author = null) {

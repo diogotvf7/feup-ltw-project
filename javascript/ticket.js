@@ -3,72 +3,88 @@
 const list = document.getElementById('ticket-list');
 currentPage = window.location.href.split('/').pop();
 
-'my_tickets.php' 
-'display_tickets.php'
-window.onload = async function() {
-    loadDepartments();
-    loadTags();
-    const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
-        func: currentPage.substring(0, currentPage.length - 4),
-    }));
-    const tickets = await response.json();  
-    console.log(tickets);
-    for (const ticket of tickets['tickets']) {
-        createTicketPreview(ticket);
-    }
-    setTagsColor();
-}
+const pattern = /\/pages\/([a-z_]+)\.php/;
+const match = pattern.exec(window.location.href);
 
-const filterForm = document.getElementById('filter-form');
-
-filterForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const formData = new FormData(filterForm);
-    tickets = await fetchTickets(
-        formData.get('dateLowerBound'),
-        formData.get('dateUpperBound'),
-        formData.get('status'),
-        formData.get('department'),
-        formData.getAll('tag')
-    );
-    list.innerHTML = '';
-    for (const ticket of tickets['tickets'])
-        createTicketPreview(ticket);
-    
-    setTagsColor();
-});
-
-if (list) {
-    window.onload = async function() {
-        loadDepartments();
-        loadTags();
-        const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
-            func: currentPage.substring(0, currentPage.length - 4),
-        }));
-        const tickets = await response.json();  
-        for (const ticket of tickets['tickets']) {
-            createTicketPreview(ticket);
+switch (match[1]) {
+    case 'display_tickets': case 'my_tickets':
+        const filterForm = document.getElementById('filter-form');
+        filterForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(filterForm);
+            tickets = await fetchTickets(
+                formData.get('dateLowerBound'),
+                formData.get('dateUpperBound'),
+                formData.get('status'),
+                formData.get('department'),
+                formData.getAll('tag')
+            );
+            list.innerHTML = '';
+            for (const ticket of tickets['tickets'])
+                createTicketPreview(ticket);
+            
+            setTagsColor();
+        });   
+        window.onload = async function() {
+            loadDepartments();
+            loadTags();
+            const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
+                func: currentPage.substring(0, currentPage.length - 4),
+            }));
+            const tickets = await response.json();  
+            for (const ticket of tickets['tickets']) {
+                createTicketPreview(ticket);
+            }
+            setTagsColor();
         }
-        setTagsColor();
-    }
+    
+        filterForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(filterForm);
+            tickets = await fetchTickets(
+                formData.get('dateLowerBound'),
+                formData.get('dateUpperBound'),
+                formData.get('status'),
+                formData.get('department'),
+                formData.getAll('tag')
+            );
+            list.innerHTML = '';
+            for (const ticket of tickets['tickets'])
+                createTicketPreview(ticket);
+            
+            setTagsColor();
+        });             
+        break;
 
-    const filterForm = document.getElementById('filter-form');
-    filterForm.addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const formData = new FormData(filterForm);
-        tickets = await fetchTickets(
-            formData.get('dateLowerBound'),
-            formData.get('dateUpperBound'),
-            formData.get('status'),
-            formData.get('department'),
-            formData.getAll('tag')
-        );
-        list.innerHTML = '';
-        for (const ticket of tickets['tickets'])
-            createTicketPreview(ticket);
-        
+    case 'ticket_page':
         setTagsColor();
-    });
+        break;
+
+    case 'new_ticket':
+        var file_input = document.getElementById('submitted-files');
+        var allowed_extensions = ['.png', '.jpg', '.jpeg', '.gif'];
+        if (file_input)
+            file_input.addEventListener('change', function() {
+                var files = file_input.files;
+        
+                for (var i = 0; i < files.length; i++) {
+                    var file_name = files[i].name;
+                    var file_extension = file_name.substring(file_name.lastIndexOf('.'));
+        
+                    if (!allowed_extensions.includes(file_extension.toLowerCase())) {
+                        // The uploaded file has an invalid extension, so display an error message
+                        alert('Error: Invalid file type.');
+                        file_input.value = '';
+                        return;
+                    }
+                }
+        
+                // All uploaded files have valid extensions, so proceed with the submission
+            });
+        break;
+    default:
+        console.log('This page isn\'t recognized: ' + match);
+        break;
 }
 
 function createTicketPreview(ticket) {
@@ -84,7 +100,7 @@ function createTicketPreview(ticket) {
     time.textContent = timeAgo(ticket.date.date);
     time.classList.add('time');
     const description = document.createElement('p'); // description
-    description.textContent = removeOverflow(ticket.description, 60);
+    description.textContent = limitDisplayLength(ticket.description, 60);
     description.classList.add('description');
     const tagsDiv = document.createElement('div'); // tags div
     tagsDiv.classList.add('tags');
@@ -165,44 +181,6 @@ async function fetchTickets(_dateLowerBound, _dateUpperBound, _status, _departme
     return tickets;
 }
 
-function encodeForAjax(data) {
-    return Object.keys(data).map(function(k){
-        if (data[k] === null || data[k] === undefined) return;
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&')
-}
-
-function timeAgo(_date) {
-    const date = new Date(_date); 
-    const now = new Date();
-    const diff = Math.floor((now - date) / 1000);
-    
-    if (diff < 60) {
-      return 'just now';
-    } else if (diff < 3600) {
-      const minutes = Math.floor(diff / 60);
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-    } else if (diff < 86400) {
-      const hours = Math.floor(diff / 3600);
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    } else if (diff < 2592000) {
-      const days = Math.floor(diff / 86400);
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else if (diff < 31536000) {
-      const months = Math.floor(diff / 2592000);
-      return `${months} month${months > 1 ? 's' : ''} ago`;
-    } else {
-      const years = Math.floor(diff / 31536000);
-      return `${years} year${years > 1 ? 's' : ''} ago`;
-    }
-}
-
-function removeOverflow(string, maxSize) {
-    if (string.length > maxSize) 
-        return string.substr(0, maxSize - 3) + '...';
-    return string;
-}
-
 // Script to assign colors to tags 
 
 function setTagsColor() {
@@ -236,4 +214,48 @@ function setTagsColor() {
         else if (status.textContent.trim() == "Closed")
             status.style.backgroundColor = "#FF6347";
     });
+}
+
+// Script to display the date in a human readable format
+
+function timeAgo(_date) {
+    const date = new Date(_date); 
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    
+    if (diff < 60) {
+      return 'just now';
+    } else if (diff < 3600) {
+      const minutes = Math.floor(diff / 60);
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else if (diff < 86400) {
+      const hours = Math.floor(diff / 3600);
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (diff < 2592000) {
+      const days = Math.floor(diff / 86400);
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (diff < 31536000) {
+      const months = Math.floor(diff / 2592000);
+      return `${months} month${months > 1 ? 's' : ''} ago`;
+    } else {
+      const years = Math.floor(diff / 31536000);
+      return `${years} year${years > 1 ? 's' : ''} ago`;
+    }
+}
+
+// Script to remove overflow from strings
+
+function limitDisplayLength(string, maxSize) {
+    if (string.length > maxSize) 
+        return string.substr(0, maxSize - 3) + '...';
+    return string;
+}
+
+// Script to encode data for ajax
+
+function encodeForAjax(data) {
+    return Object.keys(data).map(function(k){
+        if (data[k] === null || data[k] === undefined) return;
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+    }).join('&')
 }

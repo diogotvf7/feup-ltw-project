@@ -79,7 +79,11 @@
                 <input placeholder="Title" type="text" name="ticket_title" tabindex="1" required autofocus>
                 <textarea placeholder="Type your Message Here...." name="ticket_description" tabindex="3" required></textarea>
                 <span id="horizontal">
-                    <input type="file" id="submitted-files" name="files[]" multiple>
+                    <input type="file" 
+                            id="submitted-files" 
+                            name="files[]"
+                            accept="application/pdf, image/png, image/jpeg, image/gif" 
+                            multiple>
                     <select id="department" name="ticket_department">
                         <option value="" selected>Select a department</option>
                         <?php
@@ -103,13 +107,11 @@
             <form method="get" id="filter-form">
                 <div class="space-between">
                     <label for="from">From: </label>
-                    <input id="date-input" type="date" id="from" name="dateLowerBound"
-                        value="2010-01-01">
+                    <input id="date-input" type="date" id="from" name="dateLowerBound">
                 </div>
                 <div class="space-between">
                     <label for="to">To: </label>
-                    <input id="date-input" type="date" id="to" name="dateUpperBound"
-                        value="<?=Date('Y-m-d')?>">
+                    <input id="date-input" type="date" id="to" name="dateUpperBound">
                 </div>
                 <label for="status">Status:</label>
                 <select id="status-select" name="status">
@@ -117,7 +119,7 @@
                     <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
                 </select> 
-                <label for="department-select">Departments:</label>
+                <label for="department-select">Department:</label>
                 <select id="department-select" name="department">
                     <option value=""></option>
                 </select> 
