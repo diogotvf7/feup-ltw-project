@@ -154,7 +154,7 @@ async function fetchDepartments() {
 
 async function fetchTickets(_dateLowerBound, _dateUpperBound, _status, _departments, _tags) {
     const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
-        func: 'tickets-list',
+        func: currentPage.substring(0, currentPage.length - 4),
         dateLowerBound: _dateLowerBound,
         dateUpperBound: _dateUpperBound,
         status: _status ? _status : null,
