@@ -14,10 +14,9 @@
 
   if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
-  drawHeader(['ticket_colors'], ['style']);
+  drawHeader(['ticket'], ['style']);
   drawNavBar($_SESSION['PERMISSIONS']);
-  $tickets = Ticket::getUserTickets($db, $_SESSION['IDUSER']);
-  $tickets = Ticket::sortTicketsLeastRecent($db, $tickets);
-  if ($tickets != null) drawTicketsList($db, $tickets);
+  drawTicketsListPage();
   drawFooter();
 ?>
+
