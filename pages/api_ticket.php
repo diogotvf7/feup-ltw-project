@@ -37,18 +37,18 @@
                 foreach ($ids as $id) {
                     $ticketData = Ticket::getTicketData($db, $id);
                     $tickets[] = array(
-                        'id' => $ticketData['TicketID'],
-                        'title' => $ticketData['Title'],
-                        'description' => $ticketData['Description'],
-                        'status' => $ticketData['Status'],
-                        'clientId' => $ticketData['ClientID'],
-                        'agentId' => $ticketData['AgentID'],
-                        'departmentId' => $ticketData['DepartmentID'],
-                        'date' => $ticketData['Date'],
+                        'id' => $ticketData->id,
+                        'title' => $ticketData->title,
+                        'description' => $ticketData->description,
+                        'status' => $ticketData->status,
+                        'clientId' => $ticketData->clientId,
+                        'agentId' => $ticketData->agentId,
+                        'departmentId' => $ticketData->departmentId,
+                        'date' => $ticketData->date,
                         'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
                         'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
-                        'author' => User::getUser($db, $ticketData['ClientID'])->username,
-                        'assignee' => $ticketData['AgentID'] ? User::getUser($db, $ticketData['AgentID'])->username : '',
+                        'author' => User::getUser($db, $ticketData->clientId)->username,
+                        'assignee' => $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '',
                     );
                 }
                 $ret['tickets'] = $tickets;
@@ -71,18 +71,18 @@
                 foreach ($ids as $id) {
                     $ticketData = Ticket::getTicketData($db, $id);
                     $tickets[] = array(
-                        'id' => $ticketData['TicketID'],
-                        'title' => $ticketData['Title'],
-                        'description' => $ticketData['Description'],
-                        'status' => $ticketData['Status'],
-                        'clientId' => $ticketData['ClientID'],
-                        'agentId' => $ticketData['AgentID'],
-                        'departmentId' => $ticketData['DepartmentID'],
-                        'date' => $ticketData['Date'],
+                        'id' => $ticketData->id,
+                        'title' => $ticketData->title,
+                        'description' => $ticketData->description,
+                        'status' => $ticketData->status,
+                        'clientId' => $ticketData->clientId,
+                        'agentId' => $ticketData->agentId,
+                        'departmentId' => $ticketData->departmentId,
+                        'date' => $ticketData->date,
                         'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
                         'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
-                        'author' => User::getUser($db, $ticketData['ClientID'])->username,
-                        'assignee' => $ticketData['AgentID'] ? User::getUser($db, $ticketData['AgentID'])->username : '',
+                        'author' => User::getUser($db, $ticketData->clientId)->username,
+                        'assignee' => $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '',
                     );
                 }
                 $ret['tickets'] = $tickets;

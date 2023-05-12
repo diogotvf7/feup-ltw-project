@@ -22,7 +22,7 @@
     $ticket = Ticket::getTicketData($db, $ticketId);
     $tags = Ticket::getTicketTags($db, $ticketId);
     $documents = Ticket::getDocuments($db, $ticketId);
-    $author = User::getUser($db, $ticket->clientId);
+    $author = User::getUser($db, $ticketId);
     if ($ticket->agentId != null) $agent = User::getUser($db, $ticket->agentId);
     if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
     ?>

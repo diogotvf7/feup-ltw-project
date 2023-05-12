@@ -115,7 +115,19 @@
         WHERE TicketID = ?
       ');
       $stmt->execute([$ticketID]);
-      return $stmt->fetch();
+      $ticket = $stmt->fetch();
+      if ($ticket) {
+        return new Ticket(
+          $ticket['TicketID'], 
+          $ticket['Title'], 
+          $ticket['Description'], 
+          $ticket['Status'], 
+          $ticket['ClientID'], 
+          $ticket['AgentID'], 
+          $ticket['DepartmentID'], 
+          $ticket['Date']
+        );
+      } else return null;
     }
 
     static function filterTicketsByAuthor(PDO $db, $authorID) {

@@ -81,7 +81,7 @@ function createTicketPreview(ticket) {
     title.textContent = ticket.title;
     title.classList.add('title');
     const time = document.createElement('p'); // time
-    time.textContent = timeAgo(ticket.date);
+    time.textContent = timeAgo(ticket.date.date);
     time.classList.add('time');
     const description = document.createElement('p'); // description
     description.textContent = removeOverflow(ticket.description, 60);
