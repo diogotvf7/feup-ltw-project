@@ -17,80 +17,41 @@
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
 
     if (!isset($ret['error'])) {
-        switch ($_GET['func']) {
-            case 'my_tickets':
-                $tickets = array();
-                $ret['statusFilter'] = isset($_GET['status']) ? $_GET['status'] : '';
-                $ret['tagsFilter'] = isset($_GET['tags']) ? explode(',', $_GET['tags']) : array();
-                $ret['departmentsFilter'] = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
-                $ret['dateLowerBound'] = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
-                $ret['dateUpperBound'] = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
-                $ret['userId'] = $_SESSION['IDUSER'];
-                $ids = Ticket::getTickets($db, 
-                    $ret['statusFilter'], 
-                    $ret['tagsFilter'], 
-                    $ret['departmentsFilter'], 
-                    $ret['dateLowerBound'], 
-                    $ret['dateUpperBound'],
-                    $ret['userId']
+        if ($_GET['func'] == 'my_tickets' || $_GET['func'] == 'display_tickets') {
+            $tickets = array();
+            $ret['statusFilter'] = isset($_GET['status']) ? $_GET['status'] : '';
+            $ret['tagsFilter'] = isset($_GET['tags']) ? explode(',', $_GET['tags']) : array();
+            $ret['departmentsFilter'] = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
+            $ret['dateLowerBound'] = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
+            $ret['dateUpperBound'] = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
+            $ret['userId'] = $_SESSION['IDUSER'];
+            $ids = Ticket::getTickets($db, 
+                $ret['statusFilter'], 
+                $ret['tagsFilter'], 
+                $ret['departmentsFilter'], 
+                $ret['dateLowerBound'], 
+                $ret['dateUpperBound'],
+                $_GET['func'] == 'my_tickets' ? $ret['userId'] : null
+            );
+            foreach ($ids as $id) {
+                $ticketData = Ticket::getTicketData($db, $id);
+                $tickets[] = array(
+                    'id' => $ticketData->id,
+                    'title' => $ticketData->title,
+                    'description' => $ticketData->description,
+                    'status' => $ticketData->status,
+                    'clientId' => $ticketData->clientId,
+                    'agentId' => $ticketData->agentId,
+                    'departmentId' => $ticketData->departmentId,
+                    'date' => $ticketData->date,
+                    'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
+                    'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
+                    'author' => User::getUser($db, $ticketData->clientId)->username,
+                    'assignee' => $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '',
                 );
-                foreach ($ids as $id) {
-                    $ticketData = Ticket::getTicketData($db, $id);
-                    $tickets[] = array(
-                        'id' => $ticketData->id,
-                        'title' => $ticketData->title,
-                        'description' => $ticketData->description,
-                        'status' => $ticketData->status,
-                        'clientId' => $ticketData->clientId,
-                        'agentId' => $ticketData->agentId,
-                        'departmentId' => $ticketData->departmentId,
-                        'date' => $ticketData->date,
-                        'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
-                        'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
-                        'author' => User::getUser($db, $ticketData->clientId)->username,
-                        'assignee' => $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '',
-                    );
-                }
-                $ret['tickets'] = $tickets;
-                break;
-            case 'display_tickets':
-                if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') $ret['error'] = 'You don\'t have permission to access this data!';
-                $tickets = array();
-                $ret['statusFilter'] = isset($_GET['status']) ? $_GET['status'] : '';
-                $ret['tagsFilter'] = isset($_GET['tags']) ? explode(',', $_GET['tags']) : array();
-                $ret['departmentsFilter'] = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
-                $ret['dateLowerBound'] = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
-                $ret['dateUpperBound'] = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
-                $ids = Ticket::getTickets($db, 
-                    $ret['statusFilter'], 
-                    $ret['tagsFilter'], 
-                    $ret['departmentsFilter'], 
-                    $ret['dateLowerBound'], 
-                    $ret['dateUpperBound']
-                );
-                foreach ($ids as $id) {
-                    $ticketData = Ticket::getTicketData($db, $id);
-                    $tickets[] = array(
-                        'id' => $ticketData->id,
-                        'title' => $ticketData->title,
-                        'description' => $ticketData->description,
-                        'status' => $ticketData->status,
-                        'clientId' => $ticketData->clientId,
-                        'agentId' => $ticketData->agentId,
-                        'departmentId' => $ticketData->departmentId,
-                        'date' => $ticketData->date,
-                        'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
-                        'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
-                        'author' => User::getUser($db, $ticketData->clientId)->username,
-                        'assignee' => $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '',
-                    );
-                }
-                $ret['tickets'] = $tickets;
-                break;
-            default:
-                $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
-                break;
-        }
+            }
+            $ret['tickets'] = $tickets;
+        } else $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
     }
 
     echo json_encode($ret);
