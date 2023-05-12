@@ -18,6 +18,7 @@
         return;
     } 
 ?>  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>     <!--dont know if best way -->
     <table id="user-list">
         <tr id="table-header">
             <th></th>
@@ -56,6 +57,7 @@
             <button type="button" id="toggle-select" class="list-button"><i class="fa-solid fa-square-check"></i> Toggle Select</button> 
             <button type="button" id="select-all" class="list-button"><i class="fa-solid fa-square-check"></i> Select All</button> 
             <button type="button" id="edit-button" class="list-button"><i class="fa-solid fa-pencil"></i> Edit</button> 
+            <button type="button" id="remove-user-button" class="list-button"><i class="fa-solid fa-user-xmark"></i> Remove user</button> 
             <button type="button" id="save-button" class="list-button"><i class="fa-solid fa-floppy-disk"></i> Save</button> 
             <button type="button" id="cancel-button" class="list-button"><i class="fa-solid fa-rectangle-xmark"></i> Cancel</button> 
         </div>

@@ -57,6 +57,18 @@
       $stmt = $db->prepare("
       SELECT ClientID, Name, Username, Email,
       CASE 
+        WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = Client.ClientID) THEN 'Admin'
+        WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = Client.ClientID) THEN 'Agent'
+        ELSE 'Client'
+      END AS Type, Password
+      FROM Client;
+    ");
+
+    /*
+      before
+      $stmt = $db->prepare("
+      SELECT ClientID, Name, Username, Email,
+      CASE 
         WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
         WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
         ELSE 'Client'
@@ -64,6 +76,7 @@
       FROM Client;
     ");
 
+      */
       $stmt->execute();
       $users = $stmt->fetchAll();
       $ret = array();
@@ -211,6 +224,43 @@
       ');
       $stmt->execute(array($id));
       return $stmt->fetch()['Tickets_open'];
+    }
+
+    static function makeClient(PDO $db, int $id) {
+      $stmt = $db->prepare('
+        DELETE FROM Admin
+        WHERE ClientID = ?;
+        ');
+      $stmt->execute(array($id));
+      $stmt = $db->prepare('
+      DELETE FROM Agent
+      WHERE ClientID = ?;
+      ');
+      $stmt->execute(array($id));
+      $stmt = $db->prepare('
+        INSERT INTO Client
+        VALUES (?);
+      ');
+      $stmt->execute(array($id));
+    }
+    static function makeAgent(PDO $db, int $id) {
+      $stmt = $db->prepare('
+        DELETE FROM Admin
+        WHERE ClientID = ?;
+        ');
+      $stmt->execute(array($id));
+      $stmt = $db->prepare('
+        INSERT INTO Agent
+        VALUES (?);
+      ');
+      $stmt->execute(array($id));
+    }
+    static function makeAdmin(PDO $db, int $id) {
+      $stmt = $db->prepare('
+        INSERT INTO Admin
+        VALUES (?);
+      ');
+      $stmt->execute(array($id));
     }
   }
 ?>

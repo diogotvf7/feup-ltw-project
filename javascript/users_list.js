@@ -4,6 +4,7 @@ selectAll = document.getElementById("select-all");
 toggleSelect = document.getElementById("toggle-select");
 cancel = document.getElementById("cancel-button");
 table = document.getElementById("user-list");
+removeUser = document.getElementById("remove-user-button");
 
 window.onload = async function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
@@ -37,21 +38,71 @@ edit.addEventListener("click", function() {
             cell = row.cells[j]; 
             cell.setAttribute("contentEditable", "true");
             cell.style.backgroundColor = "#FFFFCC";
+            if (j == 5) {
+                cell.innerHTML = "";
+                var dropdown = document.createElement("select");
+                // dropdown.addEventListener("change", function(e) {e.target.nextSibling.value = e.target.value;});
+                var option1 = document.createElement("option");
+                option1.text = "Admin";
+                dropdown.add(option1);
+                var option2 = document.createElement("option");
+                option2.text = "Agent";
+                dropdown.add(option2);
+                var option3 = document.createElement("option");
+                option3.text = "Client";
+                dropdown.add(option3);
+                cell.appendChild(dropdown);
+            }
         }
     }
 });
 
 save.addEventListener("click", function() {
+    let rowData = {};
     for (var i = 1, row; row = table.rows[i]; i++) {
         checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
+        rowData[1] = row.cells[1].textContent;
         for (var j = 2; j < 6; j++) {
-            cell = row.cells[j]; 
+            cell = row.cells[j];
             cell.setAttribute("contentEditable", "false");
             cell.style.backgroundColor = row.cells[0].style.backgroundColor;
             checkbox.checked = false;
+            if (j != 5){
+                rowData[j] = cell.innerHTML;
+            }    
+            else {
+                var currentOption = cell.querySelector("select").value;
+                cell.innerHTML = currentOption;
+                rowData[j] = currentOption;
+            }
+            
         }
     }
+    console.log(rowData[1]);
+    console.log(rowData[2]);
+    console.log(rowData[3]);
+    console.log(rowData[4]);
+    console.log(rowData[5]);
+    
+    $.ajax({
+        url: '../actions/update_data.php',
+        method: 'POST',
+        data: {
+            id : rowData[1],
+            name: rowData[2],
+            username: rowData[3],
+            email: rowData[4],
+            newRole: rowData[5]
+        },
+        success: function(response) {
+          console.log('Update successful!');
+        },
+        error: function(xhr, status, error) {
+          console.error('Update failed:', error);
+        }
+      });
+      
 });
 
 selectAll.addEventListener("click", function() {
@@ -86,6 +137,29 @@ cancel.addEventListener("click", async function() {
         row.cells[5].style.backgroundColor = row.cells[0].style.backgroundColor;
         checkbox.checked = false;
     }
+});
+
+removeUser.addEventListener("click", function() {
+    let usersToRemove = {};
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        var checkbox = row.cells[0].children[0];
+        if (!checkbox.checked) continue;
+        usersToRemove[i] = row.cells[1].textContent;
+    }
+    console.log(usersToRemove);
+    $.ajax({
+        url: '../actions/remove_user.php',
+        method: 'POST',
+        data: {
+            usersToRemove : usersToRemove
+        },
+        success: function(response) {
+            console.log('Removal successful!');
+        },
+        error: function(xhr, status, error) {
+            console.error('Removal failed:', error);
+        }
+        });
 });
 
 async function fetchUserInfo(_id) {
