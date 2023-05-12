@@ -14,6 +14,6 @@
         die(header('Location: /pages/login.php'));
     drawHeader([], ['style']);
     drawNavBar($_SESSION['PERMISSIONS']);
-    createNewTicket($db);
+    drawNewTicketPage($db);
     drawFooter();
 ?>
