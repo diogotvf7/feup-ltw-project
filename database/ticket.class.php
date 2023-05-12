@@ -74,16 +74,27 @@
       return $stmt->fetchAll();
     }
 
-    static function getAllTickets(PDO $db) {
-      $stmt = $db->prepare('
-        SELECT TicketID
-        FROM Ticket');
-      $stmt->execute();
-      return $stmt->fetchAll();
+    static function getAllTickets(PDO $db, $author) {
+      if ($author != null) {
+        $stmt = $db->prepare('
+          SELECT TicketID
+          FROM Ticket
+          WHERE ClientID = ?
+        ');
+        $stmt->execute([$author]);
+        return $stmt->fetchAll();
+      } else {
+        $stmt = $db->prepare('
+          SELECT TicketID
+          FROM Ticket
+        ');
+        $stmt->execute();
+        return $stmt->fetchAll();
+      }
     }
 
-    static function getTickets(PDO $db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound) {
-      $result = array_column(Ticket::getAllTickets($db), 'TicketID');
+    static function getTickets(PDO $db, $status, $tags, $departments, $dateLowerBound, $dateUpperBound, $author = null) {
+      $result = array_column(Ticket::getAllTickets($db, $author), 'TicketID');
       if (!empty($status))
         $result = array_intersect($result, array_column(Ticket::filterTicketsByStatus($db, $status), 'TicketID'));
       if (!empty($tags)) 
@@ -104,6 +115,16 @@
         WHERE TicketID = ?
       ');
       $stmt->execute([$ticketID]);
+      return $stmt->fetch();
+    }
+
+    static function filterTicketsByAuthor(PDO $db, $authorID) {
+      $stmt = $db->prepare('
+        SELECT TicketID
+        FROM Ticket
+        WHERE ClientID = ?
+      ');
+      $stmt->execute([$authorID]);
       return $stmt->fetch();
     }
 

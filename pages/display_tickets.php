@@ -16,8 +16,6 @@
     die(header('Location: /pages/login.php'));
   drawHeader(['ticket'], ['style']);
   drawNavBar($_SESSION['PERMISSIONS']);
-  $tickets = Ticket::getAllTickets($db);
-  $tickets = Ticket::sortTicketsLeastRecent($db, $tickets);
   drawTicketsListPage();
   drawFooter();
 ?>

@@ -6,6 +6,13 @@
     require_once(__DIR__ . '/../database/department.class.php');
 
     echo '<br><br><br><br>';
-    $ticketData = Ticket::getTicketData($db, $id);
-    var_dump($ticketData['TicketID']);
+    $tickets = Ticket::getTickets($db, 
+        '', 
+        '', 
+        '', 
+        '', 
+        '',
+        1
+    );
+    var_dump($tickets);
 ?>

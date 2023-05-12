@@ -1,12 +1,49 @@
 // Script to input ticket previews in ticket-list
 
 const list = document.getElementById('ticket-list');
+currentPage = window.location.href.split('/').pop();
+
+'my_tickets.php' 
+'display_tickets.php'
+window.onload = async function() {
+    loadDepartments();
+    loadTags();
+    const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
+        func: currentPage.substring(0, currentPage.length - 4),
+    }));
+    const tickets = await response.json();  
+    console.log(tickets);
+    for (const ticket of tickets['tickets']) {
+        createTicketPreview(ticket);
+    }
+    setTagsColor();
+}
+
+const filterForm = document.getElementById('filter-form');
+
+filterForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const formData = new FormData(filterForm);
+    tickets = await fetchTickets(
+        formData.get('dateLowerBound'),
+        formData.get('dateUpperBound'),
+        formData.get('status'),
+        formData.get('department'),
+        formData.getAll('tag')
+    );
+    list.innerHTML = '';
+    for (const ticket of tickets['tickets'])
+        createTicketPreview(ticket);
+    
+    setTagsColor();
+});
+
 if (list) {
     window.onload = async function() {
         loadDepartments();
         loadTags();
         const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
-            func: 'tickets-list'
+            func: currentPage.substring(0, currentPage.length - 4),
         }));
         const tickets = await response.json();  
         for (const ticket of tickets['tickets']) {
@@ -19,7 +56,6 @@ if (list) {
     filterForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         const formData = new FormData(filterForm);
-        console.log(formData);
         tickets = await fetchTickets(
             formData.get('dateLowerBound'),
             formData.get('dateUpperBound'),

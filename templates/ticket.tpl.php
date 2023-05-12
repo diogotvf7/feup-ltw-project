@@ -7,44 +7,11 @@
 ?>
 
 <?php function drawTicketsListPage() {
-  
   ?><main id="ticket-list-page"><?php
   drawTicketsList();
   drawFiltersBar();
   ?></main><?php
 } ?>
-
-<?php function drawTicketPreview($db, $id) { 
-    $ticket = Ticket::getTicketData($db, $id);
-    $tags = Ticket::getTicketTags($db, $ticket->id);
-    $author = User::getUser($db, $ticket->clientId);
-    // $department = Department::getDepartment($db, $ticket->departmentId);
-?>
-    <a class="ticket-list-element" href="ticket_page.php?id=<?=$id;?>">
-        <h3 class="title">
-            <?=$ticket->title?>
-        </h3>
-        <p class="time">
-            <?=timeAgo($ticket->date)?>
-        </p>
-        <p class="description">
-            <?=removeOverflow($ticket->description, 60)?>
-        </p>
-        <div class="tags">
-            <p class="status">
-                <?=$ticket->status?>
-            </p>
-            <?php 
-                if ($tags != null)
-                    foreach ($tags as $tag)
-                        echo '<p class="tag">' . $tag['Name'] . '</p>';
-            ?>
-        </div>
-        <p class="author">
-            <?='@' . $author->username?>  
-        </p>
-    </a>
-<?php } ?>
 
 <?php function drawTicketsList() { ?>
         <ul id="ticket-list">
