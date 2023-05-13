@@ -17,13 +17,6 @@
     die(header('Location: /pages/login.php'));
   }
 
-  /*
-  if (empty($username) || empty($email) || empty($name) || empty($password)) {
-    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Login failed!');
-    header('Location: '.$_SERVER['HTTP_REFERER']);
-  }
-  */
-
   if (checkUserNotRegistered($db, $username, $email)) { // we should create restrictions for the username and password
     signUpUser($db,$name, $email,$username,$password);
     $user = User::getClientByUsername($db, $username);
