@@ -229,5 +229,13 @@
         WHERE TicketID = ?');
       $stmt->execute([$TicketID]);
     }
+
+    static function setStatus(PDO $db, string $status, int $id) {
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET Status = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$status, $id]);
+    }
   }
 ?>

@@ -18,55 +18,44 @@
         </ul>
 <?php } ?>
 
-<?php function drawTicket($db, $ticketId) {
+<?php function drawTicketPage($db, $ticketId) {
     $ticket = Ticket::getTicketData($db, $ticketId);
     $tags = Ticket::getTicketTags($db, $ticketId);
     $documents = Ticket::getDocuments($db, $ticketId);
-    $author = User::getUser($db, $ticketId);
+    $author = User::getUser($db, $ticket->clientId);
     if ($ticket->agentId != null) $agent = User::getUser($db, $ticket->agentId);
     if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
     ?>
-
-    <div id="ticket">
-        <h1> 
-            <?=$ticket->title;?> 
-        </h1>
-        <label id="description-label" for="description">Ticket description</label>
-        <p id="description"> 
-            <?=$ticket->description;?>
-        </p>
-        <div id="info"> 
-            <p class="status"><?=$ticket->status;?></p>
-            <!-- <select class="status"> 
-                <option value="option1" > </*?=$ticket->status;?*/> </option>
-                <option value="option2"> </*?php echo ($ticket->status == "Open") ? "Closed" : "Open"; */?> </option>
-            </select> -->
-            <div class="tags">
-                <?php foreach ($tags as $tag) {
-                    echo '<p class="tag">' . $tag['Name'] . '</p>';
-                }?>
+    <main>
+        <header>
+            <h1 id="title"> 
+            </h1>
+            <div>
+                <select id="status">
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                    <option value="In progress">In progress</option>
+                </select>
+                <button id="save-button"><i class="fa-solid fa-floppy-disk"></i></button>
             </div>
-            <?= $department == null ? '<p>No department</p>' : '<p>Department: ' . $department->name . '</p>';?>
-            <p>By: <?='@' . $author->username;?></p>
-             <?= $agent == null ? 'This ticket isn\'t assigned' : '<p>Currently assigned to: @' . $agent->username . '</p>';?>
-        </div>
-        <div id="documents">
-            <?php if ($documents != null) { ?>
-                <h2> 
-                    Documents 
-                </h2>
-                <ul id="image-list">
-                    <?php foreach ($documents as $document)
-                        echo  '<img class="image-list-element" height="300" src="../' . $document['Path'] . '">';
-                    ?>
-                </ul>
-            <?php } ?>
-        </div>
-        <div class="date">
-            <p>Created: <?=displayDate($ticket->date);?></p>
-            <!-- <p>Last updated: <?=''#timeAgo($ticket->lastUpdate);?></p> -->
-        </div>
-    </div>
+
+            <p id="date"></p>
+        </header>
+        <body>
+            <p id="description"></p>
+            <div class="space-between">
+                <div id="tags"></div>
+                <p id="department"></p>
+                <p id="author"></p>
+                <p id="agent"></p>
+            </div>
+            <div id="documents-list"></div>            
+            <div id="log">
+                <!-- log goes here -->
+                <!-- insert comment form -->
+            </div>
+        </body>
+    </main>
 <?php } ?>
 
 <?php function drawNewTicketPage($db) { ?>
@@ -117,6 +106,7 @@
                     <option value="">All</option>
                     <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
+                    <option value="In progress">In progress</option>
                 </select> 
                 <label for="department-select">Department:</label>
                 <select id="department-select" name="department">

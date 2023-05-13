@@ -12,14 +12,19 @@
 
     $ret = array();
 
-    if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') $ret['error'] = 'You don\'t have permission to access this data!';
-
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
 
     if (!isset($ret['error'])) {
         switch ($_GET['func']) {
             case 'tags':
+                if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
+                    break;
+                }
                 $ret = Tag::getTags($db);
+                break;
+            case 'user_tags':
+                $ret = Tag::getUserTags($db);
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';

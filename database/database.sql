@@ -122,6 +122,8 @@ INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (10, 'Emil
 INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (11, 'Mike Wilson', 'mwilson', 'mwilson@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
 INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (12, 'Olivia Green', 'ogreen', 'ogreen@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
 INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (13, 'Sophie Taylor', 'staylor', 'staylor@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (14, 'No Ticket Man', 'notickets', 'notickets@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
+INSERT INTO Client (ClientID, Name, Username, Email, Password) VALUES (15, 'No Dep Man', 'nodep', 'nodep@example.com', '$2y$12$iE8ekpQTxYrSH8ob6CAHrOTRRE9BYaVps3kILpKPgjdNVUdJOnwlm');
 
 -- Populating Agent table
 INSERT INTO Agent (ClientID) VALUES (3);
@@ -192,6 +194,8 @@ INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, Dep
 (19, "Difficulty canceling an order", "When a user wants to cancel an order but is having trouble doing so through the website or customer service channels. This could be due to a lack of clear cancellation policies, technical issues with the website's order management system, or unresponsive customer service.", 'Closed', 11, 7, 1, '2023-04-23 01:50:00');
 INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES 
 (20, "Account deletion requests", "When a user requests to have their account deleted but is having trouble doing so. This could be due to unclear account deletion policies, technical issues with the website's account management system, or unresponsive customer service.", 'Open', 12, 5, 1, '2022-01-05 12:00:00');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) VALUES 
+(21, "Issues using website with mobile data", "When I am connected to mobile data my connection to the website takes considerably longer.", 'Open', 15, NULL, NULL, '2022-01-05 12:00:00');
 
 -- Populating Ticket_Tag table
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (1, 1);
@@ -201,6 +205,9 @@ INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (2, 2);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (3, 1);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (4, 3);
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (5, 4);
+INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (21, 2);
+INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (21, 3);
+INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (21, 4);
 
 -- Populating Ticket_Document table
 INSERT INTO Ticket_Document (TicketID, Path) VALUES (1, 'docs/tickets-docs/CNV000009.JPG');

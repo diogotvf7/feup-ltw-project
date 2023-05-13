@@ -19,20 +19,17 @@
       $stmt->execute();
       return $stmt->fetchAll();
     }
-    // static function getTag(PDO $db, int $id) : Tag {
-    //   $stmt = $db->prepare('
-    //     SELECT TagID, Name
-    //     FROM Tag
-    //     WHERE TagID = ?
-    //   ');
 
-    //   $stmt->execute([$id]);
-    //   $agent = $stmt->fetch();
-      
-    //   return new Tag(
-    //     $agent['TagID'],
-    //     $agent['Name']
-    //   );
-    // }
+    static function getUserTags(PDO $db) {
+      $stmt = $db->prepare('
+        SELECT DISTINCT TagID, Name
+        FROM Tag 
+        JOIN Ticket_Tag USING(TagID)
+        JOIN Ticket USING(TicketID)
+        WHERE ClientID = ?
+      ');
+      $stmt->execute([$_SESSION['IDUSER']]);
+      return $stmt->fetchAll();
+    }
   }
 ?>

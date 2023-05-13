@@ -9,8 +9,8 @@ const match = pattern.exec(window.location.href);
 switch (match[1]) {
     case 'display_tickets': case 'my_tickets':
         window.onload = async function() {
-            loadDepartments();
-            loadTags();
+            loadDepartments(match[1]);
+            loadTags(match[1]);
             const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
                 func: currentPage.substring(0, currentPage.length - 4),
                 sort: 'DESC'
@@ -21,7 +21,7 @@ switch (match[1]) {
             setTagsColor();
         }
         const filterForm = document.getElementById('filter-form');    
-        filterForm.addEventListener('submit', async function(event) {
+        filterForm.addEventListener('submit', async function (event) {
             event.preventDefault();
             const formData = new FormData(filterForm);
             console.log(formData);
@@ -36,36 +36,99 @@ switch (match[1]) {
             list.innerHTML = '';
             for (const ticket of tickets['tickets'])
                 createTicketPreview(ticket);
-            setTagsColor();
         });   
         break;
 
     case 'ticket_page':
-        setTagsColor();
+        _title = document.getElementById('title');
+        _description = document.getElementById('description');
+        _status = document.getElementById('status');
+        _tags = document.getElementById('tags');
+        _department = document.getElementById('department');
+        _author = document.getElementById('author');
+        _agent = document.getElementById('agent');
+        _date = document.getElementById('date');
+        _documentList = document.getElementById('documents-list');
+        // _log = document.getElementById('log');
+
+        window.onload = async function() { 
+            const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
+                func: 'get_ticket',
+                id: getParameterByName('id')
+            }));
+            const ticketInfo = await response.json();
+
+            _title.textContent = ticketInfo['title'];
+
+            _description.textContent = ticketInfo['description'];
+
+            if (ticketInfo['status'] == 'Open') 
+                _status.children[0].selected = true;            
+            else if (ticketInfo['status'] == 'Closed') 
+                _status.children[1].selected = true;
+            else if (ticketInfo['status'] == 'In Progress')
+                _status.children[2].selected = true;
+
+            if (ticketInfo['department'] == null)
+                _department.textContent = 'No department assigned';
+            else 
+                _department.textContent = 'Department: ' + ticketInfo['department'];
+
+            _author.textContent = 'By: @' + ticketInfo['author'];
+            
+            if (ticketInfo['agent'] == null)
+                _agent.textContent = 'No agent assigned';
+            else
+                _agent.textContent = 'Currently assigned to: @' + ticketInfo['agent'];
+
+            _date.textContent = 'Created ' + timeAgo(ticketInfo['date']['date']);
+
+            if (ticketInfo['tags'].length == 0) 
+                _tags.remove();
+            else
+                for (const tag of ticketInfo['tags']) {
+                    const tagElement = document.createElement('p');
+                    tagElement.textContent = tag;
+                    tagElement.classList.add('tag');
+                    _tags.appendChild(tagElement);
+                }
+
+            if (ticketInfo['documents'].length == 0) 
+                _documentList.remove();
+            else
+                for (const doc of ticketInfo['documents']) {
+                    const docListElement = document.createElement('img');
+                    docListElement.src = '../' + doc;
+                    docListElement.classList.add('document');
+                    _documentList.appendChild(docListElement);
+                }
+
+            setTagsColor();
+        }
         break;
 
-    case 'new_ticket':
-        var file_input = document.getElementById('submitted-files');
-        var allowed_extensions = ['.png', '.jpg', '.jpeg', '.gif'];
-        if (file_input)
-            file_input.addEventListener('change', function() {
-                var files = file_input.files;
+    // case 'new_ticket':
+    //     var file_input = document.getElementById('submitted-files');
+    //     var allowed_extensions = ['.png', '.jpg', '.jpeg', '.gif'];
+    //     if (file_input)
+    //         file_input.addEventListener('change', function() {
+    //             var files = file_input.files;
         
-                for (var i = 0; i < files.length; i++) {
-                    var file_name = files[i].name;
-                    var file_extension = file_name.substring(file_name.lastIndexOf('.'));
+    //             for (var i = 0; i < files.length; i++) {
+    //                 var file_name = files[i].name;
+    //                 var file_extension = file_name.substring(file_name.lastIndexOf('.'));
         
-                    if (!allowed_extensions.includes(file_extension.toLowerCase())) {
-                        // The uploaded file has an invalid extension, so display an error message
-                        alert('Error: Invalid file type.');
-                        file_input.value = '';
-                        return;
-                    }
-                }
+    //                 if (!allowed_extensions.includes(file_extension.toLowerCase())) {
+    //                     // The uploaded file has an invalid extension, so display an error message
+    //                     alert('Error: Invalid file type.');
+    //                     file_input.value = '';
+    //                     return;
+    //                 }
+    //             }
         
-                // All uploaded files have valid extensions, so proceed with the submission
-            });
-        break;
+    //             // All uploaded files have valid extensions, so proceed with the submission
+    //         });
+    //     break;
     default:
         console.log('This page isn\'t recognized: ' + match);
         break;
@@ -114,43 +177,49 @@ function createTicketPreview(ticket) {
     // const department = document.createElement('p'); // department
 }
 
-async function loadDepartments() {
+async function loadDepartments(_page) {
     const departmentsSelect = document.getElementById('department-select');
-    const departments = await fetchDepartments();
+    const departments = await fetchDepartments(_page);
     if (departments.length !== 0) {
-    for (const department of departments) {
-        const option = document.createElement('option');
-        option.value = department.DepartmentID;
-        option.textContent = department.Name;
-        departmentsSelect.appendChild(option);
+        for (const department of departments) {
+            const option = document.createElement('option');
+            option.value = department.DepartmentID;
+            option.textContent = department.Name;
+            departmentsSelect.appendChild(option);
+        }
+    } else {
+        document.querySelector('#filter-form > label[for="department-select"]').hidden = true;
+        departmentsSelect.hidden = true;
     }
 }
-}
 
-async function loadTags() {
+async function loadTags(_page) {
     const tagsSelect = document.getElementById('tag-select');
-    const tags = await fetchTags();
+    const tags = await fetchTags(_page);
     if (tags.length !== 0) {
-    for (const tag of tags) {
-        const option = document.createElement('option');
-        option.value = tag.TagID;
-        option.textContent = tag.Name;
-        tagsSelect.appendChild(option);
+        for (const tag of tags) {
+            const option = document.createElement('option');
+            option.value = tag.TagID;
+            option.textContent = tag.Name;
+            tagsSelect.appendChild(option);
+        }
+    } else {
+        tagsSelect.hidden = true;
+        document.querySelector('#filter-form > label[for="tag-select"]').hidden = true;
     }
 }
-}
 
-async function fetchTags() {
+async function fetchTags(_page) {
     const response = await fetch('../pages/api_tag.php?' + encodeForAjax({
-        func: 'tags',
+        func: _page == 'display_tickets' ? 'tags' : 'user_tags',
     }));
     const tags = await response.json();
     return tags;
 }
 
-async function fetchDepartments() {
+async function fetchDepartments(_page) {
     const response = await fetch('../pages/api_department.php?' + encodeForAjax({
-        func: 'departments',
+        func: _page == 'display_tickets' ? 'departments' : 'user_departments',
     }));
     const departments = await response.json();
     return departments;
@@ -202,7 +271,23 @@ function setTagsColor() {
             status.style.backgroundColor = "#32CD32";
         else if (status.textContent.trim() == "Closed")
             status.style.backgroundColor = "#FF6347";
+        else if (status.textContent.trim() == "In progress")
+            status.style.backgroundColor = "#FFD700";
     });
+
+    const _status = document.getElementById('status');
+    if (_status) {            
+        const option = _status.options[_status.selectedIndex].value;
+        if (option == "Open") _status.style.backgroundColor = "#32CD32";
+        else if (option == "Closed") _status.style.backgroundColor = "#FF6347";
+        else if (option == "In progress") _status.style.backgroundColor = "#FFD700";
+        _status.addEventListener('change', function() {
+            const option = _status.options[_status.selectedIndex].value;
+            if (option == "Open") _status.style.backgroundColor = "#32CD32";
+            else if (option == "Closed") _status.style.backgroundColor = "#FF6347";
+            else if (option == "In progress") _status.style.backgroundColor = "#FFD700";
+        });
+    }
 }
 
 // Script to display the date in a human readable format
@@ -247,4 +332,11 @@ function encodeForAjax(data) {
         if (data[k] === null || data[k] === undefined) return;
         return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
     }).join('&')
+}
+
+// Script to get url parameter by name
+
+function getParameterByName(name) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
 }

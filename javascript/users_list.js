@@ -36,7 +36,7 @@ edit.addEventListener("click", function() {
         if (!checkbox.checked) continue;
         for (var j = 2, col; col = row.cells[j] && j < 6; j++) {
             cell = row.cells[j]; 
-            cell.setAttribute("contentEditable", "true");
+            if (j != 5) cell.setAttribute("contentEditable", "true");
             cell.style.backgroundColor = "#FFFFCC";
             if (j == 5) {
                 cell.innerHTML = "";
@@ -133,7 +133,6 @@ cancel.addEventListener("click", async function() {
         row.cells[4].setAttribute("contentEditable", "false");
         row.cells[4].style.backgroundColor = row.cells[0].style.backgroundColor;
         row.cells[5].textContent = user['role']; 
-        row.cells[5].setAttribute("contentEditable", "false");
         row.cells[5].style.backgroundColor = row.cells[0].style.backgroundColor;
         checkbox.checked = false;
     }
