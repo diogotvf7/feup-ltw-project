@@ -63,20 +63,6 @@
       END AS Type, Password
       FROM Client;
     ");
-
-    /*
-      before
-      $stmt = $db->prepare("
-      SELECT ClientID, Name, Username, Email,
-      CASE 
-        WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
-        WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
-        ELSE 'Client'
-      END AS Type, Password
-      FROM Client;
-    ");
-
-      */
       $stmt->execute();
       $users = $stmt->fetchAll();
       $ret = array();
