@@ -19,8 +19,7 @@
     $agents = User::getAgents($db);
 
     if ($_SESSION['PERMISSIONS'] != 'Admin') 
-        die(header('Location: /pages/my_tickets.php'));
-    
+        die(header('Location: /pages/my_tickets.php')); 
     drawHeader(['users_list'], ['style']);
     drawNavBar($_SESSION['PERMISSIONS']);
     $agents = User::getAgents($db);

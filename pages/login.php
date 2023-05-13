@@ -27,11 +27,11 @@
     <h1 class="up">Welcome to</h1>
     <form action="../actions/action_login.php" class="form-box" method="post">
       <h2>Login</h2>
-      <input type="email" name="email" placeholder="Email" hidden required>
-      <input type="name" name="name" placeholder="Name" hidden required>
-      <input type="username" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <input type="password" name="confirm-password" placeholder="Confirm password" hidden required>
+      <input type="email" name="email" placeholder="Email" hidden>
+      <input type="name" name="name" placeholder="Name" hidden>
+      <input type="username" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="confirm-password" placeholder="Confirm password" hidden>
       <button type="submit">Login</button>
       <span>
         <p>Don't have an account yet?</p>

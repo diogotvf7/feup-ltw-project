@@ -96,14 +96,13 @@
 
     static function getAgents(PDO $db) {
       $stmt = $db->prepare("
-        SELECT ClientID, Name, Username, Email,
-        CASE 
-          WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = ?) THEN 'Admin'
-          WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = ?) THEN 'Agent'
-          ELSE 'Client'
-        END AS Type, Password
-        FROM Client JOIN Agent
-        USING(ClientID);
+      SELECT Client.ClientID as ClientID, Name, Username, Email,
+      CASE 
+        WHEN EXISTS (SELECT 1 FROM Admin WHERE ClientID = Client.ClientID) THEN 'Admin'
+        WHEN EXISTS (SELECT 1 FROM Agent WHERE ClientID = Client.ClientID) THEN 'Agent'
+        ELSE 'Client'
+      END AS Type, Password
+      FROM Client join Agent where Client.ClientID = Agent.ClientID;
       ");
 
       $stmt->execute();
