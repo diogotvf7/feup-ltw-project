@@ -117,6 +117,7 @@ function createTicketPreview(ticket) {
 async function loadDepartments() {
     const departmentsSelect = document.getElementById('department-select');
     const departments = await fetchDepartments();
+    if (departments.length !== 0) {
     for (const department of departments) {
         const option = document.createElement('option');
         option.value = department.DepartmentID;
@@ -124,16 +125,19 @@ async function loadDepartments() {
         departmentsSelect.appendChild(option);
     }
 }
+}
 
 async function loadTags() {
     const tagsSelect = document.getElementById('tag-select');
     const tags = await fetchTags();
+    if (tags.length !== 0) {
     for (const tag of tags) {
         const option = document.createElement('option');
         option.value = tag.TagID;
         option.textContent = tag.Name;
         tagsSelect.appendChild(option);
     }
+}
 }
 
 async function fetchTags() {

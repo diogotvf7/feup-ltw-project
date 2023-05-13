@@ -11,6 +11,7 @@
   require_once(__DIR__ . '/../templates/ticket.tpl.php');
   require_once (__DIR__ . '/../database/user.class.php');
   require_once (__DIR__ . '/../database/ticket.class.php');
+  include_once('../utils/util_funcs.php');
 
   if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));

@@ -120,7 +120,7 @@
                 </select> 
                 <label for="department-select">Department:</label>
                 <select id="department-select" name="department">
-                    <option value=""></option>
+                    <option value="">All</option>
                 </select> 
                 <label for="tag-select">Tags:</label>
                 <select id="tag-select" name="tag" multiple>

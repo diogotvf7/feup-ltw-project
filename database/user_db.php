@@ -24,4 +24,16 @@ function checkUserCredentials($db, $username, $password){
     $stmt->execute(array($username));
     $hashed_password = $stmt->fetch()['Password'];
     return (password_verify($password, $hashed_password));
-} ?>
+} 
+
+function updateUserData($db, $id, $name, $username, $email){
+    //$db = getDatabaseConnection();
+    $stmt = $db->prepare('UPDATE Client SET Name = ?, Email = ?, Username = ? WHERE ClientID = ?');
+    $stmt->execute(array($name,$email,$username,$id));
+} 
+
+function RemoveUser($db, $id){
+    $stmt = $db->prepare('DELETE FROM Client WHERE ClientID = ?');
+    $stmt->execute(array($id));
+}
+?>
