@@ -30,8 +30,8 @@
       <input type="email" name="email" placeholder="Email" hidden>
       <input type="name" name="name" placeholder="Name" hidden>
       <input type="username" name="username" placeholder="Username">
-      <input type="password" name="password" placeholder="Password">
-      <input type="password" name="confirm-password" placeholder="Confirm password" hidden>
+      <input type="password" id="password" name="password" placeholder="Password">
+      <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" hidden>
       <button type="submit">Login</button>
       <span>
         <p>Don't have an account yet?</p>

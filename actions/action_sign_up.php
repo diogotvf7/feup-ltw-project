@@ -13,9 +13,11 @@
   $confirmPassword = $_POST['confirm-password'];
   $db = getDatabaseConnection();
   
+  /*
   if ($password !== $confirmPassword){
     die(header('Location: /pages/login.php'));
   }
+  */
 
   if (checkUserNotRegistered($db, $username, $email)) { // we should create restrictions for the username and password
     signUpUser($db,$name, $email,$username,$password);
