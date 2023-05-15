@@ -37,6 +37,15 @@ main {
     padding: 2rem;
 }
 
+#edit-ticket {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    border-radius: 100%;
+    font-size: 1.5em;
+    padding: 10px;
+}
+
 header {
     font-family: 'Montserrat', sans-serif;
     display: flex;

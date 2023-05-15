@@ -14,16 +14,22 @@
 
     if (!Session::isLoggedIn()) $ret['error'] = 'User not logged in!';
 
-    if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') $ret['error'] = 'You don\'t have permission to access this data!';
-
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
 
     if (!isset($ret['error'])) {
         switch ($_GET['func']) {
             case 'getAgents':
+                if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
+                    break;  
+                }
                 $ret['agents'] = User::getAgents($db);
                 break;
             case 'getSingleUser':
+                if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
+                    break;  
+                }
                 if (!isset($_GET['id'])) {
                     $ret['error'] = 'No client id provided!';
                     break;
@@ -39,7 +45,7 @@
             case 'getAgentInfo':
                 if ($_SESSION['PERMISSIONS'] != 'Admin') {
                     $ret['error'] = 'You don\'t have permission to access this data!';
-                    break;
+                    break;  
                 }
                 if (!isset($_GET['id'])) {
                     $ret['error'] = 'No client id provided!';
@@ -52,6 +58,10 @@
                 $ret['closed'] = User::getTicketsClosed($db, $id);
                 break;
             case 'getClientInfo':
+                if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
+                    break;  
+                }
                 if (!isset($_GET['id'])) {
                     $ret['error'] = 'No client id provided!';
                     break;
@@ -59,6 +69,9 @@
                 $id = $_GET['id'];
                 $ret['id'] = $id;
                 $ret['made'] = User::getTicketsMade($db, $id);
+                break;
+            case 'getAccountInfo':
+                $ret = User::getUser($db, $_SESSION['IDUSER']);
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';

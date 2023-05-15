@@ -56,6 +56,10 @@ switch (match[1]) {
         break;
 }
 
+async function editTicketHandler() {
+    // bla bla bla
+}
+
 async function drawTicketPage(ticket) {
     const session = await getSession();
     _title = document.getElementById('title');
@@ -73,16 +77,14 @@ async function drawTicketPage(ticket) {
 
     _description.textContent = ticket['description'];
 
-    if (session['permissions'] == 'Admin' || session['permissions'] == 'Agent') {
-        if (ticket['status'] == 'Open') 
-            _status.children[0].selected = true;            
-        else if (ticket['status'] == 'Closed') 
-            _status.children[1].selected = true;
-        else if (ticket['status'] == 'In Progress')
-            _status.children[2].selected = true;
-    } else {
-        _status.textContent = ticket['status']; 
-    }
+    _status.textContent = 'Status: ' + ticket['status'];
+
+    // if (ticket['status'] == 'Open') 
+    //     _status.children[0].selected = true;            
+    // else if (ticket['status'] == 'Closed') 
+    //     _status.children[1].selected = true;
+    // else if (ticket['status'] == 'In Progress')
+    //     _status.children[2].selected = true;
 
     if (ticket['departmentId'] == null)
         _department.textContent = 'No department assigned';
@@ -324,29 +326,6 @@ async function setTagsColor() {
         else if (status.textContent.trim() == "In progress")
             status.style.backgroundColor = "#FFD700";
     });
-
-    const _status = document.getElementById('status');
-
-    if (_status) {
-        const session = await getSession();         
-        if (session['permissions'] == ['Admin'] || session['permissions'] == ['Agent']) {   
-            const option = _status.options[_status.selectedIndex].value;
-            if (option == "Open") _status.style.color = "#32CD32";
-            else if (option == "Closed") _status.style.color = "#FF6347";
-            else if (option == "In progress") _status.style.color = "#FFD700";
-            _status.addEventListener('change', function() {
-                const option = _status.options[_status.selectedIndex].value;
-                if (option == "Open") _status.style.color = "#32CD32";
-                else if (option == "Closed") _status.style.color = "#FF6347";
-                else if (option == "In progress") _status.style.color = "#FFD700";
-            });
-        } else {
-            const statusValue = _status.textContent;
-            if (statusValue.trim() == "Open") _status.style.border = "1px solid #32CD32";
-            else if (statusValue.trim() == "Closed") _status.style.border = "1px solid #FF6347";
-            else if (statusValue.trim() == "In progress") _status.style.border = "1px solid #FFD700";
-        }
-    }
 }
 
 // Script to display the date in a human readable format

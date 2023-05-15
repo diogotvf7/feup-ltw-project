@@ -88,7 +88,7 @@
 
 <?php function drawClientNavBar() { ?>
     <li class="nav-item">
-        <a href="../pages/account_settings.php" class="nav-link">
+        <a href="../pages/my_account.php" class="nav-link">
             <i class="fa-solid fa-user fa-lg"></i>
             <span class="link-text">My account</span>
         </a>

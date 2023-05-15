@@ -20,21 +20,16 @@
 
 <?php function drawTicketPage() { ?>
     <main>
+        <button id="edit-ticket"><i class="fa-solid fa-pen-to-square"></i></button>
         <header>
             <h1 id="title"> 
             </h1>
-            <?php if ($_SESSION['PERMISSIONS'] == 'Admin' || $_SESSION['PERMISSIONS'] == 'Agent') { ?>
-                <div>
-                    <select id="status">
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
-                        <option value="In progress">In progress</option>
-                    </select>
-                    <button id="save-button"><i class="fa-solid fa-floppy-disk"></i></button>
-                </div>
-            <?php } else { ?>
-                <p id="status"></p>
-            <?php } ?>
+            <p id="status"></p>
+            <!-- <select id="status">
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+                <option value="In progress">In progress</option>
+            </select> -->
             <p id="date"></p>
         </header>
         <body>
