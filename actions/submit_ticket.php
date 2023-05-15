@@ -13,28 +13,7 @@
 
   $ticket_title = $_POST['ticket_title'];
   $ticket_description = $_POST['ticket_description'];   
-
-  /*
-  echo $ticket_title;
-  echo "<br>";
-  echo $ticket_description;
-  echo "<br>";
-  echo $_FILES['files']['name'][0];
-  echo "<br>";
-  echo $_POST['ticket_department'];
-  echo "<br>"
-  */
-  /*
-  $tags = $_POST['tags'];
-    foreach ($tags as $tag){
-        echo $tag;
-    }
-    */
- 
     
-    /* handling department */
-    
-
     if (!empty($_POST['ticket_department'])){
         $ticket_department = $_POST['ticket_department'];
         $departmentID = Department::getDepartmentbyName($db, $ticket_department);
