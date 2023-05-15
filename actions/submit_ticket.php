@@ -3,6 +3,7 @@
   include_once('../database/connection.db.php');
   include_once('../database/ticket.class.php');
   include_once('../database/department.class.php');
+  include_once('../database/tag.class.php');
 
   session_start();
   $db = getDatabaseConnection();
@@ -11,22 +12,36 @@
     exit("POST request expected");
 
   $ticket_title = $_POST['ticket_title'];
-  $ticket_description = $_POST['ticket_description'];
+  $ticket_description = $_POST['ticket_description'];   
+    
+    if (!empty($_POST['ticket_department'])){
+        $ticket_department = $_POST['ticket_department'];
+        $departmentID = Department::getDepartmentbyName($db, $ticket_department);
+    }
+    else {
+        $departmentID = null;
+    }
 
-  if (!empty($_POST['ticket_department'])){
-    $ticket_department = $_POST['ticket_department'];
-    $departmentID = Department::getDepartmentbyName($db, $ticket_department);
-  }
-  else {
-    $departmentID = null;
-  }
-
+    
     $now = new DateTime('now',new DateTimeZone('Europe/Lisbon'));
     $now = $now->format('Y-m-d H:i:s');
     $status = "Open";
     $ticketID = Ticket::addTicket($db, $ticket_title, $ticket_description, $status, $_SESSION['IDUSER'], $departmentID, $now);
     settype($ticketID, "integer");
 
+    /* handling tags */
+
+    if (!empty($_POST['tags'])){
+        $tags = $_POST['tags'];
+        foreach ($tags as $tag){
+            $tagID = Tag::getTagbyName($db, $tag);
+            if ($tagID == null) {
+                $tagID = Tag::createTag($db, $tag);
+            }
+            Ticket::addTicketTag($db, $ticketID, $tagID);
+        }
+    }
+    
     if ($_FILES['files']['error'][0] != 4){
         
     $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -79,15 +94,8 @@
 
     }
     header("Location: /../pages/my_tickets.php");
+    
+    
 
 ?>
 
-
-<!-- Array ( 
-    [files] => Array ( 
-        [name] => Array ( [0] => 2day.txt [1] => Capturar.PNG ) 
-        [full_path] => Array ( [0] => 2day.txt [1] => Capturar.PNG ) 
-        [type] => Array ( [0] => text/plain [1] => image/png ) 
-        [tmp_name] => Array ( [0] => /tmp/phpKeubo6 [1] => /tmp/phpDCm8lm ) 
-        [error] => Array ( [0] => 0 [1] => 0 ) 
-        [size] => Array ( [0] => 0 [1] => 94625 ) ) ) -->
