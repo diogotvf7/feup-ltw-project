@@ -1,17 +1,19 @@
-import { fetch_ticket_api } from './api/fetch_api.js'
-import { loadDepartments, loadTags } from './api/load_from_api.js'
-import { drawTicketPreview } from './draw_functions/draw_ticket_preview.js'
-import { setTagsColor } from './util.js'
+import { fetch_ticket_api } from '../api/fetch_api.js'
+import { loadDepartments, loadTags } from '../api/load_from_api.js'
+import { drawTicketPreview } from '../draw_functions/draw_ticket_preview.js'
+import { setTagsColor } from '../util.js'
+
+const list = document.getElementById('ticket-list');
 
 window.onload = async function() {
     loadDepartments({
-        func: 'user_departments'
+        func: 'departments'
     });
     loadTags({
-        func: 'user_tags'
+        func: 'tags'
     });
     const tickets = await fetch_ticket_api({
-        func: 'my_tickets',
+        func: 'display_tickets',
         sort: 'DESC'
     }); 
     for (const ticket of tickets['tickets'])

@@ -48,10 +48,10 @@ checkbox.addEventListener('change', () => {
 });
 
 async function fillInputsWithDatabaseInfo() {
-    _name = document.getElementById('name');
-    _username = document.getElementById('username');
-    _email = document.getElementById('email');
-    _pass = document.getElementById('pass');
+    const _name = document.getElementById('name');
+    const _username = document.getElementById('username');
+    const _email = document.getElementById('email');
+    const _pass = document.getElementById('pass');
 
     const response = await fetch('../pages/api_user.php?func=getAccountInfo');
     const data = await response.json();

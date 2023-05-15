@@ -15,7 +15,7 @@
                     echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
                 } ?>
                 <?php foreach ($scripts as $script) { 
-                    echo '<script type="module" src="../javascript/', $script, '.js" defer></script>';
+                    echo '<script type="module" src="../javascript/pages/', $script, '.js" defer></script>';
                 } ?>
                 <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
             </head>

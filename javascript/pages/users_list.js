@@ -1,14 +1,14 @@
-edit = document.getElementById("edit-button");
-save = document.getElementById("save-button");
-selectAll = document.getElementById("select-all");
-toggleSelect = document.getElementById("toggle-select");
-cancel = document.getElementById("cancel-button");
-table = document.getElementById("user-list");
-removeUser = document.getElementById("remove-user-button");
+const edit = document.getElementById("edit-button");
+const save = document.getElementById("save-button");
+const selectAll = document.getElementById("select-all");
+const toggleSelect = document.getElementById("toggle-select");
+const cancel = document.getElementById("cancel-button");
+const table = document.getElementById("user-list");
+const removeUser = document.getElementById("remove-user-button");
 
 window.onload = async function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
-        id = row.cells[1].textContent;
+        let id = row.cells[1].textContent;
         switch (row.cells.length) {
             case 7:
                 let clientInfo = await fetchClientInfo(id);
