@@ -7,6 +7,8 @@
 
     $ret = array();
 
+    if (!Session::isLoggedIn()) $ret['error'] = 'User not logged in!';
+
     if (!isset($_GET['functionname'])) $ret['error'] = 'No function name!';
 
     if (!isset($_GET['n'])) $ret['error'] = 'No function arguments!';

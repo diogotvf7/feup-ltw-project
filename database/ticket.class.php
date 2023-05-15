@@ -237,5 +237,28 @@
         WHERE TicketID = ?');
       $stmt->execute([$status, $id]);
     }
+
+    static function getComments(PDO $db, int $id) {
+      $stmt = $db->prepare('
+        SELECT Comment, Date, Username
+        FROM Ticket_Comment JOIN Client
+        USING(ClientID)
+        WHERE TicketID = ?
+        ORDER BY Date ASC
+      ');
+      $stmt->execute([$id]);
+      return $stmt->fetchAll();
+    }
+
+    static function getUpdates(PDO $db, int $id) {
+      $stmt = $db->prepare('
+        SELECT *
+        FROM Ticket_Update
+        WHERE TicketID = ?
+        ORDER BY Date ASC
+      ');
+      $stmt->execute([$id]);
+      return $stmt->fetchAll();
+    }
   }
 ?>

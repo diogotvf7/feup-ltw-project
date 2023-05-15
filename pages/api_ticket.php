@@ -13,6 +13,7 @@
     require_once(__DIR__ . '/../utils/util_funcs.php');
 
     $ret = array();
+    
     if (!Session::isLoggedIn()) $ret['error'] = 'User not logged in!';
 
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
@@ -70,6 +71,7 @@
                 $ret['status'] = $ticketData->status;
                 $ret['clientId'] = $ticketData->clientId;
                 $ret['agentId'] = $ticketData->agentId;
+                $ret['agentName'] = $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '';
                 $ret['departmentId'] = $ticketData->departmentId;
                 $ret['departmentName'] = $ticketData->departmentId ? Department::getDepartment($db, $ticketData->departmentId)->name : '';
                 $ret['date'] = $ticketData->date;
@@ -77,6 +79,8 @@
                 $ret['tags'] = array_column(Ticket::getTicketTags($db, $_GET['id']), 'Name');
                 $ret['author'] = User::getUser($db, $ticketData->clientId)->username;
                 $ret['assignee'] = $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '';
+                $ret['comments'] = Ticket::getComments($db, $_GET['id']);
+                $ret['updates'] = Ticket::getUpdates($db, $_GET['id']);
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';

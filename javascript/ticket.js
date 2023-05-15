@@ -17,7 +17,7 @@ switch (match[1]) {
             }));
             const tickets = await response.json();  
             for (const ticket of tickets['tickets'])
-                createTicketPreview(ticket);
+                drawTicketPreview(ticket);
             setTagsColor();
         }
         const filterForm = document.getElementById('filter-form');    
@@ -35,106 +35,150 @@ switch (match[1]) {
             );
             list.innerHTML = '';
             for (const ticket of tickets['tickets'])
-                createTicketPreview(ticket);
+                drawTicketPreview(ticket);
         });   
         break;
 
     case 'ticket_page':
-        _title = document.getElementById('title');
-        _description = document.getElementById('description');
-        _status = document.getElementById('status');
-        _tags = document.getElementById('tags');
-        _department = document.getElementById('department');
-        _author = document.getElementById('author');
-        _agent = document.getElementById('agent');
-        _date = document.getElementById('date');
-        _documentList = document.getElementById('documents-list');
-        // _log = document.getElementById('log');
-
         window.onload = async function() { 
             const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
                 func: 'get_ticket',
                 id: getParameterByName('id')
             }));
             const ticketInfo = await response.json();
-
-            _title.textContent = ticketInfo['title'];
-
-            _description.textContent = ticketInfo['description'];
-
-            if (ticketInfo['status'] == 'Open') 
-                _status.children[0].selected = true;            
-            else if (ticketInfo['status'] == 'Closed') 
-                _status.children[1].selected = true;
-            else if (ticketInfo['status'] == 'In Progress')
-                _status.children[2].selected = true;
-
-            if (ticketInfo['department'] == null)
-                _department.textContent = 'No department assigned';
-            else 
-                _department.textContent = 'Department: ' + ticketInfo['department'];
-
-            _author.textContent = 'By: @' + ticketInfo['author'];
-            
-            if (ticketInfo['agent'] == null)
-                _agent.textContent = 'No agent assigned';
-            else
-                _agent.textContent = 'Currently assigned to: @' + ticketInfo['agent'];
-
-            _date.textContent = 'Created ' + timeAgo(ticketInfo['date']['date']);
-
-            if (ticketInfo['tags'].length == 0) 
-                _tags.remove();
-            else
-                for (const tag of ticketInfo['tags']) {
-                    const tagElement = document.createElement('p');
-                    tagElement.textContent = tag;
-                    tagElement.classList.add('tag');
-                    _tags.appendChild(tagElement);
-                }
-
-            if (ticketInfo['documents'].length == 0) 
-                _documentList.remove();
-            else
-                for (const doc of ticketInfo['documents']) {
-                    const docListElement = document.createElement('img');
-                    docListElement.src = '../' + doc;
-                    docListElement.classList.add('document');
-                    _documentList.appendChild(docListElement);
-                }
-
+            drawTicketPage(ticketInfo);
             setTagsColor();
         }
         break;
 
-    // case 'new_ticket':
-    //     var file_input = document.getElementById('submitted-files');
-    //     var allowed_extensions = ['.png', '.jpg', '.jpeg', '.gif'];
-    //     if (file_input)
-    //         file_input.addEventListener('change', function() {
-    //             var files = file_input.files;
-        
-    //             for (var i = 0; i < files.length; i++) {
-    //                 var file_name = files[i].name;
-    //                 var file_extension = file_name.substring(file_name.lastIndexOf('.'));
-        
-    //                 if (!allowed_extensions.includes(file_extension.toLowerCase())) {
-    //                     // The uploaded file has an invalid extension, so display an error message
-    //                     alert('Error: Invalid file type.');
-    //                     file_input.value = '';
-    //                     return;
-    //                 }
-    //             }
-        
-    //             // All uploaded files have valid extensions, so proceed with the submission
-    //         });
-    //     break;
     default:
         console.log('This page isn\'t recognized: ' + match);
         break;
 }
 
-function createTicketPreview(ticket) {
+async function drawTicketPage(ticket) {
+    const session = await getSession();
+    _title = document.getElementById('title');
+    _description = document.getElementById('description');
+    _status = document.getElementById('status');
+    _tags = document.getElementById('tags');
+    _department = document.getElementById('department');
+    _author = document.getElementById('author');
+    _agent = document.getElementById('agent');
+    _date = document.getElementById('date');
+    _documentList = document.getElementById('documents-list');
+    _log = document.getElementById('log');
+
+    _title.textContent = ticket['title'];
+
+    _description.textContent = ticket['description'];
+
+    if (session['permissions'] == 'Admin' || session['permissions'] == 'Agent') {
+        if (ticket['status'] == 'Open') 
+            _status.children[0].selected = true;            
+        else if (ticket['status'] == 'Closed') 
+            _status.children[1].selected = true;
+        else if (ticket['status'] == 'In Progress')
+            _status.children[2].selected = true;
+    } else {
+        _status.textContent = ticket['status']; 
+    }
+
+    if (ticket['departmentId'] == null)
+        _department.textContent = 'No department assigned';
+    else 
+        _department.textContent = 'Department: ' + ticket['departmentName'];
+
+    _author.textContent = 'By: @' + ticket['author'];
+    
+    if (ticket['agentId'] == null)
+        _agent.textContent = 'No agent assigned';
+    else
+        _agent.textContent = 'Currently assigned to: @' + ticket['agentName'];
+
+    _date.textContent = 'Created ' + timeAgo(ticket['date']['date']);
+
+    if (ticket['tags'].length == 0) 
+        _tags.remove();
+    else
+        for (const tag of ticket['tags']) {
+            const tagElement = document.createElement('p');
+            tagElement.textContent = tag;
+            tagElement.classList.add('tag');
+            _tags.appendChild(tagElement);
+        }
+
+    if (ticket['documents'].length == 0) 
+        _documentList.remove();
+    else
+        for (const doc of ticket['documents']) {
+            const docListElement = document.createElement('img');
+            docListElement.src = '../' + doc;
+            docListElement.classList.add('document');
+            _documentList.appendChild(docListElement);
+        }
+    
+    let i = 0, j = 0;
+    while (i < ticket['updates'].length || j < ticket['comments'].length) {
+        
+        if (i == ticket['updates'].length)
+            _log.appendChild(createCommentElement(ticket['comments'][j++]));
+        
+        else if (j == ticket['comments'].length)
+            _log.appendChild(createUpdateElement(ticket['updates'][i++]));
+        
+        else if (ticket['comments'][j]['Date'] > ticket['updates'][i]['Date'])
+            _log.appendChild(createUpdateElement(ticket['updates'][i++]));
+        
+        else
+            _log.appendChild(createCommentElement(ticket['comments'][j++]));
+    }
+}
+
+function createCommentElement(commentInfo) {
+    const comment = document.createElement('div');
+    comment.classList.add('comment');
+    
+    const body = document.createElement('p');
+    body.classList.add('comment-body');
+    body.textContent = commentInfo['Comment'];
+
+    const bottom = document.createElement('div');
+    bottom.classList.add('comment-bottom');
+
+    const author = document.createElement('p');
+    author.classList.add('comment-author');
+    author.textContent = '@' + commentInfo['Username'];
+
+    const date = document.createElement('p');
+    date.classList.add('comment-date');
+    date.textContent = timeAgo(commentInfo['Date']);
+
+    bottom.appendChild(author);
+    bottom.appendChild(date);
+    comment.appendChild(body);
+    comment.appendChild(bottom);
+    return comment;
+}
+
+function createUpdateElement(updateInfo) {
+    const update = document.createElement('div');
+    update.classList.add('update');
+
+    const body = document.createElement('p');
+    body.classList.add('update-body');
+    body.textContent = updateInfo['Message'];
+
+    const date = document.createElement('p');
+    date.classList.add('update-date');
+    date.textContent = timeAgo(updateInfo['Date']);
+
+    update.appendChild(body);
+    update.appendChild(date);
+    return update;
+}
+
+function drawTicketPreview(ticket) {
     const ticketPreview = document.createElement('a'); // ticket preview
     ticketPreview.classList.add('ticket-list-element');
     ticketPreview.href = 'ticket_page.php?' + encodeForAjax({
@@ -209,6 +253,12 @@ async function loadTags(_page) {
     }
 }
 
+async function getSession() {
+    const response = await fetch('../pages/api_session.php');
+    const session = await response.json();
+    return session;
+}
+
 async function fetchTags(_page) {
     const response = await fetch('../pages/api_tag.php?' + encodeForAjax({
         func: _page == 'display_tickets' ? 'tags' : 'user_tags',
@@ -241,7 +291,7 @@ async function fetchTickets(_dateLowerBound, _dateUpperBound, _status, _departme
 
 // Script to assign colors to tags 
 
-function setTagsColor() {
+async function setTagsColor() {
     const tags = document.querySelectorAll('.tag');
     var index = 0;
     const tagColors = [ "#FFD700", // gold 
@@ -276,17 +326,26 @@ function setTagsColor() {
     });
 
     const _status = document.getElementById('status');
-    if (_status) {            
-        const option = _status.options[_status.selectedIndex].value;
-        if (option == "Open") _status.style.backgroundColor = "#32CD32";
-        else if (option == "Closed") _status.style.backgroundColor = "#FF6347";
-        else if (option == "In progress") _status.style.backgroundColor = "#FFD700";
-        _status.addEventListener('change', function() {
+
+    if (_status) {
+        const session = await getSession();         
+        if (session['permissions'] == ['Admin'] || session['permissions'] == ['Agent']) {   
             const option = _status.options[_status.selectedIndex].value;
-            if (option == "Open") _status.style.backgroundColor = "#32CD32";
-            else if (option == "Closed") _status.style.backgroundColor = "#FF6347";
-            else if (option == "In progress") _status.style.backgroundColor = "#FFD700";
-        });
+            if (option == "Open") _status.style.color = "#32CD32";
+            else if (option == "Closed") _status.style.color = "#FF6347";
+            else if (option == "In progress") _status.style.color = "#FFD700";
+            _status.addEventListener('change', function() {
+                const option = _status.options[_status.selectedIndex].value;
+                if (option == "Open") _status.style.color = "#32CD32";
+                else if (option == "Closed") _status.style.color = "#FF6347";
+                else if (option == "In progress") _status.style.color = "#FFD700";
+            });
+        } else {
+            const statusValue = _status.textContent;
+            if (statusValue.trim() == "Open") _status.style.border = "1px solid #32CD32";
+            else if (statusValue.trim() == "Closed") _status.style.border = "1px solid #FF6347";
+            else if (statusValue.trim() == "In progress") _status.style.border = "1px solid #FFD700";
+        }
     }
 }
 
@@ -296,7 +355,7 @@ function timeAgo(_date) {
     const date = new Date(_date); 
     const now = new Date();
     const diff = Math.floor((now - date) / 1000);
-    
+
     if (diff < 60) {
       return 'just now';
     } else if (diff < 3600) {

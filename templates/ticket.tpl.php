@@ -18,27 +18,23 @@
         </ul>
 <?php } ?>
 
-<?php function drawTicketPage($db, $ticketId) {
-    $ticket = Ticket::getTicketData($db, $ticketId);
-    $tags = Ticket::getTicketTags($db, $ticketId);
-    $documents = Ticket::getDocuments($db, $ticketId);
-    $author = User::getUser($db, $ticket->clientId);
-    if ($ticket->agentId != null) $agent = User::getUser($db, $ticket->agentId);
-    if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
-    ?>
+<?php function drawTicketPage() { ?>
     <main>
         <header>
             <h1 id="title"> 
             </h1>
-            <div>
-                <select id="status">
-                    <option value="Open">Open</option>
-                    <option value="Closed">Closed</option>
-                    <option value="In progress">In progress</option>
-                </select>
-                <button id="save-button"><i class="fa-solid fa-floppy-disk"></i></button>
-            </div>
-
+            <?php if ($_SESSION['PERMISSIONS'] == 'Admin' || $_SESSION['PERMISSIONS'] == 'Agent') { ?>
+                <div>
+                    <select id="status">
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                        <option value="In progress">In progress</option>
+                    </select>
+                    <button id="save-button"><i class="fa-solid fa-floppy-disk"></i></button>
+                </div>
+            <?php } else { ?>
+                <p id="status"></p>
+            <?php } ?>
             <p id="date"></p>
         </header>
         <body>

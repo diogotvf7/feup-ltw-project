@@ -12,15 +12,22 @@
 
     $ret = array();
 
+    if (!Session::isLoggedIn()) $ret['error'] = 'User not logged in!';
+
     if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') $ret['error'] = 'You don\'t have permission to access this data!';
 
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
 
-    if (!isset($_GET['id'])) $ret['error'] = 'No client id provided!';
-
     if (!isset($ret['error'])) {
         switch ($_GET['func']) {
+            case 'getAgents':
+                $ret['agents'] = User::getAgents($db);
+                break;
             case 'getSingleUser':
+                if (!isset($_GET['id'])) {
+                    $ret['error'] = 'No client id provided!';
+                    break;
+                }
                 $id = $_GET['id'];
                 $clientInfo = User::getUser($db, $id);
                 $ret['id'] = $clientInfo->id; 
@@ -34,6 +41,10 @@
                     $ret['error'] = 'You don\'t have permission to access this data!';
                     break;
                 }
+                if (!isset($_GET['id'])) {
+                    $ret['error'] = 'No client id provided!';
+                    break;
+                }
                 $id = $_GET['id'];
                 $ret['id'] = $id;
                 $ret['responsible'] = User::getTicketsResponsible($db, $id);
@@ -41,6 +52,10 @@
                 $ret['closed'] = User::getTicketsClosed($db, $id);
                 break;
             case 'getClientInfo':
+                if (!isset($_GET['id'])) {
+                    $ret['error'] = 'No client id provided!';
+                    break;
+                }
                 $id = $_GET['id'];
                 $ret['id'] = $id;
                 $ret['made'] = User::getTicketsMade($db, $id);

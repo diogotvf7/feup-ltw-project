@@ -12,6 +12,8 @@
 
     $ret = array();
 
+    if (!Session::isLoggedIn()) $ret['error'] = 'User not logged in!';
+
     if (!isset($_GET['func'])) $ret['error'] = 'No function provided!';
 
     if (!isset($ret['error'])) {

@@ -51,6 +51,14 @@ header {
     border: none;
 }
 
+#save-button {
+    border-radius: 5px;
+    padding: 1em;
+    background-color: transparent;
+    color: var(--black);
+    font-weight: 600;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
 }
@@ -58,6 +66,7 @@ body {
 #description {
     padding: 1em;
     border-left: var(--black) solid 2px;
+    border-bottom: var(--black) solid 2px;
 }
 
 #tags {
@@ -70,6 +79,51 @@ body {
     padding: 0.5em;
     border-radius: 5px;
     font-size: 0.8em;
+}
+
+#documents-list {
+    overflow-x: scroll;
+    scroll-snap-type: y proximity;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    padding: 1em;
+}
+
+#documents-list img {
+    width: 15rem;
+}
+
+#log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+#log > * {
+    width: 70%;
+}
+
+.comment {
+    border-top: var(--black) solid 2px;
+}
+
+.comment-bottom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2em;
+}
+
+.comment-bottom * {
+    margin: 0;
+}
+
+.update {
+    border-top: var(--black) solid 2px;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
 }
 
 /*          Nav Bar          */
