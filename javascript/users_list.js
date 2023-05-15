@@ -35,13 +35,13 @@ edit.addEventListener("click", function() {
         checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
         for (var j = 2, col; col = row.cells[j] && j < 6; j++) {
-            cell = row.cells[j]; 
+            cell = row.cells[j];
             cell.setAttribute("contentEditable", "true");
             cell.style.backgroundColor = "#FFFFCC";
+            
             if (j == 5) {
                 cell.innerHTML = "";
                 var dropdown = document.createElement("select");
-                // dropdown.addEventListener("change", function(e) {e.target.nextSibling.value = e.target.value;});
                 var option1 = document.createElement("option");
                 option1.text = "Admin";
                 dropdown.add(option1);
@@ -79,12 +79,7 @@ save.addEventListener("click", function() {
             
         }
     }
-    console.log(rowData[1]);
-    console.log(rowData[2]);
-    console.log(rowData[3]);
-    console.log(rowData[4]);
-    console.log(rowData[5]);
-    
+
     $.ajax({
         url: '../actions/update_data.php',
         method: 'POST',

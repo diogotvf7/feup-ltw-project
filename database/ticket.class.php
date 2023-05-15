@@ -229,5 +229,12 @@
         WHERE TicketID = ?');
       $stmt->execute([$TicketID]);
     }
+
+    static function addTicketTag(PDO $db, int $TicketID, int $TagID){
+      $stmt = $db->prepare('
+        INSERT INTO Ticket_Tag (TicketID, TagID)
+        VALUES (?, ?)');
+      $stmt->execute([$TicketID, $TagID]);
+    }
   }
 ?>

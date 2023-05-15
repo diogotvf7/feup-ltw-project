@@ -9,6 +9,11 @@ const submitButton = document.querySelector('[type=submit]');
 const paragraph = document.querySelector('p');
 var state = 0;
 const switchState = document.getElementById('switch-state');
+emailInput.required = false;
+nameInput.required = false;
+usernameInput.required = true;
+passwordInput.required = true;
+confirmPasswordInput.required = false;
 
 switchState.addEventListener('click', () => {
     switch (state) {

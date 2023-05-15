@@ -23,6 +23,8 @@
     $tags = Ticket::getTicketTags($db, $ticketId);
     $documents = Ticket::getDocuments($db, $ticketId);
     $author = User::getUser($db, $ticketId);
+    $department = null;
+    $agent = null;
     if ($ticket->agentId != null) $agent = User::getUser($db, $ticket->agentId);
     if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
     ?>
@@ -46,9 +48,9 @@
                     echo '<p class="tag">' . $tag['Name'] . '</p>';
                 }?>
             </div>
-            <?= $department == null ? '<p>No department</p>' : '<p>Department: ' . $department->name . '</p>';?>
+            <?= $department === null ? '<p>No department</p>' : '<p>Department: ' . $department->name . '</p>';?>
             <p>By: <?='@' . $author->username;?></p>
-             <?= $agent == null ? 'This ticket isn\'t assigned' : '<p>Currently assigned to: @' . $agent->username . '</p>';?>
+             <?= $agent === null ? 'This ticket isn\'t assigned' : '<p>Currently assigned to: @' . $agent->username . '</p>';?>
         </div>
         <div id="documents">
             <?php if ($documents != null) { ?>
@@ -93,10 +95,22 @@
                         ?>
                     </select>
                 </span>
+                <div>
+                    <select name="tags[]" id="tags" multiple>
+                        <option value="Technical" >Technical</option>
+                        <option value="Billing" >Billing</option>
+                        <option value="Product" >Product</option>
+                        <option value="Sales" >Sales</option>
+                    </select>
+                </div>
                 <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
             </fieldset>        
         </form>
     </main>
+    <script src="../javascript/new_ticket.js"></script>
+    <script>
+        new MultiSelectTag('tags');
+    </script>
 <?php } ?>
 
 <?php function drawFiltersBar() { ?>
