@@ -22,19 +22,19 @@
   echo $_FILES['files']['name'][0];
   echo "<br>";
   echo $_POST['ticket_department'];
-  echo "<br>";
+  echo "<br>"
+  */
+  /*
   $tags = $_POST['tags'];
     foreach ($tags as $tag){
         echo $tag;
     }
     */
-
-    /* handling tags */
-    
+ 
     
     /* handling department */
     
-    
+
     if (!empty($_POST['ticket_department'])){
         $ticket_department = $_POST['ticket_department'];
         $departmentID = Department::getDepartmentbyName($db, $ticket_department);
@@ -42,26 +42,27 @@
     else {
         $departmentID = null;
     }
+
     
     $now = new DateTime('now',new DateTimeZone('Europe/Lisbon'));
     $now = $now->format('Y-m-d H:i:s');
     $status = "Open";
     $ticketID = Ticket::addTicket($db, $ticket_title, $ticket_description, $status, $_SESSION['IDUSER'], $departmentID, $now);
     settype($ticketID, "integer");
-    
+
+    /* handling tags */
+
     if (!empty($_POST['tags'])){
         $tags = $_POST['tags'];
         foreach ($tags as $tag){
-                $tagID = Tag::getTagbyName($db, $tag);
-                //echo "<script> console.log( 'indo buscar id do tag, se tiver') </script>";
+            $tagID = Tag::getTagbyName($db, $tag);
             if ($tagID == null) {
                 $tagID = Tag::createTag($db, $tag);
-                //echo "<script> console.log( 'criando o tag' ) </script>";
             }
             Ticket::addTicketTag($db, $ticketID, $tagID);
-            //echo "<script> console.log( 'adicionando o tag ao ticket' ) </script>";
         }
     }
+    
     if ($_FILES['files']['error'][0] != 4){
         
     $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -114,6 +115,7 @@
 
     }
     header("Location: /../pages/my_tickets.php");
+    
     
 
 ?>

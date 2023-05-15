@@ -46,6 +46,16 @@
       return $tag['TagID'];
     }
 
+    static function deleteTag(PDO $db, int $tagID){
+      $stmt = $db->prepare('
+        DELETE
+        FROM Tag
+        WHERE TagID = ?
+      ');
+      $stmt->execute(['TagID']);
+      $stmt->fetch();
+    }
+
 
 
     // static function getTag(PDO $db, int $id) : Tag {
