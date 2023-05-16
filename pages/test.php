@@ -3,27 +3,16 @@
     $db = getDatabaseConnection();
 
     require_once(__DIR__ . '/../database/ticket.class.php');
-    require_once(__DIR__ . '/../database/department.class.php');
+    require_once(__DIR__ . '/../database/comment.class.php');
 
     echo '<br><br><br><br>';
 
-    $ret = array();
-    $ret['func'] = 'display_tickets';
 
-    $tickets = Ticket::getTickets(
+    $comment = TicketComment::createTicketComment(
         $db,
-        '',
-        array(),
-        array(),
-        '',
-        '',
-        null,
-        null
+        1,
+        1,
+        'test comment'
     );
-    var_dump($tickets);
+    var_dump($comment);
 ?>
-
-<p>
-    Coiso com botao para mostrar tickets
-    <button onclick="display_tickets()">Display tickets</button>
-</p>

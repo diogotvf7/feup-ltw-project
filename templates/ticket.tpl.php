@@ -60,13 +60,26 @@
                         </select>
                     </div>
                 </div>
-                <div id="documents-list"></div>            
-                <div id="log">
-                    <!-- log goes here -->
-                    <!-- insert comment form -->
-                </div>
+                <div id="documents-list"></div> 
             </body>
         </form>
+        <footer>
+            <div id="log">
+            </div>
+            <form id="new-comment" method="post" enctype="multipart/form-data" action="../actions/action_submit_comment.php">
+                <textarea placeholder="Type your Message Here...." name="comment" required></textarea>
+                <div>
+                    <input type="file" 
+                        id="submitted-files" 
+                        name="files[]"
+                        accept="application/pdf, image/png, image/jpeg, image/gif" 
+                        multiple>
+                    <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
+                </div>
+            </form>
+        </footer>
+            
+        
     </main>
 <?php } ?>
 

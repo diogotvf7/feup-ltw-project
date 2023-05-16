@@ -9,6 +9,7 @@
 
     require_once(__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../database/user.class.php');
+    require_once(__DIR__ . '/../database/comment.class.php');
     require_once(__DIR__ . '/../database/department.class.php');
     require_once(__DIR__ . '/../utils/util_funcs.php');
 
@@ -80,6 +81,9 @@
                 $ret['author'] = User::getUser($db, $ticketData->clientId)->username;
                 $ret['assignee'] = $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '';
                 $ret['comments'] = Ticket::getComments($db, $_GET['id']);
+                for ($i = 0; $i < count($ret['comments']); $i++) {
+                    $ret['comments'][$i]['documents'] = Comment::getDocuments($db, $comment['CommentID']);
+                }
                 $ret['updates'] = Ticket::getUpdates($db, $_GET['id']);
                 break;
             default:

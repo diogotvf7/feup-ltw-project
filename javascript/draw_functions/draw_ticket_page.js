@@ -16,6 +16,7 @@ export async function drawTicketPage(ticket) {
     const _date = document.getElementById('date');
     const _documentList = document.getElementById('documents-list');
     const _log = document.getElementById('log');
+    const _newCommentForm = document.getElementById('new-comment');
 
     const idInput = document.createElement('input');
     idInput.type = 'hidden';
@@ -108,6 +109,12 @@ export async function drawTicketPage(ticket) {
         else
             _log.appendChild(createCommentElement(ticket['comments'][j++]));
     }
+
+    const newCommentInput = document.createElement('input');
+    newCommentInput.type = 'hidden';
+    newCommentInput.name = 'ticket_id';
+    newCommentInput.value = ticket['id'];
+    _newCommentForm.appendChild(newCommentInput);
 }
 
 function createCommentElement(commentInfo) {
@@ -128,6 +135,9 @@ function createCommentElement(commentInfo) {
     const date = document.createElement('p');
     date.classList.add('comment-date');
     date.textContent = timeAgo(commentInfo['Date']);
+
+    const imageList = document.createElement('img');
+    imageList.id = 'comment-image-list';
 
     bottom.appendChild(author);
     bottom.appendChild(date);

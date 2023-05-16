@@ -240,7 +240,7 @@
 
     static function getComments(PDO $db, int $id) {
       $stmt = $db->prepare('
-        SELECT Comment, Date, Username
+        SELECT CommentID, Comment, Date, Username
         FROM Ticket_Comment JOIN Client
         USING(ClientID)
         WHERE TicketID = ?

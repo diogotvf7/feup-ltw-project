@@ -19,7 +19,7 @@
     $ticket = Ticket::getTicketData($db, $_POST['id']);
     $tags = Ticket::getTicketTags($db, $_POST['id']);
         
-    if ($_POST['status'] != $ticket->status) {
+    if (isset($_POST['status']) && $_POST['status'] != $ticket->status) {
         Ticket::updateTicketStatus($db, $_POST['id'], $_POST['status']);
         TicketUpdate::createTicketUpdate(
             $db, 
@@ -29,31 +29,34 @@
         );
     }
 
-    $new_tags = empty($_POST['tags']) ? array() : $_POST['tags'];
-    $old_tags = empty($tags) ? array() : array_column($tags, 'Name');
-    $tags_to_add = array_diff($new_tags, $old_tags);
-    $tags_to_remove = array_diff($old_tags, $new_tags);
-    $updateString = '';
-    $updateString .= !empty($tags_to_add) ? 'Tags added: ' . implode(', ', $tags_to_add) . '.' : '';
-    $updateString .= !empty($tags_to_add) && !empty($tags_to_remove) ? ' | ' : '';
-    $updateString .= !empty($tags_to_remove) ? 'Tags removed: ' . implode(', ', $tags_to_remove) . '.' : '';
-    TicketUpdate::createTicketUpdate(
-        $db, 
-        $_POST['id'], 
-        'Tags', 
-        $updateString
-    );
+    if (isset($_POST['tags'])) {
+        $new_tags = empty($_POST['tags']) ? array() : $_POST['tags'];
+        $old_tags = empty($tags) ? array() : array_column($tags, 'Name');
+        $tags_to_add = array_diff($new_tags, $old_tags);
+        $tags_to_remove = array_diff($old_tags, $new_tags);
+        $updateString = '';
+        $updateString .= !empty($tags_to_add) ? 'Tags added: ' . implode(', ', $tags_to_add) . '.' : '';
+        $updateString .= !empty($tags_to_add) && !empty($tags_to_remove) ? ' | ' : '';
+        $updateString .= !empty($tags_to_remove) ? 'Tags removed: ' . implode(', ', $tags_to_remove) . '.' : '';
+        if (!empty($tags_to_add) || !empty($tags_to_remove))
+            TicketUpdate::createTicketUpdate(
+                $db, 
+                $_POST['id'], 
+                'Tags', 
+                $updateString
+            );
 
-    foreach ($tags_to_add as $tag) {
-        if (!Tag::tagExists($db, $tag))
-            Tag::createTag($db, $tag);
-        Tag::addTag($db, $_POST['id'], $tag);
+        foreach ($tags_to_add as $tag) {
+            if (!Tag::tagExists($db, $tag))
+                Tag::createTag($db, $tag);
+            Tag::addTag($db, $_POST['id'], $tag);
+        }
+
+        foreach ($tags_to_remove as $tag)
+            Tag::removeTag($db, $_POST['id'], $tag);
     }
 
-    foreach ($tags_to_remove as $tag)
-        Tag::removeTag($db, $_POST['id'], $tag);
-    
-    if ($_POST['agent'] != $ticket->agentId) {
+    if (isset($_POST['agent']) && $_POST['agent'] != $ticket->agentId) {
         Ticket::updateTicketAgent($db, $_POST['id'], !empty($_POST['agent']) ? $_POST['agent'] : null);
         $messageString = $_POST['agent'] == '' ? 'Ticket unassigned.' : 'Ticket assigned to ' . User::getUser($db, $_POST['agent'])->name . '.';
         TicketUpdate::createTicketUpdate(
@@ -64,7 +67,7 @@
         );
     }
 
-    if ($_POST['department'] != $ticket->departmentId) {
+    if (isset($_POST['department']) && $_POST['department'] != $ticket->departmentId) {
         Ticket::updateTicketDepartment($db, $_POST['id'], !empty($_POST['department']) ? $_POST['department'] : null);
         $messageString = $_POST['department'] == '' ? 'Ticket department unassigned.' : 'Ticket moved to ' . Department::getDepartment($db, $_POST['department'])->name . ' department.';
         TicketUpdate::createTicketUpdate(
@@ -75,7 +78,7 @@
         );
     }
 
-    if ($ticket->title != $_POST['title']) {
+    if (isset($_POST['title']) && $ticket->title != $_POST['title']) {
         Ticket::updateTicketTitle($db, $_POST['id'], $_POST['title']);
         TicketUpdate::createTicketUpdate(
             $db, 
@@ -85,7 +88,7 @@
         );
     }
 
-    if ($ticket->description != $_POST['description']) {
+    if (isset($_POST['description']) && $ticket->description != $_POST['description']) {
         Ticket::updateTicketDescription($db, $_POST['id'], $_POST['description']);
         TicketUpdate::createTicketUpdate(
             $db, 

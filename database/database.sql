@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS Ticket_Tag;
 DROP TABLE IF EXISTS Ticket_Document;
 DROP TABLE IF EXISTS Ticket_Comment;
 DROP TABLE IF EXISTS Ticket_Update;
+DROP TABLE IF EXISTS Comment_Document;
 DROP TABLE IF EXISTS FAQ;
 
 -- database schema
@@ -103,6 +104,13 @@ CREATE TABLE Ticket_Update
     Message varchar(255) NOT NULL,
     Date datetime NOT NULL,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
+);
+
+CREATE TABLE Comment_Document
+(
+    CommentID int NOT NULL,
+    Path varchar NOT NULL,
+    FOREIGN KEY (CommentID) REFERENCES Ticket_Comment(CommentID)
 );
 
 CREATE TABLE FAQ
