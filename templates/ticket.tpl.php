@@ -97,10 +97,10 @@
                 </span>
                 <div>
                     <select name="tags[]" id="tags" multiple>
-                        <option value="Technical" >Technical</option>
+                        <!-- <option value="Technical">Technical</option>
                         <option value="Billing" >Billing</option>
                         <option value="Product" >Product</option>
-                        <option value="Sales" >Sales</option>
+                        <option value="Sales" >Sales</option> -->
                     </select>
                 </div>
                 <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
@@ -108,9 +108,9 @@
         </form>
     </main>
     <script src="../javascript/new_ticket.js"></script>
-    <script>
+    <!-- <script>
         new MultiSelectTag('tags');
-    </script>
+    </script> -->
 <?php } ?>
 
 <?php function drawFiltersBar() { ?>

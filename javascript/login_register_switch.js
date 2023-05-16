@@ -66,4 +66,16 @@ function matchPassword() {
       alert("Passwords match");  
       return true;
     }  
-  }  
+  }
+
+  function validatePassword() {
+    const password = document.getElementById("password").value;
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (pattern.test(password)) {
+      console.log("Valid password");
+
+    } else {
+      console.log("Invalid password");
+  }
+}

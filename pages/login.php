@@ -30,7 +30,73 @@
       <input type="email" name="email" placeholder="Email" hidden>
       <input type="name" name="name" placeholder="Name" hidden>
       <input type="username" name="username" placeholder="Username">
-      <input type="password" id="password" name="password" placeholder="Password">
+      <input type="password" id="password" name="password" oninput="" placeholder="Password">
+      
+      <div class="requirements-todo-list">
+        <span class="requirements-title">
+            Your password has to:
+        </span>
+            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasLowerCaseRequirement() }">
+        <div class="requirement-todo-icon pull-left">
+            <div class="icon-info-small"></div>
+            <div class="icon-checkmark-small"></div>
+        </div>
+        <div class="requirement-todo-text pull-left">
+            Have at least one lowercase.
+        </div>
+    </div>
+
+            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasUpperCaseRequirement() }">
+        <div class="requirement-todo-icon pull-left">
+            <div class="icon-info-small"></div>
+            <div class="icon-checkmark-small"></div>
+        </div>
+        <div class="requirement-todo-text pull-left">
+            Have at least one uppercase.
+        </div>
+    </div>
+
+            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasDigitsRequirement() }">
+        <div class="requirement-todo-icon pull-left">
+            <div class="icon-info-small"></div>
+            <div class="icon-checkmark-small"></div>
+        </div>
+        <div class="requirement-todo-text pull-left">
+            Have at least one number.
+        </div>
+    </div>
+
+            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasSpecialCharactersRequirement() }">
+        <div class="requirement-todo-icon pull-left">
+            <div class="icon-info-small"></div>
+            <div class="icon-checkmark-small"></div>
+        </div>
+        <div class="requirement-todo-text pull-left">
+            Have at least one special character.
+        </div>
+    </div>
+
+            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasMinLengthRequirement() }">
+        <div class="requirement-todo-icon pull-left">
+            <div class="icon-info-small"></div>
+            <div class="icon-checkmark-small"></div>
+        </div>
+        <div class="requirement-todo-text pull-left">
+            Be at least 8 characters.
+        </div>
+    </div>
+
+            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasNotEqualToLoginRequirement() }">
+        <div class="requirement-todo-icon pull-left">
+            <div class="icon-info-small"></div>
+            <div class="icon-checkmark-small"></div>
+        </div>
+        <div class="requirement-todo-text pull-left">
+            Be different than your manager name.
+        </div>
+    </div>
+
+    </div>
       <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" hidden>
       <button type="submit">Login</button>
       <span>

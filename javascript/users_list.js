@@ -57,7 +57,7 @@ edit.addEventListener("click", function() {
     }
 });
 
-save.addEventListener("click", function() {
+save.addEventListener("click", async function() {
     let rowData = {};
     for (var i = 1, row; row = table.rows[i]; i++) {
         checkbox = row.cells[0].childNodes[0];
@@ -80,6 +80,24 @@ save.addEventListener("click", function() {
         }
     }
 
+    const data = {
+        id : rowData[1],
+        name: rowData[2],
+        username: rowData[3],
+        email: rowData[4],
+        newRole: rowData[5]
+    };
+    
+    fetch('../actions/update_data.php', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+        });
+    
+        /*
     $.ajax({
         url: '../actions/update_data.php',
         method: 'POST',
@@ -97,8 +115,8 @@ save.addEventListener("click", function() {
           console.error('Update failed:', error);
         }
       });
-      
-});
+      */
+
 
 selectAll.addEventListener("click", function() {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {

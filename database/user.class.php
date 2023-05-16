@@ -172,7 +172,8 @@
         GROUP BY ClientID;
       ');
       $stmt->execute(array($id));
-      return $stmt->fetch()['Tickets_made'];
+      if ($result = $stmt->fetch()) return $result['Tickets_made'];
+      return null;
     }
 
     static function getTicketsResponsible(PDO $db, $id) {

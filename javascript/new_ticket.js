@@ -1,6 +1,9 @@
 
+window.onload = function() {
+    MultiSelectTag('tags');
+}
 
-function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
+async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     var element = null
     var options = null
     var customSelectContainer = null
@@ -14,12 +17,12 @@ function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     var drawer = null
     var ul = null
     var domParser = new DOMParser()
-    init()
+    await init()
 
-    function init() {
+    async function init()  {
         element = document.getElementById(el)
-        createElements()
-        initOptions()
+        await createElements()
+        await initOptions()
         enableItemSelection()
         setValues()
 
@@ -70,9 +73,9 @@ function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
         options = options.filter(op => op.value !== option.value);
     }
 
-    function createElements() {
+    async function createElements() {
         // Create custom elements
-        options = getOptions();
+        options = await getOptions();
         element.classList.add('hidden') // make cities dropdown hidden
         
         // .multi-select-tag
@@ -154,6 +157,7 @@ function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     function initOptions(val = null) {
         ul.innerHTML = '';
         var optionFound = false;
+        console.log("initOptions ->" , options);
         for (var option of options) {
             if (option.selected) {
                 !isTagSelected(option.value) && createTag(option);
@@ -269,21 +273,46 @@ function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
         }
     }
     function setValues() {
+        console.log("setValues -> options", options);
+        console.log("setValues -> element.options", element.options);
         // Update element final values
         for(var i = 0; i < options.length; i++) {
             element.options[i].selected = options[i].selected
      
     }
 } 
-    function getOptions() {
-        // Map element options
-        return [...element.options].map((op) => {
-            return {
-                value: op.value,
-                label: op.label,
-                selected: op.selected,
-                default: true
-            }
-        })
-    }
+
+async function fetchTags() {
+    const response = await fetch('../pages/api_tag.php?' + encodeForAjax({
+        func: 'tags',
+    }));
+    const tags = await response.json();
+    return tags;
+}
+
+    async function getOptions() {
+        
+        const tagsSelect = document.getElementById('tags');
+        const tags = await fetchTags();
+        console.log("tags" , tags);
+
+        options = Array.from(tags).map((option) => ({
+            value: option.Name,
+            label: option.Name,
+            selected: false,
+            default: true,
+        }));
+        console.log(options);
+        for (var i = 0; i < options.length; i++){
+            addOption(options[i]);
+        }
+        return options;
+}
+
+function encodeForAjax(data) {
+    return Object.keys(data).map(function(k){
+        if (data[k] === null || data[k] === undefined) return;
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+    }).join('&')
+}
 }
