@@ -81,9 +81,8 @@
                 $ret['author'] = User::getUser($db, $ticketData->clientId)->username;
                 $ret['assignee'] = $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '';
                 $ret['comments'] = Ticket::getComments($db, $_GET['id']);
-                for ($i = 0; $i < count($ret['comments']); $i++) {
-                    $ret['comments'][$i]['documents'] = Comment::getDocuments($db, $comment['CommentID']);
-                }
+                for ($i = 0; $i < count($ret['comments']); $i++)
+                    $ret['comments'][$i]['documents'] = array_column(Comment::getDocuments($db, $ret['comments'][$i]['CommentID']), 'Path');
                 $ret['updates'] = Ticket::getUpdates($db, $_GET['id']);
                 break;
             default:

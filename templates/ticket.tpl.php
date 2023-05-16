@@ -72,7 +72,7 @@
                     <input type="file" 
                         id="submitted-files" 
                         name="files[]"
-                        accept="application/pdf, image/png, image/jpeg, image/gif" 
+                        accept="application/pdf, image/png, image/jpeg, image/gif"
                         multiple>
                     <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
                 </div>

@@ -87,7 +87,7 @@ CREATE TABLE Ticket_Document
 
 CREATE TABLE Ticket_Comment
 (
-    CommentID INTEGER PRIMARY KEY,
+    CommentID INTEGER PRIMARY KEY AUTOINCREMENT,
     TicketID int NOT NULL,
     ClientID int NOT NULL,
     Comment varchar(255) NOT NULL,

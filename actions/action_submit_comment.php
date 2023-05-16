@@ -36,20 +36,10 @@
         if (!file_exists(__DIR__ . "/../docs/comments-docs/" . $commentId)) mkdir(__DIR__ . "/../docs/comments-docs/" . $commentId,  0777, true);
         $path = "docs/comments-docs/" . $commentId . "/" . $_FILES['files']['name'][$i];
         $destination = __DIR__ . "/../"  . $path;
+        echo '<br>' . $destination . '<br>';
         if (!move_uploaded_file($_FILES['files']['tmp_name'][$i], $destination)) exit("Error moving file");
         Comment::addTicketDocument($db, $commentId, $path);
     }
-
-    echo "<br><br><br><br>";
-    echo 'ticket id: ' . $ticketId;
-    echo "<br>";
-    echo 'client id: ' . $clientId;
-    echo "<br>";
-    echo 'comment : ' . $comment;
-    echo "<br>";
-    echo 'date : ' . $date;
-    echo "<br>";
-
 
     header("Location: /../pages/ticket_page.php?id=" . $ticketId);
 

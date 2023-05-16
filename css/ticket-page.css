@@ -212,7 +212,8 @@ body {
 }
 
 #documents-list img {
-    width: 15rem;
+    /* width: 15rem; */
+    max-height: 15rem;
 }
 
 #log {

@@ -136,13 +136,22 @@ function createCommentElement(commentInfo) {
     date.classList.add('comment-date');
     date.textContent = timeAgo(commentInfo['Date']);
 
-    const imageList = document.createElement('img');
-    imageList.id = 'comment-image-list';
-
     bottom.appendChild(author);
     bottom.appendChild(date);
     comment.appendChild(body);
     comment.appendChild(bottom);
+    
+    if (commentInfo['documents'].length > 0) {
+        const documentsList = document.createElement('div');
+        documentsList.id = 'documents-list';
+        for (const doc of commentInfo['documents']) {
+            const docListElement = document.createElement('img');
+            docListElement.src = '../' + doc;
+            docListElement.classList.add('document');
+            documentsList.appendChild(docListElement);
+        }
+        comment.appendChild(documentsList);
+    }
     return comment;
 }
 
