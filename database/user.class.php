@@ -197,7 +197,8 @@
         GROUP BY Agent.ClientID;
       ');
       $stmt->execute(array($id));
-      return $stmt->fetch()['Tickets_closed'];
+      if ($result = $stmt->fetch()) return $result['Tickets_closed'];
+      return null;
     }
 
     static function getTicketsOpen(PDO $db, $id) {
@@ -247,6 +248,16 @@
         VALUES (?);
       ');
       $stmt->execute(array($id));
+    }
+
+    static function getDepartment(PDO $db, int $id) {
+      $stmt = $db->prepare('
+      SELECT DepartmentID
+      FROM Agent join Agent_Department on Agent.ClientID = Agent_Department.AgentID
+      WHERE Agent.ClientID = ?;
+      ');
+      $stmt->execute(array($id));
+      return $stmt->fetchAll();
     }
   }
 ?>

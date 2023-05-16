@@ -9,6 +9,7 @@
         <html lang="en-US">
             <head>
                 <title>UP Tickets</title>
+                <link rel="icon" type="image/x-icon" href="../docs/favicon.ico">
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <?php foreach ($cssFiles as $css) { 
