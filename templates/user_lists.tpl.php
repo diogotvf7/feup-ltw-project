@@ -18,7 +18,7 @@
         return;
     } 
 ?>  
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>     <!--dont know if best way yet -->
+
     <table id="user-list">
         <tr id="table-header">
             <th></th>

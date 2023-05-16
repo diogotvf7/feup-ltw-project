@@ -236,5 +236,13 @@
         VALUES (?, ?)');
       $stmt->execute([$TicketID, $TagID]);
     }
+
+    static function changeTicketDepartment(PDO $db, int $TicketID, int $departmentID){
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET DepartmentID = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$departmentID, $TicketID]);
+    }
   }
 ?>
