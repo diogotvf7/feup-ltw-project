@@ -79,12 +79,12 @@
       $params = [];
   
       if ($author !== null) {
-          array_push($params, $author);
-          $query .= ' WHERE ClientID = ?';
+        array_push($params, $author);
+        $query .= ' WHERE ClientID = ?';
       }
   
       if ($sort !== null) {
-          $query .= ' ORDER BY Date ' . $sort;
+        $query .= ' ORDER BY Date ' . $sort;
       }
   
       $stmt = $db->prepare($query);
@@ -141,7 +141,7 @@
 
     static function getTicketTags(PDO $db, $ticketID) {
       $stmt = $db->prepare('
-        SELECT Name
+        SELECT Name, TagID
         FROM Ticket_Tag JOIN Tag
         USING(TagID)
         WHERE TicketID = ?
@@ -259,6 +259,46 @@
       ');
       $stmt->execute([$id]);
       return $stmt->fetchAll();
+    }
+
+    static function updateTicketTitle(PDO $db, int $id, string $title) {
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET Title = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$title, $id]);
+    }
+
+    static function updateTicketDescription(PDO $db, int $id, string $description) {
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET Description = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$description, $id]);
+    }
+
+    static function updateTicketStatus(PDO $db, int $id, string $status) {
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET Status = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$status, $id]);
+    }
+
+    static function updateTicketAgent(PDO $db, int $id, $agentID) {
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET AgentID = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$agentID, $id]);
+    }
+
+    static function updateTicketDepartment(PDO $db, int $id, $departmentID) {
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET DepartmentID = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$departmentID, $id]);
     }
   }
 ?>

@@ -65,7 +65,7 @@ CREATE TABLE Agent_Department
 
 CREATE TABLE Tag 
 (
-    TagID INTEGER PRIMARY KEY,
+    TagID INTEGER PRIMARY KEY AUTOINCREMENT,
     Name varchar(255) NOT NULL
 );
 
@@ -97,7 +97,7 @@ CREATE TABLE Ticket_Comment
 
 CREATE TABLE Ticket_Update
 (
-    UpdateID INTEGER PRIMARY KEY,
+    UpdateID INTEGER PRIMARY KEY AUTOINCREMENT,
     TicketID int NOT NULL,
     Type varchar(10) NOT NULL,
     Message varchar(255) NOT NULL,

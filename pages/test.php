@@ -6,13 +6,24 @@
     require_once(__DIR__ . '/../database/department.class.php');
 
     echo '<br><br><br><br>';
-    $tickets = Ticket::getTickets($db, 
-        '', 
-        '', 
-        '', 
-        '', 
+
+    $ret = array();
+    $ret['func'] = 'display_tickets';
+
+    $tickets = Ticket::getTickets(
+        $db,
         '',
-        1
+        array(),
+        array(),
+        '',
+        '',
+        null,
+        null
     );
     var_dump($tickets);
 ?>
+
+<p>
+    Coiso com botao para mostrar tickets
+    <button onclick="display_tickets()">Display tickets</button>
+</p>

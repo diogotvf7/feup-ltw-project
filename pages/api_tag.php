@@ -19,10 +19,6 @@
     if (!isset($ret['error'])) {
         switch ($_GET['func']) {
             case 'tags':
-                if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') {
-                    $ret['error'] = 'You don\'t have permission to access this data!';
-                    break;
-                }
                 $ret = Tag::getTags($db);
                 break;
             case 'user_tags':

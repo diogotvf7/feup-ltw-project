@@ -6,19 +6,19 @@
             <fieldset>
                 <div>    
                     <label for="name">Name: </label>
-                    <input id="name" name="name" placeholder="Name" readonly>
+                    <input id="name" name="name" placeholder="Name" readonly required>
                 </div>
                 <div>
                     <label for="username">Username: </label>
-                    <input id="username" name="username" placeholder="Username" readonly>
+                    <input id="username" name="username" placeholder="Username" readonly required>
                 </div>
                 <div>
                     <label for="email">Email: </label>
-                    <input id="email" name="email" placeholder="Email" readonly>
+                    <input id="email" name="email" placeholder="Email" readonly required>
                 </div>
                 <div>
                     <label for="password" hidden>Password: </label>
-                    <input type="password" name="password" placeholder="Password" readonly hidden>
+                    <input type="password" name="password" placeholder="Password" readonly hidden required>
                 </div>
                 <div id="change-password-div">
                     <label for="change-password" hidden>Change password:</label>

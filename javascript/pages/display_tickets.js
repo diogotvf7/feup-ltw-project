@@ -27,7 +27,7 @@ filterForm.addEventListener('submit', async function (event) {
     event.preventDefault();
     const formData = new FormData(filterForm);
     console.log(formData);
-    tickets = await fetch_ticket_api({
+    let tickets = await fetch_ticket_api({
         func: 'display_tickets',
         dateLowerBound: formData.get('dateLowerBound'),
         dateUpperBound: formData.get('dateUpperBound'),
@@ -39,4 +39,5 @@ filterForm.addEventListener('submit', async function (event) {
     list.innerHTML = '';
     for (const ticket of tickets['tickets'])
         drawTicketPreview(ticket);
+    setTagsColor();
 });   

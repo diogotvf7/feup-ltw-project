@@ -3,6 +3,8 @@ import { loadDepartments, loadTags } from '../api/load_from_api.js'
 import { drawTicketPreview } from '../draw_functions/draw_ticket_preview.js'
 import { setTagsColor } from '../util.js'
 
+const list = document.getElementById('ticket-list');
+
 window.onload = async function() {
     loadDepartments({
         func: 'user_departments'
@@ -25,8 +27,8 @@ filterForm.addEventListener('submit', async function (event) {
     event.preventDefault();
     const formData = new FormData(filterForm);
     console.log(formData);
-    tickets = await fetch_ticket_api({
-        func: 'display_tickets',
+    let tickets = await fetch_ticket_api({
+        func: 'my_tickets',
         dateLowerBound: formData.get('dateLowerBound'),
         dateUpperBound: formData.get('dateUpperBound'),
         status: formData.get('status'),
@@ -37,4 +39,5 @@ filterForm.addEventListener('submit', async function (event) {
     list.innerHTML = '';
     for (const ticket of tickets['tickets'])
         drawTicketPreview(ticket);
+    setTagsColor();
 });   

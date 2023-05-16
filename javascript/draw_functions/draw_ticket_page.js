@@ -1,56 +1,88 @@
 // import { fetch_session_api } from '../api/fetch_api.js'
 import { timeAgo } from '../util.js'
+import { autocomplete } from '../misc/autocomplete.js'
+import { fetch_tag_api } from '../api/fetch_api.js';
 
 export async function drawTicketPage(ticket) {
     // const session = await fetch_session_api();
+    const _form = document.getElementById('ticket-form');
     const _title = document.getElementById('title');
     const _description = document.getElementById('description');
     const _status = document.getElementById('status');
     const _tags = document.getElementById('tags');
-    const _department = document.getElementById('department');
+    const _department = document.getElementById('department-select');
     const _author = document.getElementById('author');
-    const _agent = document.getElementById('agent');
+    const _agent = document.getElementById('agent-select');
     const _date = document.getElementById('date');
     const _documentList = document.getElementById('documents-list');
     const _log = document.getElementById('log');
 
-    _title.textContent = ticket['title'];
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'id';
+    idInput.value = ticket['id'];
+    _form.appendChild(idInput);
+
+    _title.value = ticket['title'];
 
     _description.textContent = ticket['description'];
 
-    _status.textContent = 'Status: ' + ticket['status'];
+    if (ticket['status'] == 'Open') 
+        _status.children[0].selected = true;            
+    else if (ticket['status'] == 'Closed') 
+        _status.children[1].selected = true;
+    else if (ticket['status'] == 'In Progress')
+        _status.children[2].selected = true;
 
-    // if (ticket['status'] == 'Open') 
-    //     _status.children[0].selected = true;            
-    // else if (ticket['status'] == 'Closed') 
-    //     _status.children[1].selected = true;
-    // else if (ticket['status'] == 'In Progress')
-    //     _status.children[2].selected = true;
-
-    if (ticket['departmentId'] == null)
-        _department.textContent = 'No department assigned';
-    else 
-        _department.textContent = 'Department: ' + ticket['departmentName'];
-
-    _author.textContent = 'By: @' + ticket['author'];
+    if (ticket['departmentId'] != null) {
+        const option = document.createElement('option');
+        option.selected = true;
+        option.value = ticket['departmentId'];
+        option.textContent = ticket['departmentName'];
+        _department.appendChild(option);
+    } else {
+        const option = document.createElement('option');
+        option.selected = true;
+        option.textContent = 'No department associated';
+        _department.appendChild(option);
+    }
     
-    if (ticket['agentId'] == null)
-        _agent.textContent = 'No agent assigned';
-    else
-        _agent.textContent = 'Currently assigned to: @' + ticket['agentName'];
+    _author.textContent = 'By: @' + ticket['author'];
+
+    if (ticket['agentId'] != null) {
+        const option = document.createElement('option');
+        option.selected = true;
+        option.value = ticket['agentId'];
+        option.textContent = '@' + ticket['agentName'];
+        _agent.appendChild(option);
+    } else {
+        const option = document.createElement('option');
+        option.selected = true;
+        option.textContent = 'No agent assigned';
+        _agent.appendChild(option);
+    }
 
     _date.textContent = 'Created ' + timeAgo(ticket['date']['date']);
 
-    if (ticket['tags'].length == 0) 
-        _tags.remove();
-    else
-        for (const tag of ticket['tags']) {
-            const tagElement = document.createElement('p');
-            tagElement.textContent = tag;
-            tagElement.classList.add('tag');
-            _tags.appendChild(tagElement);
-        }
+    for (const tag of ticket['tags']) {
+        const tagInput = document.createElement('input');
+        tagInput.type = 'hidden';
+        tagInput.name = 'tags[]';
+        tagInput.value = tag;
+        const tagElement = document.createElement('p');
+        tagElement.textContent = tag;
+        tagElement.classList.add('tag');
+        tagElement.appendChild(tagInput);
+        _tags.appendChild(tagElement);
+    }
 
+    autocomplete(
+        document.getElementById("tags-search"), 
+        await fetch_tag_api({ 
+            func: 'tags'
+        }).then(tags => tags.map(tag => tag['Name'])),
+    );
+    
     if (ticket['documents'].length == 0) 
         _documentList.remove();
     else
@@ -63,7 +95,7 @@ export async function drawTicketPage(ticket) {
     
     let i = 0, j = 0;
     while (i < ticket['updates'].length || j < ticket['comments'].length) {
-        
+
         if (i == ticket['updates'].length)
             _log.appendChild(createCommentElement(ticket['comments'][j++]));
         

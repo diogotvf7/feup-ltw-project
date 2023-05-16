@@ -24,20 +24,20 @@
             case 'display_tickets':
                 $tickets = array();
                 $ret['statusFilter'] = isset($_GET['status']) ? $_GET['status'] : '';
-                $ret['tagsFilter'] = isset($_GET['tags']) ? explode(',', $_GET['tags']) : array();
-                $ret['departmentsFilter'] = isset($_GET['departments']) ? explode(',', $_GET['departments']) : array();
+                $ret['tagsFilter'] = (isset($_GET['tags']) && $_GET['tags'] != '') ? explode(',', $_GET['tags']) : array();
+                $ret['departmentsFilter'] = (isset($_GET['departments']) && $_GET['departments'] != '') ? explode(',', $_GET['departments']) : array();
                 $ret['dateLowerBound'] = isset($_GET['dateLowerBound']) ? $_GET['dateLowerBound'] : '';
                 $ret['dateUpperBound'] = isset($_GET['dateUpperBound']) ? $_GET['dateUpperBound'] : '';
-                $ret['userId'] = $_SESSION['IDUSER'];
-                $ret['sort'] = $_GET['sort'];
+                $ret['userId'] = $_GET['func'] == 'my_tickets' ? $_SESSION['IDUSER'] : null;
+                $ret['sort'] = empty($_GET['sort']) ? null : $_GET['sort'];
                 $ids = Ticket::getTickets($db, 
                     $ret['statusFilter'], 
                     $ret['tagsFilter'], 
                     $ret['departmentsFilter'], 
                     $ret['dateLowerBound'], 
                     $ret['dateUpperBound'],
-                    $_GET['func'] == 'my_tickets' ? $ret['userId'] : null,
-                    isset($_GET['sort']) ? $_GET['sort'] : null
+                    $ret['userId'],
+                    $ret['sort']
                 );
                 foreach ($ids as $id) {
                     $ticketData = Ticket::getTicketData($db, $id);

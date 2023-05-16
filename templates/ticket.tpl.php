@@ -21,31 +21,52 @@
 <?php function drawTicketPage() { ?>
     <main>
         <button id="edit-ticket"><i class="fa-solid fa-pen-to-square"></i></button>
-        <header>
-            <h1 id="title"> 
-            </h1>
-            <p id="status"></p>
-            <!-- <select id="status">
-                <option value="Open">Open</option>
-                <option value="Closed">Closed</option>
-                <option value="In progress">In progress</option>
-            </select> -->
-            <p id="date"></p>
-        </header>
-        <body>
-            <p id="description"></p>
-            <div class="space-between">
-                <div id="tags"></div>
-                <p id="department"></p>
-                <p id="author"></p>
-                <p id="agent"></p>
-            </div>
-            <div id="documents-list"></div>            
-            <div id="log">
-                <!-- log goes here -->
-                <!-- insert comment form -->
-            </div>
-        </body>
+        <button id="cancel-edit-ticket" type="" hidden><i class="fa-solid fa-xmark"></i></button>
+        <form id="ticket-form" action="../actions/edit_ticket.php" method="post">
+            <button id="save-ticket" hidden><i class="fa-solid fa-floppy-disk"></i></button>
+            <header>
+                <input type="text" name="title" id="title" maxlength="27" disabled required></input>
+                <div>
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" disabled>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                        <option value="In progress">In progress</option>
+                    </select>
+                </div>
+                <p id="date"></p>
+            </header>
+            <body>
+                <textarea name="description" id="description" disabled required></textarea>
+                <div class="space-between align-center">
+                    <div id="tags"></div>
+                    <div >
+                        <div class="autocomplete">
+                            <input id="tags-search" type="text" placeholder="Tag" hidden>
+                        </div>
+                        <button id="add-tag" type="button" hidden><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div>
+                        <label for="department">Department:</label>
+                        <select id="department-select" name="department" disabled>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <p id="author"></p>
+                    <div>
+                        <label for="agent">Agent:</label>
+                        <select id="agent-select" name="agent" disabled>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div id="documents-list"></div>            
+                <div id="log">
+                    <!-- log goes here -->
+                    <!-- insert comment form -->
+                </div>
+            </body>
+        </form>
     </main>
 <?php } ?>
 
@@ -55,7 +76,7 @@
             <h3>New Ticket</h3>
             <fieldset>
                 <legend id = description>Fill in the following fields to create a new ticket</legend>
-                <input placeholder="Title" type="text" name="ticket_title" tabindex="1" required autofocus>
+                <input placeholder="Title" type="text" name="ticket_title" tabindex="1" maxlength="27" required autofocus>
                 <textarea placeholder="Type your Message Here...." name="ticket_description" tabindex="3" required></textarea>
                 <span id="horizontal">
                     <input type="file" 
