@@ -29,7 +29,7 @@ main {
 
 .form-box {
     width: 25rem;
-    height: 25rem;
+    height: 30rem;
     background-color: rgba(255,255,255,0.05);
     box-shadow: 5px 20px 30px var(--black);
     color: var(--white);
@@ -124,4 +124,33 @@ form span button {
     font-size: 1em;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.requirements-todo-list{
+    text-align: left;
+    width: 100%;
+}
+
+.requirements-todo-list div {
+    display: flex;
+    text-align: left;
+}
+
+
+.requirements-todo-list .requirements-title {
+    font-size: 11px;
+    display: block!important;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.requirements-todo-list .requirement-todo-item {
+    margin-top: 5px;
+}
+
+.requirements-todo-list .requirement-todo-item .requirement-todo-icon {
+    font-size: 15px;
+    display: inline-block!important;
+    color: #fff;
+    margin-right: 5px;
 }

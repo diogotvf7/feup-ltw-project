@@ -32,13 +32,13 @@
       <input type="username" name="username" placeholder="Username">
       <input type="password" id="password" name="password" oninput="" placeholder="Password">
       
-      <div class="requirements-todo-list">
+      <div class="requirements-todo-list" hidden>
         <span class="requirements-title">
             Your password has to:
         </span>
             <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasLowerCaseRequirement() }">
         <div class="requirement-todo-icon pull-left">
-            <div class="icon-info-small"></div>
+            <i name="password_lowercase_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
         </div>
         <div class="requirement-todo-text pull-left">
@@ -48,7 +48,7 @@
 
             <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasUpperCaseRequirement() }">
         <div class="requirement-todo-icon pull-left">
-            <div class="icon-info-small"></div>
+            <i name="password_uppercase_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
         </div>
         <div class="requirement-todo-text pull-left">
@@ -58,7 +58,7 @@
 
             <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasDigitsRequirement() }">
         <div class="requirement-todo-icon pull-left">
-            <div class="icon-info-small"></div>
+            <i name="password_number_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
         </div>
         <div class="requirement-todo-text pull-left">
@@ -68,7 +68,7 @@
 
             <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasSpecialCharactersRequirement() }">
         <div class="requirement-todo-icon pull-left">
-            <div class="icon-info-small"></div>
+            <i name="password_special_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
         </div>
         <div class="requirement-todo-text pull-left">
@@ -78,7 +78,7 @@
 
             <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasMinLengthRequirement() }">
         <div class="requirement-todo-icon pull-left">
-            <div class="icon-info-small"></div>
+            <i name="password_min_length_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
         </div>
         <div class="requirement-todo-text pull-left">
@@ -86,18 +86,13 @@
         </div>
     </div>
 
-            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasNotEqualToLoginRequirement() }">
-        <div class="requirement-todo-icon pull-left">
-            <div class="icon-info-small"></div>
-            <div class="icon-checkmark-small"></div>
-        </div>
-        <div class="requirement-todo-text pull-left">
-            Be different than your manager name.
-        </div>
-    </div>
-
     </div>
       <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" hidden>
+      <div class="match-passwords" hidden>
+        <span class="requirements-title">
+            Both passwords should match!
+        </span>
+      </div>
       <button type="submit">Login</button>
       <span>
         <p>Don't have an account yet?</p>
