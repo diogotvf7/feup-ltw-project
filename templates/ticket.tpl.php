@@ -39,10 +39,6 @@
         </p>
         <div id="info"> 
             <p class="status"><?=$ticket->status;?></p>
-            <!-- <select class="status"> 
-                <option value="option1" > </*?=$ticket->status;?*/> </option>
-                <option value="option2"> </*?php echo ($ticket->status == "Open") ? "Closed" : "Open"; */?> </option>
-            </select> -->
             <div class="tags">
                 <?php foreach ($tags as $tag) {
                     echo '<p class="tag">' . $tag['Name'] . '</p>';

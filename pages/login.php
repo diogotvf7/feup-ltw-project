@@ -36,7 +36,7 @@
         <span class="requirements-title">
             Your password has to:
         </span>
-            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasLowerCaseRequirement() }">
+            <div class="requirement-todo-item ">
         <div class="requirement-todo-icon pull-left">
             <i name="password_lowercase_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasUpperCaseRequirement() }">
+            <div class="requirement-todo-item ">
         <div class="requirement-todo-icon pull-left">
             <i name="password_uppercase_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasDigitsRequirement() }">
+            <div class="requirement-todo-item">
         <div class="requirement-todo-icon pull-left">
             <i name="password_number_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasSpecialCharactersRequirement() }">
+            <div class="requirement-todo-item ">
         <div class="requirement-todo-icon pull-left">
             <i name="password_special_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-            <div class="requirement-todo-item clearfix" data-bind="css: { 'requirement-fulfilled': passwordHasMinLengthRequirement() }">
+            <div class="requirement-todo-item ">
         <div class="requirement-todo-icon pull-left">
             <i name="password_min_length_icon" class="fa fa-info-circle" aria-hidden="true"></i>
             <div class="icon-checkmark-small"></div>

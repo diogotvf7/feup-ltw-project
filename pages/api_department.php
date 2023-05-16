@@ -21,6 +21,12 @@
             case 'departments':
                 $ret = Department::getAllDepartments($db);
                 break;
+            case 'getDepartmentInfo':
+                $id = $_GET['id'];
+                $departmentInfo = Department::getDepartment($db, $id);
+                $ret['id'] = $departmentInfo->id; 
+                $ret['name'] = $departmentInfo->name;  
+                break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;

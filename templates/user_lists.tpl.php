@@ -27,7 +27,8 @@
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
-            <?= $agents 
+            <?= $agents ? '<th>Department</th>' : '' ?>
+            <?= $agents
             ? '<th>Tickets in charge</th><th>Tickets open</th><th>Tickets closed</th>' 
             : '<th>Tickets made</th>' ?>
         </tr>
@@ -39,6 +40,7 @@
                 <td><?= $user->username ?></td>
                 <td><?= $user->email ?></td>
                 <td><?= $user->type ?></td>
+                <?= $agents ? '<td> - </td>' : '' ?>
                 <td> - </td>
                 <?= $agents 
                 ? '<td> - </td><td> - </td>'

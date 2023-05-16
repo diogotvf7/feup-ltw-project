@@ -15,16 +15,29 @@ switch (match[1]) {
                 func: currentPage.substring(0, currentPage.length - 4),
                 sort: 'DESC'
             }));
-            const tickets = await response.json();  
-            for (const ticket of tickets['tickets'])
-                createTicketPreview(ticket);
-            setTagsColor();
+            const tickets = await response.json();
+            if (tickets['tickets'].length === 0) {
+                const noTickets = document.createElement('div');
+                noTickets.classList.add('noTickets');
+                const image = document.createElement('img');
+                image.src = '../docs/panda.jpg';
+                image.classList.add('panda');
+                const textPostPanda = document.createElement('h2');
+                textPostPanda.textContent = 'No tickets yet, just a panda eating bamboo.';
+                textPostPanda.classList.add('text-post-panda');
+                noTickets.appendChild(image);
+                noTickets.appendChild(textPostPanda);
+                list.appendChild(noTickets);
+            }
+            else {    
+                for (const ticket of tickets['tickets']) createTicketPreview(ticket);
+                setTagsColor();
+            }                
         }
         const filterForm = document.getElementById('filter-form');    
         filterForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             const formData = new FormData(filterForm);
-            console.log(formData);
             tickets = await fetchTickets(
                 formData.get('dateLowerBound'),
                 formData.get('dateUpperBound'),
@@ -34,17 +47,30 @@ switch (match[1]) {
                 formData.get('sort')
             );
             list.innerHTML = '';
+            if (tickets['tickets'].length === 0) {
+                const noTickets = document.createElement('div');
+                noTickets.classList.add('noTickets');
+                const image = document.createElement('img');
+                image.src = '../docs/panda.jpg';
+                image.classList.add('panda');
+                const textPostPanda = document.createElement('h2');
+                textPostPanda.textContent = 'No tickets yet, just a panda eating bamboo.';
+                textPostPanda.classList.add('text-post-panda');
+                noTickets.appendChild(image);
+                noTickets.appendChild(textPostPanda);
+                list.appendChild(noTickets);
+            }
             for (const ticket of tickets['tickets'])
                 createTicketPreview(ticket);
             setTagsColor();
-        });   
+        });
         break;
 
     case 'ticket_page':
         setTagsColor();
         break;
 
-    case 'new_ticket':
+    case 'new_ticket':  
         var file_input = document.getElementById('submitted-files');
         var allowed_extensions = ['.png', '.jpg', '.jpeg', '.gif'];
         if (file_input)
