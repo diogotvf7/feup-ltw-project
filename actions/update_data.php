@@ -18,17 +18,6 @@
     $username = $data['username'];
     $email = $data['email'];
     $newRole = $data['newRole'];
-    /*
-    echo "<script> console.log('$id') </script>";
-    echo "<br>";
-    echo "<script> console.log('$name') </script>";
-    echo "<br>";
-    echo "<script> console.log('$username') </script>";
-    echo "<br>";
-    echo "<script> console.log('$email') </script>";
-    echo "<br>";
-    echo "<script> console.log('$newRole') </script>";
-    */
     
     updateUserData($db, $id, $name, $username, $email);
     if (getUserType($db, $id) != $newRole){
