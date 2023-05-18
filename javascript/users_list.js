@@ -104,9 +104,8 @@ save.addEventListener("click", async function() {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
-        })
-        });
-    
+    })
+});
 
 
 selectAll.addEventListener("click", function() {
@@ -145,26 +144,31 @@ cancel.addEventListener("click", async function() {
 
 removeUser.addEventListener("click", function() {
     let usersToRemove = {};
-    for (var i = 1, row; row = table.rows[i]; i++) {
-        var checkbox = row.cells[0].children[0];
+    let array = [];
+    for (let i = 1, row; row = table.rows[i]; i++) {
+        let checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
         usersToRemove[i] = row.cells[1].textContent;
+        array.push(row);
     }
-    console.log(usersToRemove);
+    console.log(array[0]);
 
     const data = {
         usersToRemove : usersToRemove
     };
-    
+
     fetch('../actions/remove_user.php', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
+        }).then(function(response) {
+            if (response.ok) {
+                for (let i = 0; i < array.length; i++) array[i].innerHTML = "";
+            }
         });
-
-        });
+        }); 
     
 
 async function fetchUserInfo(_id) {

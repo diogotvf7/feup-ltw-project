@@ -50,7 +50,7 @@ CREATE TABLE Ticket
 
 CREATE TABLE Department 
 (   
-    DepartmentID INTEGER PRIMARY KEY,
+    DepartmentID INTEGER PRIMARY KEY AUTOINCREMENT,
     Name varchar(255) NOT NULL
 );
 

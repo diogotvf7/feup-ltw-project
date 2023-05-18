@@ -27,7 +27,7 @@
       );
     }
 
-    static function getDepartmentbyName(PDO $db, string $name) : int {
+    static function getDepartmentbyName(PDO $db, string $name) {
       $stmt = $db->prepare('
         SELECT *
         FROM Department
@@ -41,13 +41,19 @@
     }
     
     static function addDepartment(PDO $db, string $name){
-      if (self::getDepartment($db, $name) != null) return false; // already exists
+      if (self::getDepartmentbyName($db, $name) != null) return false; // already exists
       $stmt = $db->prepare('
-        INSERT INTO Department(Name)
-        VALUES (?)
+        SELECT DepartmentID
+        FROM Department order by 1 desc');
+        $stmt->execute();
+        $lastID = $stmt->fetch();
+        $lastID = $lastID['DepartmentID'];
+      $stmt = $db->prepare('
+        INSERT INTO Department(DepartmentID, Name)
+        VALUES (?,?)
       ');
-
-      $stmt->execute([$name]);
+      $lastID += 1;
+      $stmt->execute([$lastID,$name]);
     }
 
     static function removeDepartment(PDO $db, string $name) : bool{
