@@ -1,14 +1,14 @@
-edit = document.getElementById("edit-button");
-save = document.getElementById("save-button");
-selectAll = document.getElementById("select-all");
-toggleSelect = document.getElementById("toggle-select");
-cancel = document.getElementById("cancel-button");
-table = document.getElementById("user-list");
-removeUser = document.getElementById("remove-user-button");
+const edit = document.getElementById("edit-button");
+const save = document.getElementById("save-button");
+const selectAll = document.getElementById("select-all");
+const toggleSelect = document.getElementById("toggle-select");
+const cancel = document.getElementById("cancel-button");
+const table = document.getElementById("user-list");
+const removeUser = document.getElementById("remove-user-button");
 
 window.onload = async function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
-        id = row.cells[1].textContent;
+        let id = row.cells[1].textContent;
         switch (row.cells.length) {
             case 7:
                 let clientInfo = await fetchClientInfo(id);
@@ -19,7 +19,7 @@ window.onload = async function() {
                 var departments = "";
                 for (var j = 0; j < agentInfo['departments'].length; j++) {
                     if (j != 0) departments += ", ";
-                    departmentInfo = await fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
+                    let departmentInfo = await fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
                     departments += departmentInfo['name'];
                 }
 
@@ -42,24 +42,27 @@ function encodeForAjax(data) {
 
 edit.addEventListener("click", function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
-        checkbox = row.cells[0].childNodes[0];
+        let role = row.cells[5].textContent;
+        let checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
         for (var j = 2, col; col = row.cells[j] && j < 6; j++) {
-            cell = row.cells[j];
-            cell.setAttribute("contentEditable", "true");
+            let cell = row.cells[j];
             cell.style.backgroundColor = "#FFFFCC";
-            
+            if (j != 5) cell.setAttribute("contentEditable", "true");
             if (j == 5) {
                 cell.innerHTML = "";
                 var dropdown = document.createElement("select");
                 var option1 = document.createElement("option");
                 option1.text = "Admin";
+                if (role == "Admin") option1.selected = true;
                 dropdown.add(option1);
                 var option2 = document.createElement("option");
                 option2.text = "Agent";
+                if (role == "Agent") option2.selected = true;
                 dropdown.add(option2);
                 var option3 = document.createElement("option");
                 option3.text = "Client";
+                if (role == "Client") option3.selected = true;
                 dropdown.add(option3);
                 cell.appendChild(dropdown);
             }
@@ -70,12 +73,11 @@ edit.addEventListener("click", function() {
 save.addEventListener("click", async function() {
     let rowData = {};
     for (var i = 1, row; row = table.rows[i]; i++) {
-        checkbox = row.cells[0].childNodes[0];
+        let checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
         rowData[1] = row.cells[1].textContent;
         for (var j = 2; j < 6; j++) {
-            cell = row.cells[j];
-            cell.setAttribute("contentEditable", "false");
+            let cell = row.cells[j];
             cell.style.backgroundColor = row.cells[0].style.backgroundColor;
             checkbox.checked = false;
             if (j != 5){
@@ -86,7 +88,6 @@ save.addEventListener("click", async function() {
                 cell.innerHTML = currentOption;
                 rowData[j] = currentOption;
             }
-            
         }
     }
 
@@ -105,10 +106,8 @@ save.addEventListener("click", async function() {
                 'Content-type': 'application/json; charset=UTF-8'
             }
         })
-        });
+    });
     
-
-
 selectAll.addEventListener("click", function() {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
         checkbox.checked = true;
@@ -125,7 +124,7 @@ cancel.addEventListener("click", async function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
         var checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
-        id = row.cells[1].textContent;
+        let id = row.cells[1].textContent;
         let user = await fetchUserInfo(id);
         row.cells[2].textContent = user['name'];
         row.cells[2].setAttribute("contentEditable", "false");
@@ -137,7 +136,6 @@ cancel.addEventListener("click", async function() {
         row.cells[4].setAttribute("contentEditable", "false");
         row.cells[4].style.backgroundColor = row.cells[0].style.backgroundColor;
         row.cells[5].textContent = user['role']; 
-        row.cells[5].setAttribute("contentEditable", "false");
         row.cells[5].style.backgroundColor = row.cells[0].style.backgroundColor;
         checkbox.checked = false;
     }
@@ -145,28 +143,31 @@ cancel.addEventListener("click", async function() {
 
 removeUser.addEventListener("click", function() {
     let usersToRemove = {};
+    let rowsToRemove = [];
     for (var i = 1, row; row = table.rows[i]; i++) {
         var checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
+        rowsToRemove.push(row);
         usersToRemove[i] = row.cells[1].textContent;
     }
-    console.log(usersToRemove);
+
+    for (var i = 0; i < rowsToRemove.length; i++) {
+        table.deleteRow(rowsToRemove[i].rowIndex);
+    }
 
     const data = {
         usersToRemove : usersToRemove
     };
-    
+
     fetch('../actions/remove_user.php', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        });
-
-        });
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    });
+});
     
-
 async function fetchUserInfo(_id) {
     const response = await fetch('../pages/api_user.php?' + encodeForAjax({
         func: 'getSingleUser',

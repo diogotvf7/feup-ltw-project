@@ -14,7 +14,7 @@
 
   if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
-  drawHeader(['ticket'], ['style']);
+  drawHeader(['display_tickets'], ['style']);
   drawNavBar($_SESSION['PERMISSIONS']);
   drawTicketsListPage();
   drawFooter();
