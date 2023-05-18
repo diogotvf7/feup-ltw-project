@@ -18,7 +18,6 @@
         return;
     } 
 ?>  
-
     <table id="user-list">
         <tr id="table-header">
             <th></th>

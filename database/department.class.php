@@ -66,12 +66,23 @@
       return true;
     }
 
-    static function getAllDepartments(PDO $db){
+    static function getAllDepartments(PDO $db) {
       $stmt = $db->prepare('
         SELECT * 
         FROM Department
       ');
       $stmt->execute();
+      return $stmt->fetchAll();
+    }
+
+    static function getUserDepartments(PDO $db) {
+      $stmt = $db->prepare('
+        SELECT DISTINCT DepartmentID, Name
+        FROM Ticket
+        JOIN Department USING(DepartmentID)
+        WHERE ClientID = ?
+      ');
+      $stmt->execute([$_SESSION['IDUSER']]);
       return $stmt->fetchAll();
     }
   }

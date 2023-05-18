@@ -30,5 +30,4 @@
             header('Location: /pages/users.php');
         }
     }
-
 ?>

@@ -20,7 +20,7 @@
   */
 
   if (checkUserNotRegistered($db, $username, $email)) { // we should create restrictions for the username and password
-    signUpUser($db,$name, $email,$username,$password);
+    signUpUser($db, $name, $email,$username,$password);
     $user = User::getClientByUsername($db, $username);
     $_SESSION['IDUSER'] = $user->id;
     $_SESSION['PERMISSIONS'] = getUserType($db, $user->id);

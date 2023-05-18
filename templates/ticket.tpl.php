@@ -18,53 +18,69 @@
         </ul>
 <?php } ?>
 
-<?php function drawTicket($db, $ticketId) {
-    $ticket = Ticket::getTicketData($db, $ticketId);
-    $tags = Ticket::getTicketTags($db, $ticketId);
-    $documents = Ticket::getDocuments($db, $ticketId);
-    $author = User::getUser($db, $ticketId);
-    $department = null;
-    $agent = null;
-    if ($ticket->agentId != null) $agent = User::getUser($db, $ticket->agentId);
-    if ($ticket->departmentId != null) $department = Department::getDepartment($db, $ticket->departmentId);
-    ?>
-
-    <div id="ticket">
-        <h1> 
-            <?=$ticket->title;?> 
-        </h1>
-        <label id="description-label" for="description">Ticket description</label>
-        <p id="description"> 
-            <?=$ticket->description;?>
-        </p>
-        <div id="info"> 
-            <p class="status"><?=$ticket->status;?></p>
-            <div class="tags">
-                <?php foreach ($tags as $tag) {
-                    echo '<p class="tag">' . $tag['Name'] . '</p>';
-                }?>
+<?php function drawTicketPage() { ?>
+    <main>
+        <button id="edit-ticket"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button id="cancel-edit-ticket" type="" hidden><i class="fa-solid fa-xmark"></i></button>
+        <form id="ticket-form" action="../actions/edit_ticket.php" method="post">
+            <button id="save-ticket" hidden><i class="fa-solid fa-floppy-disk"></i></button>
+            <header>
+                <input type="text" name="title" id="title" maxlength="27" disabled required></input>
+                <div>
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" disabled>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                        <option value="In progress">In progress</option>
+                    </select>
+                </div>
+                <p id="date"></p>
+            </header>
+            <body>
+                <textarea name="description" id="description" disabled required></textarea>
+                <div class="space-between align-center">
+                    <div id="tags"></div>
+                    <div >
+                        <div class="autocomplete">
+                            <input id="tags-search" type="text" placeholder="Tag" hidden>
+                        </div>
+                        <button id="add-tag" type="button" hidden><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div>
+                        <label for="department">Department:</label>
+                        <select id="department-select" name="department" disabled>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <p id="author"></p>
+                    <div>
+                        <label for="agent">Agent:</label>
+                        <select id="agent-select" name="agent" disabled>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div id="documents-list"></div> 
+            </body>
+        </form>
+        <footer>
+            <div id="log">
             </div>
-            <?= $department === null ? '<p>No department</p>' : '<p>Department: ' . $department->name . '</p>';?>
-            <p>By: <?='@' . $author->username;?></p>
-             <?= $agent === null ? 'This ticket isn\'t assigned' : '<p>Currently assigned to: @' . $agent->username . '</p>';?>
-        </div>
-        <div id="documents">
-            <?php if ($documents != null) { ?>
-                <h2> 
-                    Documents 
-                </h2>
-                <ul id="image-list">
-                    <?php foreach ($documents as $document)
-                        echo  '<img class="image-list-element" height="300" src="../' . $document['Path'] . '">';
-                    ?>
-                </ul>
-            <?php } ?>
-        </div>
-        <div class="date">
-            <p>Created: <?=displayDate($ticket->date);?></p>
-            <!-- <p>Last updated: <?=''#timeAgo($ticket->lastUpdate);?></p> -->
-        </div>
-    </div>
+            <form id="new-comment" method="post" enctype="multipart/form-data" action="../actions/action_submit_comment.php">
+                <textarea placeholder="Type your Message Here...." name="comment" required></textarea>
+                <div>
+                    <input type="file" 
+                        id="submitted-files" 
+                        name="files[]"
+                        accept="application/pdf, image/png, image/jpeg, image/gif"
+                        multiple>
+                    <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
+                </div>
+            </form>
+        </footer>
+            
+        
+    </main>
 <?php } ?>
 
 <?php function drawNewTicketPage($db) { ?>
@@ -73,7 +89,7 @@
             <h3>New Ticket</h3>
             <fieldset>
                 <legend id = description>Fill in the following fields to create a new ticket</legend>
-                <input placeholder="Title" type="text" name="ticket_title" tabindex="1" required autofocus>
+                <input placeholder="Title" type="text" name="ticket_title" tabindex="1" maxlength="27" required autofocus>
                 <textarea placeholder="Type your Message Here...." name="ticket_description" tabindex="3" required></textarea>
                 <span id="horizontal">
                     <input type="file" 
@@ -123,6 +139,7 @@
                     <option value="">All</option>
                     <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
+                    <option value="In progress">In progress</option>
                 </select> 
                 <label for="department-select">Department:</label>
                 <select id="department-select" name="department">

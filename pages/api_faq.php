@@ -1,11 +1,17 @@
 <?php
     header('Content-Type: application/json');
 
+
+    require_once(__DIR__ . '/../utils/session.php');
+    session_start();
+    
     require_once(__DIR__ . '/../database/faq.class.php');
     require_once(__DIR__ . '/../database/connection.db.php');
     $db = getDatabaseConnection();
 
     $ret = array();
+
+    if (!Session::isLoggedIn()) $ret['error'] = 'User not logged in!';
 
     if (!isset($_GET['functionname'])) $ret['error'] = 'No function name!';
 
