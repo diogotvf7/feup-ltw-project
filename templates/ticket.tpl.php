@@ -107,10 +107,18 @@
                         ?>
                     </select>
                 </span>
+                <div>
+                    <select name="tags[]" id="tags" multiple>
+                    </select>
+                </div>
                 <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
             </fieldset>        
         </form>
     </main>
+    <script src="../javascript/new_ticket.js"></script>
+    <!-- <script>
+        new MultiSelectTag('tags');
+    </script> -->
 <?php } ?>
 
 <?php function drawFiltersBar() { ?>

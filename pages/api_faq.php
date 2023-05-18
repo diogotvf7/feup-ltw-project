@@ -1,6 +1,10 @@
 <?php
     header('Content-Type: application/json');
 
+
+    require_once(__DIR__ . '/../utils/session.php');
+    session_start();
+    
     require_once(__DIR__ . '/../database/faq.class.php');
     require_once(__DIR__ . '/../database/connection.db.php');
     $db = getDatabaseConnection();

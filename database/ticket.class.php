@@ -300,5 +300,20 @@
         WHERE TicketID = ?');
       $stmt->execute([$departmentID, $id]);
     }
+
+    static function addTicketTag(PDO $db, int $TicketID, int $TagID){
+      $stmt = $db->prepare('
+        INSERT INTO Ticket_Tag (TicketID, TagID)
+        VALUES (?, ?)');
+      $stmt->execute([$TicketID, $TagID]);
+    }
+
+    static function changeTicketDepartment(PDO $db, int $TicketID, int $departmentID){
+      $stmt = $db->prepare('
+        UPDATE Ticket
+        SET DepartmentID = ?
+        WHERE TicketID = ?');
+      $stmt->execute([$departmentID, $TicketID]);
+    }
   }
 ?>

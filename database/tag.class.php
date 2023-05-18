@@ -20,6 +20,36 @@
       return $stmt->fetchAll();
     }
 
+    static function getTagbyName(PDO $db, string $name){
+      $stmt = $db->prepare('
+        SELECT TagID
+        FROM Tag
+        WHERE Name = ?
+      ');
+      $stmt->execute([$name]);
+      $tag = $stmt->fetch();
+      return $tag['TagID'];
+    }
+
+    static function deleteTag(PDO $db, int $tagID){
+      $stmt = $db->prepare('
+        DELETE
+        FROM Tag
+        WHERE TagID = ?
+      ');
+      $stmt->execute(['TagID']);
+      $stmt->fetch();
+    }
+
+
+
+    // static function getTag(PDO $db, int $id) : Tag {
+    //   $stmt = $db->prepare('
+    //     SELECT TagID, Name
+    //     FROM Tag
+    //     WHERE TagID = ?
+    //   ');
+
     static function getUserTags(PDO $db) {
       $stmt = $db->prepare('
         SELECT DISTINCT TagID, Name
@@ -72,6 +102,7 @@
         VALUES (?)
       ');
       $stmt->execute([$name]);
+      return $db->lastInsertId();
     }
   }
 ?>

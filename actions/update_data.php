@@ -12,11 +12,13 @@
 
     if (!Session::isLoggedIn()) die(header('Location: /pages/login.php'));
 
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $newRole = $_POST['newRole'];
+    $data = json_decode(file_get_contents('php://input'), true);
+    $id = $data['id'];
+    $name = $data['name'];
+    $username = $data['username'];
+    $email = $data['email'];
+    $newRole = $data['newRole'];
+    
     updateUserData($db, $id, $name, $username, $email);
     if (getUserType($db, $id) != $newRole){
         switch($newRole){
@@ -31,5 +33,6 @@
                 break;
             }
     }
+    
 
 ?>

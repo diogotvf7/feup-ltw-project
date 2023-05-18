@@ -14,11 +14,21 @@ window.onload = async function() {
                 let clientInfo = await fetchClientInfo(id);
                 row.cells[6].textContent = !!clientInfo['made'] ? clientInfo['made'] : '-';
                 break;
-            case 9:
+            case 10:
                 let agentInfo = await fetchAgentInfo(id);
-                row.cells[6].textContent = !!agentInfo['responsible'] ? agentInfo['responsible'] : '-';
-                row.cells[7].textContent = !!agentInfo['open'] ? agentInfo['open'] : '-';
-                row.cells[8].textContent = !!agentInfo['closed'] ? agentInfo['closed'] : '-';
+                var departments = "";
+                for (var j = 0; j < agentInfo['departments'].length; j++) {
+                    if (j != 0) departments += ", ";
+                    let departmentInfo = await fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
+                    departments += departmentInfo['name'];
+                }
+
+                console.log(agentInfo)
+                console.log(agentInfo['closed'] === null)
+                row.cells[6].textContent = departments = "" ? '-' : departments;
+                row.cells[7].textContent = !!agentInfo['responsible'] ? agentInfo['responsible'] : '0';
+                row.cells[8].textContent = !!agentInfo['open'] ? agentInfo['open'] : '0';
+                row.cells[9].textContent = !!agentInfo['closed'] ? agentInfo['closed'] : '0';
                 break;
         }
     }
@@ -32,24 +42,27 @@ function encodeForAjax(data) {
 
 edit.addEventListener("click", function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
-        checkbox = row.cells[0].childNodes[0];
+        let role = row.cells[5].textContent;
+        let checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
         for (var j = 2, col; col = row.cells[j] && j < 6; j++) {
-            cell = row.cells[j]; 
-            if (j != 5) cell.setAttribute("contentEditable", "true");
+            let cell = row.cells[j];
             cell.style.backgroundColor = "#FFFFCC";
+            if (j != 5) cell.setAttribute("contentEditable", "true");
             if (j == 5) {
                 cell.innerHTML = "";
                 var dropdown = document.createElement("select");
-                // dropdown.addEventListener("change", function(e) {e.target.nextSibling.value = e.target.value;});
                 var option1 = document.createElement("option");
                 option1.text = "Admin";
+                if (role == "Admin") option1.selected = true;
                 dropdown.add(option1);
                 var option2 = document.createElement("option");
                 option2.text = "Agent";
+                if (role == "Agent") option2.selected = true;
                 dropdown.add(option2);
                 var option3 = document.createElement("option");
                 option3.text = "Client";
+                if (role == "Client") option3.selected = true;
                 dropdown.add(option3);
                 cell.appendChild(dropdown);
             }
@@ -57,15 +70,14 @@ edit.addEventListener("click", function() {
     }
 });
 
-save.addEventListener("click", function() {
+save.addEventListener("click", async function() {
     let rowData = {};
     for (var i = 1, row; row = table.rows[i]; i++) {
-        checkbox = row.cells[0].childNodes[0];
+        let checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
         rowData[1] = row.cells[1].textContent;
         for (var j = 2; j < 6; j++) {
-            cell = row.cells[j];
-            cell.setAttribute("contentEditable", "false");
+            let cell = row.cells[j];
             cell.style.backgroundColor = row.cells[0].style.backgroundColor;
             checkbox.checked = false;
             if (j != 5){
@@ -76,35 +88,26 @@ save.addEventListener("click", function() {
                 cell.innerHTML = currentOption;
                 rowData[j] = currentOption;
             }
-            
         }
     }
-    console.log(rowData[1]);
-    console.log(rowData[2]);
-    console.log(rowData[3]);
-    console.log(rowData[4]);
-    console.log(rowData[5]);
-    
-    $.ajax({
-        url: '../actions/update_data.php',
-        method: 'POST',
-        data: {
-            id : rowData[1],
-            name: rowData[2],
-            username: rowData[3],
-            email: rowData[4],
-            newRole: rowData[5]
-        },
-        success: function(response) {
-          console.log('Update successful!');
-        },
-        error: function(xhr, status, error) {
-          console.error('Update failed:', error);
-        }
-      });
-      
-});
 
+    const data = {
+        id : rowData[1],
+        name: rowData[2],
+        username: rowData[3],
+        email: rowData[4],
+        newRole: rowData[5]
+    };
+    
+    fetch('../actions/update_data.php', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+    });
+    
 selectAll.addEventListener("click", function() {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
         checkbox.checked = true;
@@ -121,7 +124,7 @@ cancel.addEventListener("click", async function() {
     for (var i = 1, row; row = table.rows[i]; i++) {
         var checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
-        id = row.cells[1].textContent;
+        let id = row.cells[1].textContent;
         let user = await fetchUserInfo(id);
         row.cells[2].textContent = user['name'];
         row.cells[2].setAttribute("contentEditable", "false");
@@ -140,27 +143,31 @@ cancel.addEventListener("click", async function() {
 
 removeUser.addEventListener("click", function() {
     let usersToRemove = {};
+    let rowsToRemove = [];
     for (var i = 1, row; row = table.rows[i]; i++) {
         var checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
+        rowsToRemove.push(row);
         usersToRemove[i] = row.cells[1].textContent;
     }
-    console.log(usersToRemove);
-    $.ajax({
-        url: '../actions/remove_user.php',
-        method: 'POST',
-        data: {
-            usersToRemove : usersToRemove
-        },
-        success: function(response) {
-            console.log('Removal successful!');
-        },
-        error: function(xhr, status, error) {
-            console.error('Removal failed:', error);
-        }
-        });
-});
 
+    for (var i = 0; i < rowsToRemove.length; i++) {
+        table.deleteRow(rowsToRemove[i].rowIndex);
+    }
+
+    const data = {
+        usersToRemove : usersToRemove
+    };
+
+    fetch('../actions/remove_user.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    });
+});
+    
 async function fetchUserInfo(_id) {
     const response = await fetch('../pages/api_user.php?' + encodeForAjax({
         func: 'getSingleUser',
@@ -186,4 +193,13 @@ async function fetchClientInfo(_id) {
     }));
     const clientInfo = await response.json();
     return clientInfo;
+}
+
+async function fetchDepartmentInfo(_id){
+    const response = await fetch('../pages/api_department.php?' + encodeForAjax({
+        func: 'getDepartmentInfo',
+        id: _id,
+    }));
+    const departmentInfo = await response.json();
+    return departmentInfo;
 }

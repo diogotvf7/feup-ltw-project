@@ -53,6 +53,7 @@
                 }
                 $id = $_GET['id'];
                 $ret['id'] = $id;
+                $ret['departments'] = User::getDepartment($db, $id);
                 $ret['responsible'] = User::getTicketsResponsible($db, $id);
                 $ret['open'] = User::getTicketsOpen($db, $id);
                 $ret['closed'] = User::getTicketsClosed($db, $id);

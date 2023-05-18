@@ -9,6 +9,7 @@
         <html lang="en-US">
             <head>
                 <title>UP Tickets</title>
+                <link rel="icon" type="image/x-icon" href="../docs/favicon.ico">
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <?php foreach ($cssFiles as $css) { 
@@ -60,7 +61,7 @@
             <a href="../pages/admins.php" class="nav-link">
             <i class="fa-solid fa-gear fa-lg"></i>
             <!-- <span class="link-text">Users</span> -->
-            <span class="link-text">Admins</span>
+            <span class="link-text">Admin Page</span>
         </a>
     </li>
     <li class="nav-item">

@@ -11,7 +11,9 @@
     $db = getDatabaseConnection();
     if (!Session::isLoggedIn()) die(header('Location: /pages/login.php'));
     
-    $usersToRemove = $_POST['usersToRemove'];
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    $usersToRemove = $data['usersToRemove'];
 
     if (empty($usersToRemove)){
         $_SESSION['messages'][] = array('type' => 'error', 'content' => 'No users selected!');
@@ -28,5 +30,4 @@
             header('Location: /pages/users.php');
         }
     }
-
 ?>
