@@ -1,3 +1,5 @@
+import { fetch_user_api } from '../api/fetch_api.js'
+
 const edit = document.getElementById("edit-button");
 const save = document.getElementById("save-button");
 const selectAll = document.getElementById("select-all");
@@ -7,24 +9,23 @@ const table = document.getElementById("user-list");
 const removeUser = document.getElementById("remove-user-button");
 
 window.onload = async function() {
-    for (var i = 1, row; row = table.rows[i]; i++) {
+    for (let i = 1, row; row = table.rows[i]; i++) {
         let id = row.cells[1].textContent;
         switch (row.cells.length) {
             case 7:
-                let clientInfo = await fetchClientInfo(id);
+                let clientInfo = await fetch_user_api({func: 'getClientInfo', id: id});
                 row.cells[6].textContent = !!clientInfo['made'] ? clientInfo['made'] : '-';
                 break;
             case 10:
-                let agentInfo = await fetchAgentInfo(id);
-                var departments = "";
-                for (var j = 0; j < agentInfo['departments'].length; j++) {
+                let agentInfo = await fetch_user_api({func: 'getAgentInfo', id: id});
+
+                let departments = "";
+                for (let j = 0; j < agentInfo['departments'].length; j++) {
                     if (j != 0) departments += ", ";
-                    let departmentInfo = await fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
+                    console.log(agentInfo['departments'][j]['DepartmentID'] + " " + departments);
+                    let departmentInfo = fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
                     departments += departmentInfo['name'];
                 }
-
-                console.log(agentInfo)
-                console.log(agentInfo['closed'] === null)
                 row.cells[6].textContent = departments = "" ? '-' : departments;
                 row.cells[7].textContent = !!agentInfo['responsible'] ? agentInfo['responsible'] : '0';
                 row.cells[8].textContent = !!agentInfo['open'] ? agentInfo['open'] : '0';
@@ -41,26 +42,26 @@ function encodeForAjax(data) {
 }
 
 edit.addEventListener("click", function() {
-    for (var i = 1, row; row = table.rows[i]; i++) {
+    for (let i = 1, row; row = table.rows[i]; i++) {
         let role = row.cells[5].textContent;
         let checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
-        for (var j = 2, col; col = row.cells[j] && j < 6; j++) {
+        for (let j = 2, col; col = row.cells[j] && j < 6; j++) {
             let cell = row.cells[j];
             cell.style.backgroundColor = "#FFFFCC";
             if (j != 5) cell.setAttribute("contentEditable", "true");
             if (j == 5) {
                 cell.innerHTML = "";
-                var dropdown = document.createElement("select");
-                var option1 = document.createElement("option");
+                let dropdown = document.createElement("select");
+                let option1 = document.createElement("option");
                 option1.text = "Admin";
                 if (role == "Admin") option1.selected = true;
                 dropdown.add(option1);
-                var option2 = document.createElement("option");
+                let option2 = document.createElement("option");
                 option2.text = "Agent";
                 if (role == "Agent") option2.selected = true;
                 dropdown.add(option2);
-                var option3 = document.createElement("option");
+                let option3 = document.createElement("option");
                 option3.text = "Client";
                 if (role == "Client") option3.selected = true;
                 dropdown.add(option3);
@@ -72,11 +73,11 @@ edit.addEventListener("click", function() {
 
 save.addEventListener("click", async function() {
     let rowData = {};
-    for (var i = 1, row; row = table.rows[i]; i++) {
+    for (let i = 1, row; row = table.rows[i]; i++) {
         let checkbox = row.cells[0].childNodes[0];
         if (!checkbox.checked) continue;
         rowData[1] = row.cells[1].textContent;
-        for (var j = 2; j < 6; j++) {
+        for (let j = 2; j < 6; j++) {
             let cell = row.cells[j];
             cell.style.backgroundColor = row.cells[0].style.backgroundColor;
             checkbox.checked = false;
@@ -84,7 +85,7 @@ save.addEventListener("click", async function() {
                 rowData[j] = cell.innerHTML;
             }    
             else {
-                var currentOption = cell.querySelector("select").value;
+                let currentOption = cell.querySelector("select").value;
                 cell.innerHTML = currentOption;
                 rowData[j] = currentOption;
             }
@@ -122,11 +123,12 @@ toggleSelect.addEventListener("click", function() {
 });
 
 cancel.addEventListener("click", async function() {
-    for (var i = 1, row; row = table.rows[i]; i++) {
-        var checkbox = row.cells[0].children[0];
+    for (let i = 1, row; row = table.rows[i]; i++) {
+        let checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
         let id = row.cells[1].textContent;
-        let user = await fetchUserInfo(id);
+        let user = await fetch_user_api({func: 'getSingleUser', id: id});
+        // let user = await fetchUserInfo(id);
         row.cells[2].textContent = user['name'];
         row.cells[2].setAttribute("contentEditable", "false");
         row.cells[2].style.backgroundColor = row.cells[0].style.backgroundColor;
@@ -144,58 +146,30 @@ cancel.addEventListener("click", async function() {
 
 removeUser.addEventListener("click", function() {
     let usersToRemove = {};
-    let array = [];
+    let rowsToRemove = [];
     for (let i = 1, row; row = table.rows[i]; i++) {
         let checkbox = row.cells[0].children[0];
         if (!checkbox.checked) continue;
         rowsToRemove.push(row);
         usersToRemove[i] = row.cells[1].textContent;
-        array.push(row);
+    }
+
+    for (let i = 0; i < rowsToRemove.length; i++) {
+        table.deleteRow(rowsToRemove[i].rowIndex);
     }
 
     const data = {
-        usersToRemove : usersToRemove
+        usersToRemove: usersToRemove
     };
 
     fetch('../actions/remove_user.php', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        }).then(function(response) {
-            if (response.ok) {
-                for (let i = 0; i < array.length; i++) array[i].innerHTML = "";
-            }
-        });
-        }); 
-    
-async function fetchUserInfo(_id) {
-    const response = await fetch('../pages/api_user.php?' + encodeForAjax({
-        func: 'getSingleUser',
-        id: _id,
-    }));
-    const userInfo = await response.json();
-    return userInfo;
-}
-
-async function fetchAgentInfo(_id) {
-    const response = await fetch('../pages/api_user.php?' + encodeForAjax({
-        func: 'getAgentInfo',
-        id: _id,
-    }));
-    const agentInfo = await response.json();
-    return agentInfo;
-}
-
-async function fetchClientInfo(_id) {
-    const response = await fetch('../pages/api_user.php?' + encodeForAjax({
-        func: 'getClientInfo',
-        id: _id,
-    }));
-    const clientInfo = await response.json();
-    return clientInfo;
-}
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    });
+});
 
 async function fetchDepartmentInfo(_id){
     const response = await fetch('../pages/api_department.php?' + encodeForAjax({

@@ -42,6 +42,7 @@
                 );
                 foreach ($ids as $id) {
                     $ticketData = Ticket::getTicketData($db, $id);
+                    // error_log('the id is: ' . $id . '   ', 3, "./my-errors.log");
                     $tickets[] = array(
                         'id' => $ticketData->id,
                         'title' => $ticketData->title,
@@ -54,8 +55,10 @@
                         'date' => $ticketData->date,
                         'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
                         'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
-                        'author' => User::getUser($db, $ticketData->clientId)->username,
-                        'assignee' => $ticketData->agentId ? User::getUser($db, $ticketData->agentId)->username : '',
+                        // 'error1' => $ticketData->clientId != null,
+                        // 'error' => $ticketData->agentId != null,
+                        'author' => $ticketData->clientId != null ?  User::getUser($db, $ticketData->clientId)->username : '',
+                        'assignee' => $ticketData->agentId != null ? User::getUser($db, $ticketData->agentId)->username : '',
                     );
                 }
                 $ret['tickets'] = $tickets;

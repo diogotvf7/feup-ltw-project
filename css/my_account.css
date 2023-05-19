@@ -1,0 +1,47 @@
+/*          My account page          */ 
+
+#my-account-page input[readonly] {
+    user-select: none;
+    cursor: default;
+}
+
+#my-account-page input[readonly]:focus {
+    outline: none;
+}
+
+#my-account-page {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#my-account-page h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3em;
+    position: relative;
+    transform: translate(-1em, 0) rotate(-10deg);
+}
+
+#my-account-page form fieldset {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+#my-account-page form fieldset div {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+#my-account-page form fieldset #change-password-div {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}

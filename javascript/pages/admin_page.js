@@ -174,13 +174,5 @@ function encodeForAjax(data) {
   }).join('&')
 }
 
-// teamButton.addEventListener('click', function() {
-//   console.log('clicked');
-//   if (TeamInfo.hasAttribute('hidden') === true) {
-//     TeamInfo.setAttribute('hidden', 'false');
-//   } else {
-//     TeamInfo.setAttribute('hidden', 'true');
-//   }
-// });
 
 

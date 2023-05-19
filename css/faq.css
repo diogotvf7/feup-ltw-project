@@ -1,0 +1,133 @@
+/*             Faq page             */
+
+#faq-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* align-content: center; */
+    gap: 2em;
+    padding: 2em;
+}
+
+#faq-page h1 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#faq-list {
+    list-style-type: none;
+    margin: 0;
+}
+
+.faq-element-checkbox {
+    display: none;
+}
+
+.faq-element-header {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin: 0;
+    padding: 0 2em;
+    cursor: pointer;
+}
+
+.faq-element-answer {
+    border-left: 1px solid var(--grey);
+    margin: 0 2.5em;
+    height: 0;
+    opacity: 0;
+    transition: all .4s ease;
+}   
+
+.faq-element-checkbox:checked ~ .faq-element-answer {
+    padding: 1em;
+    height: auto;
+    opacity: 1;
+}
+
+.fetch-more {
+    background-color: var(--grey);
+    color: var(--white);
+    font-weight: 600;
+    border: none;
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 1em;
+}
+
+.fetch-more:hover {
+    background-color: var(--green);
+}
+
+.fetch-more:active {
+    transform: translateY(3px);
+}
+
+/*              New faq page             */
+
+#new-faq-page {
+    margin: 0 10rem;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#new-faq {
+    background-image: linear-gradient(45deg, var(--green), var(--dark-blue));
+    width: 60%;
+    max-width: 40rem;
+    padding: 2em;
+    font-family: 'Monserrat', sans-serif;
+    color: var(--white);
+    font-weight: 600;
+    border-radius: 2em;
+}
+
+#new-faq h3 {
+    text-align: center;
+    font-size: 2em;
+}
+
+#new-faq fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+#new-faq input, textarea {
+    color: var(--black);
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+    background: var(--white);
+    padding: 10px;
+    font-style: "Open Sans", sans-serif;
+}
+
+#new-faq textarea {
+    height: 5rem;
+    resize: none;
+}
+
+#new-faq #submit {
+    width: 30%;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    box-shadow: 0 3px #999;
+    transition: all .5s;
+}
+
+#new-faq #submit:active {
+    box-shadow: 0 3px #666;
+    transform: translateY(3px);
+}
+
+#new-faq #submit:hover {
+    background-color: var(--grey);
+    color: var(--white);
+}
