@@ -19,8 +19,6 @@
     FAQ::createFaq($db, $faq_question, $faq_answer);
 
     header("Location: /../pages/admin_page.php");
-    
-    
 
 ?>
 

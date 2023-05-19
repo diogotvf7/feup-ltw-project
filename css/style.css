@@ -358,6 +358,12 @@ main {
     margin: 0;
 }
 
+.ticket-list-element .author {
+    grid-area: author;
+    padding-left: 1em;
+    margin: auto 0;
+}
+
 .status {
     grid-area: status;
     border-radius: 1.5em;
@@ -380,11 +386,6 @@ main {
     margin: 0;
 }
 
-.ticket-list-element .author {
-    grid-area: author;
-    padding-left: 1em;
-    margin: auto 0;
-}
 
 /*              Filters bar               */
 

@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS Tag;
 
 -- database schema
 
+
 CREATE TABLE Tag 
 (
     TagID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,8 +54,8 @@ CREATE TABLE Department
 CREATE TABLE Agent_Department 
 (
     Agent_DepartmentID INTEGER PRIMARY KEY AUTOINCREMENT,
-    AgentID int NOT NULL,
-    DepartmentID int NOT NULL,
+    AgentID INTEGER NOT NULL,
+    DepartmentID INTEGER NOT NULL,
     FOREIGN KEY (AgentID) REFERENCES Agent(ClientID) ON DELETE CASCADE,
     FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE CASCADE
 );
@@ -65,9 +66,9 @@ CREATE TABLE Ticket
     Title varchar(255) NOT NULL,
     Description varchar(255) NOT NULL,
     Status varchar(255) NOT NULL,
-    ClientID int,
-    AgentID int,
-    DepartmentID int,
+    ClientID INTEGER,
+    AgentID INTEGER,
+    DepartmentID INTEGER,
     Date datetime NOT NULL,
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE SET NULL,
     FOREIGN KEY (AgentID) REFERENCES Agent(ClientID) ON DELETE SET NULL,
@@ -76,15 +77,15 @@ CREATE TABLE Ticket
 
 CREATE TABLE Ticket_Tag  
 (
-    TicketID int NOT NULL,
-    TagID int NOT NULL,
+    TicketID INTEGER NOT NULL,
+    TagID INTEGER NOT NULL,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID),
     FOREIGN KEY (TagID) REFERENCES Tag(TagID)
 );
 
 CREATE TABLE Ticket_Document
 (
-    TicketID int NOT NULL,
+    TicketID INTEGER NOT NULL,
     Path varchar NOT NULL,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID) ON DELETE CASCADE
 );
@@ -92,8 +93,8 @@ CREATE TABLE Ticket_Document
 CREATE TABLE Ticket_Comment
 (
     CommentID INTEGER PRIMARY KEY AUTOINCREMENT,
-    TicketID int NOT NULL,
-    ClientID int,
+    TicketID INTEGER NOT NULL,
+    ClientID INTEGER,
     Comment varchar(255) NOT NULL,
     Date datetime NOT NULL,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID) ON DELETE CASCADE,
@@ -103,7 +104,7 @@ CREATE TABLE Ticket_Comment
 CREATE TABLE Ticket_Update
 (
     UpdateID INTEGER PRIMARY KEY AUTOINCREMENT,
-    TicketID int NOT NULL,
+    TicketID INTEGER NOT NULL,
     Type varchar(10) NOT NULL,
     Message varchar(255) NOT NULL,
     Date datetime NOT NULL,
@@ -112,7 +113,7 @@ CREATE TABLE Ticket_Update
 
 CREATE TABLE Comment_Document
 (
-    CommentID int NOT NULL,
+    CommentID INTEGER NOT NULL,
     Path varchar NOT NULL,
     FOREIGN KEY (CommentID) REFERENCES Ticket_Comment(CommentID) ON DELETE CASCADE
 );
@@ -124,7 +125,6 @@ CREATE TABLE FAQ
     Answer varchar(255) NOT NULL
 );
 
-COMMIT;
 -- populate database
 
 -- Populating Department table
@@ -476,3 +476,5 @@ INSERT INTO FAQ (Question, Answer)
 VALUES ('What do I do if I am not receiving push notifications?', 'If you are not receiving push notifications, please check your settings or contact our support team for assistance.');
 INSERT INTO FAQ (Question, Answer) 
 VALUES ('How do I change the language settings?', 'You can change the language settings by going to your account settings and selecting "language."');    
+
+COMMIT;
