@@ -47,7 +47,10 @@ switch (match[1]) {
                 formData.get('sort')
             );
             list.innerHTML = '';
+            console.log("here");
+            console.log(tickets['tickets'].length);
             if (tickets['tickets'].length === 0) {
+                console.log("uau");
                 const noTickets = document.createElement('div');
                 noTickets.classList.add('noTickets');
                 const image = document.createElement('img');
@@ -58,6 +61,7 @@ switch (match[1]) {
                 textPostPanda.classList.add('text-post-panda');
                 noTickets.appendChild(image);
                 noTickets.appendChild(textPostPanda);
+                console.log(noTickets);
                 list.appendChild(noTickets);
             }
             for (const ticket of tickets['tickets'])
@@ -82,14 +86,12 @@ switch (match[1]) {
                     var file_extension = file_name.substring(file_name.lastIndexOf('.'));
         
                     if (!allowed_extensions.includes(file_extension.toLowerCase())) {
-                        // The uploaded file has an invalid extension, so display an error message
                         alert('Error: Invalid file type.');
                         file_input.value = '';
                         return;
                     }
                 }
         
-                // All uploaded files have valid extensions, so proceed with the submission
             });
         break;
     default:

@@ -25,9 +25,8 @@
             <div class = "dropdown">
                 <button name="dropbtn" class="dropbtn" > <i class="fa-sharp fa-solid fa-plus"></i> Create </button>
                 <div class="dropdown-content" hidden>
-                    <a href="#" onclick="openForm()">Create Department</a>
-                    <a href="aaa.php">Create Status</a>
-                    
+                    <button class="dropdown-button" id="create-department" type="button">Create Department</button>
+                    <button class="dropdown-button" type="button">Create Status</button>
                 </div>
             </div>
             <div class="table">
@@ -41,14 +40,26 @@
             </div>
         </div>
         <div class="form-popup" id="myForm">
-            <form action="../actions/create_department.php" class="form-container" method="post">
+            <form action="../actions/create_department.php" id="newDepartmentForm" class="form-container" method="post">
                 <h1>New Department</h1>
 
                 <label for="department-name"><b>Department Name</b></label>
                 <input type="text" placeholder="Enter new department name" id="department-name" name="department-name" required>
             
-                <button type="submit" onclick="closeForm()" class="btn">Create new department</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                <button type="submit" id="submit_create_department" class="btn">Create new department</button>
+                <button type="button" id="cancel-creation-department" class="btn cancel">Close</button>
+            </form>
+        </div>
+        <div class="form-popup" id="add-member-popup">
+            <form action="../actions/add_member_department.php" id="addtoDepartmentForm" class="form-container" method="post">
+                <h1 id="assign-header">Add to </h1>
+
+                <label for="department-name"><b>Select the members you want to assign</b></label>
+                <select name='type' id="assign-dropdown" required multiple='multiple'>
+                </select>
+            
+                <button type="submit" id="submit_assign" class="btn">Assign to department</button>
+                <button type="button" id="cancel-assign-department" class="btn cancel">Close</button>
             </form>
         </div>
     </main>

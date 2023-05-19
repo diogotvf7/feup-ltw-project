@@ -85,5 +85,14 @@
       $stmt->execute([$_SESSION['IDUSER']]);
       return $stmt->fetchAll();
     }
+    
+    static function getUsersInDepartments(PDO $db, int $id) {
+      $stmt = $db->prepare('
+      SELECT Client.ClientID, Client.Name, Client.Email FROM Department JOIN Agent_Department ON Department.DepartmentID = Agent_Department.DepartmentID JOIN Agent ON Agent_Department.AgentID = Agent.ClientID JOIN Client on Client.ClientID = Agent.ClientID
+      WHERE Department.DepartmentID = ?
+      ');
+      $stmt->execute([$id]);
+      return $stmt->fetchAll();
+    }
   }
 ?>

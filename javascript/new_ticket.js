@@ -74,19 +74,15 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     }
 
     async function createElements() {
-        // Create custom elements
         options = await getOptions();
-        element.classList.add('hidden') // make cities dropdown hidden
+        element.classList.add('hidden')
         
-        // .multi-select-tag
         customSelectContainer = document.createElement('div')
         customSelectContainer.classList.add('mult-select-tag')
 
-        // .container
         wrapper = document.createElement('div')
         wrapper.classList.add('wrapper')
 
-        // body
         body = document.createElement('div')
         body.classList.add('body')
         if(customs.shadow) {
@@ -96,11 +92,9 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
             body.classList.add('rounded')
         }
         
-        // .input-container
         inputContainer = document.createElement('div')
         inputContainer.classList.add('input-container')
 
-        // input
         input = document.createElement('input')
         input.classList.add('input')
         input.placeholder = `${customs.placeholder || 'Search...'}`
@@ -111,11 +105,9 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
 
         body.append(inputContainer)
 
-        // .btn-container
         btnContainer = document.createElement('div')
         btnContainer.classList.add('btn-container')
 
-        // button
         button = document.createElement('button')
         button.type = 'button'
         btnContainer.append(button)
@@ -144,7 +136,6 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
         customSelectContainer.appendChild(wrapper)
         customSelectContainer.appendChild(drawer)
 
-        // Place TailwindTagSelection after the element
         if (element.nextSibling) {
             element.parentNode.insertBefore(customSelectContainer, element.nextSibling)
         }
@@ -166,7 +157,6 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
                 li.innerHTML = option.label;
                 li.dataset.value = option.value;
     
-                // For search
                 if (val && option.label.toLowerCase().startsWith(val.toLowerCase())) {
                     ul.appendChild(li);
                     optionFound = true;
@@ -175,9 +165,7 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
                 }
             }
         }
-    
-        // Create new option dynamically as you type
-        if (val && !optionFound) {
+            if (val && !optionFound) {
             const newOption = {
                 value: val,
                 label: val,
@@ -188,13 +176,10 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
             li.innerHTML = newOption.label;
             li.dataset.value = newOption.value; 
             ul.appendChild(li);
-            //options.push(newOption);
-            //addOption(newOption);
         }
     }
 
     function createTag(option) {
-        // Create and show selected item as tag
         const itemDiv = document.createElement('div');
         itemDiv.classList.add('item-container');
         const itemLabel = document.createElement('div');
@@ -220,7 +205,6 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     }
 
     function enableItemSelection() {
-        // Add click listener to the list items
         for(var li of ul.children) {
             li.addEventListener('click', (e) => {
                 var option = options.find((o) => o.value == e.target.dataset.value);
@@ -234,8 +218,7 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
                     createTag(newOption);
                     options.push(newOption);
                     addOption(newOption);
-                    console.log(options)
-                    console.log(element.options)
+
                     
                 } else {
                     option.selected = true;
@@ -249,7 +232,6 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     }
 
     function isTagSelected(val) {
-        // If the item is already selected
         for(var child of inputContainer.children) {
             if(!child.classList.contains('input-body') && child.firstChild.dataset.value == val) {
                 return true
@@ -258,24 +240,19 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
         return false
     }
     function removeTag(val) {
-        // Remove selected item
         for(var child of inputContainer.children) {
             if(!child.classList.contains('input-body') && child.firstChild.dataset.value == val) {
                 inputContainer.removeChild(child);
                 if (options.find((op) => op.value == val).default === false){
-                    //options.remove((op) => op.value == val)
                     removeOption(options.find((op) => op.value == val))
                 }
-                console.log(options)
-                console.log(element.options)
-                
+
             }
         }
     }
     function setValues() {
         console.log("setValues -> options", options);
         console.log("setValues -> element.options", element.options);
-        // Update element final values
         for(var i = 0; i < options.length; i++) {
             element.options[i].selected = options[i].selected
      
