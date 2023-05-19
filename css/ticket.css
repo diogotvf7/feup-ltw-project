@@ -1,3 +1,7 @@
+.space-between {
+    align-items: center;
+}
+
 #ticket-list-page {
     font-family: 'Source Sans Pro', sans-serif;
     padding: 0;
@@ -19,68 +23,61 @@
 }
 
 .ticket-list-element {
-    width: fit-content;
-    height: fit-content;
     background-color: var(--light-grey);
     border-radius: 1em;
-    display: grid;
-    grid-template-columns: 25em 7em; 
-    grid-template-rows: 2em 2em 3em;
-    gap: 0px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
     margin: 1em;
     padding: 1em;
-    grid-auto-flow: row;
-    grid-template-areas: 
-        "title time"
-        "description description"
-        "tags author"; 
+    width: 50%;
+    height: fit-content;
     font-family: "Open Sans", sans-serif;
+    color: var(--black);
     scroll-snap-align: start;
     text-decoration: none;
-    color: var(--black);
+    transition: ease-out 200ms;
 }
 
-.ticket-list-element .title {
-    grid-area: title;
+.ticket-list-element:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.ticket-list-element button {
+    margin-right: 1em;
+    padding: 0.5em;
+}
+
+.ticket-list-element button:hover {
+    color: var(--red);
+}
+
+.ticket-list-element:has(button:active) {
+    transform: translate(100%, 0) opacity(0);
+}
+
+.ticket-list-element .title, .ticket-list-element .time, .ticket-list-element .description, .ticket-list-element .author, .ticket-list-element .status, .ticket-list-element .tag {
     margin: 0;
+    padding: 0;
+    height: fit-content;
+    border-radius: 1em;
+    padding: 0.5em 1em 0.5em 1em;
 }
 
 .ticket-list-element .description {
-    grid-area: description;
-    margin: 0;
+    padding: 0 1em;
 }
 
-.ticket-list-element .time {
-    grid-area: time;
-    margin: 0;
-}
-
-.ticket-list-element .author {
-    grid-area: author;
-    padding-left: 1em;
-    margin: auto 0;
-}
-
-.status {
-    grid-area: status;
-    border-radius: 1.5em;
-    padding: 0.5em 1em 0.5em 1em;
-    text-align: center;
-    margin: 0;
-}
-
-.tags {
-    grid-area: tags;
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    align-items: baseline;
-}
-
-.tags .tag {
+.ticket-list-element div:last-child {
+    background-color: var(--grey);
+    color: var(--white);
+    padding: 0 1em;
     border-radius: 1em;
-    padding: 0.5em 1em 0.5em 1em;
-    margin: 0;
+}
+
+.ticket-list-element .tag {
+    color: var(--black);    
 }
 
 /*                  Filter bar                  */
@@ -154,7 +151,8 @@
 }
 
 /*                 Ticket page                  */
-select[disabled] {
+
+#ticket-page select[disabled] {
     appearance: none;
     -webkit-appearance: none;
     background-color: transparent;
