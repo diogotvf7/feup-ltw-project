@@ -21,6 +21,11 @@
     flex-direction: column;
 }
 
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
 body {  
     background-color: var(--white);
     margin: 0;

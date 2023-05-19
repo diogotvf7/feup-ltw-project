@@ -152,6 +152,11 @@
 
 /*                 Ticket page                  */
 
+#ticket-page {
+    font-family: 'Open Sans', sans-serif;
+    margin-right: 6em;
+}
+
 #ticket-page select[disabled] {
     appearance: none;
     -webkit-appearance: none;
@@ -169,12 +174,7 @@
     height: 2em;
 }
 
-#edit-ticket {
-    top: 2rem;
-    right: 2rem;
-}
-
-#save-ticket {
+#edit-ticket, #save-ticket {
     top: 2rem;
     right: 2rem;
 }
@@ -236,10 +236,6 @@ select {
     min-height: 7em;
     resize: none;
     overflow: auto;
-}
-
-body {
-    font-family: 'Open Sans', sans-serif;
 }
 
 #description {
@@ -412,7 +408,7 @@ body {
     width: 40%;
 }
 
-#new-ticket input, select, textarea {
+#new-ticket input, #new-ticket select, #new-ticket textarea {
     color: var(--black);
     width: 80%;
     border: none;
@@ -514,6 +510,7 @@ body {
     padding: 0;
     background: transparent;
     background-image: none;
+    appearance: none;
     -webkit-appearance: none;
     text-transform: none;
     margin: 0;
