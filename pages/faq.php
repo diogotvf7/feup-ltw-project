@@ -14,8 +14,7 @@
         die(header('Location: /pages/login.php'));
     drawHeader(['faq'], ['faq', 'general']);
     drawNavBar($_SESSION['PERMISSIONS']);
-    $faqs = FAQ::fetchFAQs($db, 10, 0);
-    drawFAQList($faqs);
+    drawFAQList();
 
     drawFooter();
 ?>

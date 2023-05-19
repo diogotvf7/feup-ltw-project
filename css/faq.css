@@ -32,6 +32,7 @@
 }
 
 .faq-element-answer {
+    font-family: "Open sans", sans-serif;
     border-left: 1px solid var(--grey);
     margin: 0 2.5em;
     height: 0;

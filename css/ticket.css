@@ -44,19 +44,6 @@
     cursor: pointer;
 }
 
-.ticket-list-element button {
-    margin-right: 1em;
-    padding: 0.5em;
-}
-
-.ticket-list-element button:hover {
-    color: var(--red);
-}
-
-.ticket-list-element:has(button:active) {
-    transform: translate(100%, 0) opacity(0);
-}
-
 .ticket-list-element .title, .ticket-list-element .time, .ticket-list-element .description, .ticket-list-element .author, .ticket-list-element .status, .ticket-list-element .tag {
     margin: 0;
     padding: 0;

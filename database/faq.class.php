@@ -62,8 +62,13 @@
       $stmt->execute(array($question, $answer));
     }
 
-    function toJson() {
-      return json_encode($this);
+    static function deleteFaq(PDO $db, int $id) {
+      $stmt = $db->prepare('
+        DELETE FROM FAQ
+        WHERE FAQID = ?
+      ');
+
+      $stmt->execute(array($id));
     }
   }
 ?>
