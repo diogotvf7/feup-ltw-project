@@ -19,7 +19,7 @@
     if ($_SESSION['PERMISSIONS'] != 'Admin' && $_SESSION['PERMISSIONS'] != 'Agent') 
         die(header('Location: /pages/my_tickets.php'));
     
-    drawHeader(['users_list'], ['style']);
+    drawHeader(['users_list'], ['general', 'user']);
     drawNavBar($_SESSION['PERMISSIONS']);
     $users = User::getUsers($db);
     drawUsersPage($users);

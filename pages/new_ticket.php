@@ -12,7 +12,7 @@
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
-    drawHeader(['new_ticket'], ['style']);
+    drawHeader(['new_ticket'], ['general', 'ticket']);
     drawNavBar($_SESSION['PERMISSIONS']);
     drawNewTicketPage($db);
     drawFooter();

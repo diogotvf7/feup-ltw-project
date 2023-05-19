@@ -11,7 +11,7 @@
 
   if (!Session::isLoggedIn())
     die(header('Location: /pages/login.php'));
-  drawHeader(['my_account'], ['style']);
+  drawHeader(['my_account'], ['general', 'my_account']);
   drawNavBar($_SESSION['PERMISSIONS']);
   drawMyAccountPage();
   drawFooter();

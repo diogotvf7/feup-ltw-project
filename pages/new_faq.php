@@ -12,7 +12,7 @@
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
-    drawHeader([], ['pages/new-faq', 'templates/general']);
+    drawHeader([], ['faq', 'general']);
     drawNavBar($_SESSION['PERMISSIONS']);
     drawNewFaqPage($db);
     drawFooter();
