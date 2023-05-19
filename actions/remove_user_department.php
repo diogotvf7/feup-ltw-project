@@ -21,6 +21,5 @@
     $departmentID = $data['departmentID'];
     
     User::removeUserFromDepartment($db, $userID, $departmentID);
-    
-    
+      
 ?>

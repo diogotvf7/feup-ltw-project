@@ -15,7 +15,7 @@ window.onload = async function() {
   const cancel_assign_department_button = document.getElementById('cancel-assign-department');
   cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
   const tableRows = document.querySelectorAll('.department-table-row');
-
+  let currentOpenTab = null;
   for (const button of teamButton) {
     button.addEventListener('click', function() {
       let team_Info = button.nextSibling;
@@ -23,7 +23,7 @@ window.onload = async function() {
         team_Info.toggleAttribute('hidden');
       } 
       else if (team_Info.hasAttribute('hidden') === false) {
-        team_Info.setAttribute('hidden', true);
+        team_Info.toggleAttribute('hidden');
       }
     });
     button.addEventListener('touchend', function() {
@@ -215,7 +215,6 @@ async function loadDepartments() {
   if (departments.length !== 0) {
       for (const department of departments) {
         const usersInDepartment = await fetchUsersInDepartment(department['Name']);
-        console.log("usersinDepartment", usersInDepartment);
         if (usersInDepartment !== 0){
 
           const tr = document.createElement('tr');
@@ -235,7 +234,6 @@ async function loadDepartments() {
         teamInfo.setAttribute('class', 'team-info');
         teamInfo.id = department.DepartmentID;
         for (const user of usersInDepartment) {
-          console.log("user", user);
           const teamMember = document.createElement('div');
           const member = document.createElement('p');
           member.setAttribute('id', user['ClientID']);
@@ -243,25 +241,16 @@ async function loadDepartments() {
           
           member.title = user['Email'];
           member.textContent = user['Name'];
-          console.log(member);
           
           const minus_icon = document.createElement('i');
           minus_icon.id = "minus-icon";
           minus_icon.title = 'Remove ' + user['Name'] + ' from ' + department['Name'];
           minus_icon.classList.add('fa-solid', 'fa-minus');
-
-          console.log(minus_icon);
           
           member.appendChild(minus_icon);
           
-          console.log(member);
-
-          
           teamMember.appendChild(member);
-          console.log(teamMember);
           teamInfo.appendChild(member);
-          console.log(teamInfo);
-          console.log("teamInfo", teamInfo);
         }
         const addMember = document.createElement('button');
         addMember.setAttribute('id', 'add-member');
@@ -273,10 +262,8 @@ async function loadDepartments() {
         button.appendChild(icon);
         departmentInfo.appendChild(button);
         departmentInfo.appendChild(teamInfo);
-        console.log("departmentInfo", departmentInfo)
         tr.appendChild(departmentInfo);
         departmentTable.appendChild(tr);
-        console.log("departmentTable", departmentTable);
       }
       }
   }
