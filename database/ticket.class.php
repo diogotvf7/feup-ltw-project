@@ -6,12 +6,12 @@
     public string $title;
     public string $description;
     public string $status;
-    public int $clientId;
+    public $clientId;
     public $agentId;
     public $departmentId;
     public Datetime $date;
     
-    public function __construct(int $id, string $title, string $description, string $status, int $clientId, $agentId, $departmentId, string $date)
+    public function __construct(int $id, string $title, string $description, string $status, $clientId, $agentId, $departmentId, string $date)
     {
       $this->id = $id;
       $this->title = $title;

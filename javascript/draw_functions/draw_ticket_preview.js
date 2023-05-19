@@ -21,24 +21,38 @@ export function drawTicketPreview(ticket) {
     status.textContent = ticket.status;
     status.classList.add('status');
     tagsDiv.appendChild(status);
-    for (const tag of ticket.tags) {
+    for (let i = 0; i < 3 && i < ticket.tags.length; i++) {
         const tagElement = document.createElement('p');
-        tagElement.textContent = tag;
+        tagElement.textContent = ticket.tags[i];
         tagElement.classList.add('tag');
         tagsDiv.appendChild(tagElement);
     }
     const author = document.createElement('p'); // author
-    author.textContent = '@' + ticket.author;
+    author.textContent = ticket.author != '' ? '@' + ticket.author : 'User removed';
     author.classList.add('author');
+    const agent = document.createElement('p'); // agent
+    agent.textContent = ticket.assignee != '' ? '@' + ticket.assignee : 'Unassigned';
+    agent.classList.add('agent');
+    const department = document.createElement('p'); // department
+    department.textContent = ticket.departmentName;
+    department.classList.add('department');
 
+    const bottomDiv = document.createElement('div'); // bottom div
+    bottomDiv.classList.add('space-between');
+    bottomDiv.appendChild(tagsDiv);
+    bottomDiv.appendChild(author);
+    bottomDiv.appendChild(agent);
+    bottomDiv.appendChild(department);
 
     ticketPreview.appendChild(title);
     ticketPreview.appendChild(time);
     ticketPreview.appendChild(description);
-    ticketPreview.appendChild(tagsDiv);
-    ticketPreview.appendChild(author);
+    ticketPreview.appendChild(bottomDiv);
+    // ticketPreview.appendChild(tagsDiv);
+    // ticketPreview.appendChild(author);
+    // ticketPreview.appendChild(agent);
+    // ticketPreview.appendChild(department);
 
     list.appendChild(ticketPreview);
 
-    // const department = document.createElement('p'); // department
 }

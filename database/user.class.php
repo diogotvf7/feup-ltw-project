@@ -42,7 +42,7 @@
 
       $stmt->execute(array($id, $id, $id));
       $user = $stmt->fetch();
-      
+
       return new User(
         $user['ClientID'],
         $user['Name'],
@@ -258,6 +258,14 @@
       ');
       $stmt->execute(array($id));
       return $stmt->fetchAll();
+    }
+
+    static function RemoveUser($db, $id){
+      $stmt = $db->prepare('
+          DELETE FROM Client 
+          WHERE ClientID = ?
+      ');
+      $stmt->execute(array($id));
     }
   }
 ?>

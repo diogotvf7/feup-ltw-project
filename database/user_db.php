@@ -38,7 +38,10 @@ require_once(__DIR__ . '/connection.db.php');
     } 
 
     function RemoveUser($db, $id){
-        $stmt = $db->prepare('DELETE FROM Client WHERE ClientID = ?');
+        $stmt = $db->prepare('
+            DELETE FROM Client 
+            WHERE ClientID = ?
+        ');
         $stmt->execute(array($id));
     }
 

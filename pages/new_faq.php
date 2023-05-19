@@ -8,12 +8,12 @@
     $db = getDatabaseConnection();
 
     require_once(__DIR__ . '/../templates/common.tpl.php');
-    require_once(__DIR__ . '/../templates/ticket.tpl.php');
+    require_once(__DIR__ . '/../templates/faq.tpl.php');
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
-    drawHeader(['ticket_page'], ['general', 'ticket']);
+    drawHeader([], ['faq', 'general']);
     drawNavBar($_SESSION['PERMISSIONS']);
-    drawTicketPage();
+    drawNewFaqPage($db);
     drawFooter();
 ?>

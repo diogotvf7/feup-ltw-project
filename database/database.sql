@@ -1,53 +1,48 @@
-DROP TABLE IF EXISTS Admin;
-DROP TABLE IF EXISTS Agent;
-DROP TABLE IF EXISTS Client;
-DROP TABLE IF EXISTS Ticket;
-DROP TABLE IF EXISTS Department;
-DROP TABLE IF EXISTS Agent_Department;
-DROP TABLE IF EXISTS Tag;
-DROP TABLE IF EXISTS Ticket_Tag;
-DROP TABLE IF EXISTS Ticket_Document;
-DROP TABLE IF EXISTS Ticket_Comment;
-DROP TABLE IF EXISTS Ticket_Update;
-DROP TABLE IF EXISTS Comment_Document;
+PRAGMA foreign_keys = ON;
+BEGIN TRANSACTION;
+
 DROP TABLE IF EXISTS FAQ;
+DROP TABLE IF EXISTS Comment_Document;
+DROP TABLE IF EXISTS Ticket_Update;
+DROP TABLE IF EXISTS Ticket_Comment;
+DROP TABLE IF EXISTS Ticket_Document;
+DROP TABLE IF EXISTS Ticket_Tag;
+DROP TABLE IF EXISTS Ticket;
+DROP TABLE IF EXISTS Agent_Department;
+DROP TABLE IF EXISTS Department;
+DROP TABLE IF EXISTS Agent;
+DROP TABLE IF EXISTS Admin;
+DROP TABLE IF EXISTS Client;
+DROP TABLE IF EXISTS Tag;
 
 -- database schema
 
-CREATE TABLE Admin 
-(
-    ClientID INTEGER PRIMARY KEY AUTOINCREMENT,
-    FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
-);
 
-CREATE TABLE Agent 
+CREATE TABLE Tag 
 (
-    ClientID INTEGER PRIMARY KEY AUTOINCREMENT,
-    FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
+    TagID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name varchar(255) NOT NULL
 );
 
 CREATE TABLE Client 
 (
     ClientID INTEGER PRIMARY KEY AUTOINCREMENT, 
-    Name varchar(255),
+    Name varchar(255) NOT NULL,
     Username varchar(255) NOT NULL,
     Email varchar(255) NOT NULL,
     Password NVARCHAR(40) NOT NULL
 );
 
-CREATE TABLE Ticket 
+CREATE TABLE Admin 
 (
-    TicketID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Title varchar(255) NOT NULL,
-    Description varchar(255) NOT NULL,
-    Status varchar(255) NOT NULL,
-    ClientID int NOT NULL,
-    AgentID int ,
-    DepartmentID int,
-    Date datetime NOT NULL,
-    FOREIGN KEY (ClientID) REFERENCES Client(ClientID),
-    FOREIGN KEY (AgentID) REFERENCES Agent(ClientID),
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+    ClientID INTEGER PRIMARY KEY,
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE CASCADE
+);
+
+CREATE TABLE Agent 
+(
+    ClientID INTEGER PRIMARY KEY,
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE CASCADE
 );
 
 CREATE TABLE Department 
@@ -58,64 +53,74 @@ CREATE TABLE Department
 
 CREATE TABLE Agent_Department 
 (
-    AgentID int NOT NULL,
-    DepartmentID int NOT NULL,
-    FOREIGN KEY (AgentID) REFERENCES Agent(ClientID),
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+    Agent_DepartmentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    AgentID INTEGER NOT NULL,
+    DepartmentID INTEGER NOT NULL,
+    FOREIGN KEY (AgentID) REFERENCES Agent(ClientID) ON DELETE CASCADE,
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE CASCADE
 );
 
-CREATE TABLE Tag 
+CREATE TABLE Ticket 
 (
-    TagID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name varchar(255) NOT NULL
+    TicketID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Title varchar(255) NOT NULL,
+    Description varchar(255) NOT NULL,
+    Status varchar(255) NOT NULL,
+    ClientID INTEGER,
+    AgentID INTEGER,
+    DepartmentID INTEGER,
+    Date datetime NOT NULL,
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE SET NULL,
+    FOREIGN KEY (AgentID) REFERENCES Agent(ClientID) ON DELETE SET NULL,
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE SET NULL
 );
 
 CREATE TABLE Ticket_Tag  
 (
-    TicketID int NOT NULL,
-    TagID int NOT NULL,
+    TicketID INTEGER NOT NULL,
+    TagID INTEGER NOT NULL,
     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID),
     FOREIGN KEY (TagID) REFERENCES Tag(TagID)
 );
 
 CREATE TABLE Ticket_Document
 (
-    TicketID int NOT NULL,
+    TicketID INTEGER NOT NULL,
     Path varchar NOT NULL,
-    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
+    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID) ON DELETE CASCADE
 );
 
 CREATE TABLE Ticket_Comment
 (
     CommentID INTEGER PRIMARY KEY AUTOINCREMENT,
-    TicketID int NOT NULL,
-    ClientID int NOT NULL,
+    TicketID INTEGER NOT NULL,
+    ClientID INTEGER,
     Comment varchar(255) NOT NULL,
     Date datetime NOT NULL,
-    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID),
-    FOREIGN KEY (ClientID) REFERENCES Client(ClientID)
+    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID) ON DELETE CASCADE,
+    FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE SET NULL
 );
 
 CREATE TABLE Ticket_Update
 (
     UpdateID INTEGER PRIMARY KEY AUTOINCREMENT,
-    TicketID int NOT NULL,
+    TicketID INTEGER NOT NULL,
     Type varchar(10) NOT NULL,
     Message varchar(255) NOT NULL,
     Date datetime NOT NULL,
-    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
+    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID) ON DELETE CASCADE
 );
 
 CREATE TABLE Comment_Document
 (
-    CommentID int NOT NULL,
+    CommentID INTEGER NOT NULL,
     Path varchar NOT NULL,
-    FOREIGN KEY (CommentID) REFERENCES Ticket_Comment(CommentID)
+    FOREIGN KEY (CommentID) REFERENCES Ticket_Comment(CommentID) ON DELETE CASCADE
 );
 
 CREATE TABLE FAQ
 (
-    FAQID INTEGER PRIMARY KEY,
+    FAQID INTEGER PRIMARY KEY AUTOINCREMENT,
     Question varchar(255) NOT NULL,
     Answer varchar(255) NOT NULL
 );
@@ -207,7 +212,7 @@ INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, Dep
 VALUES (16, "Website security issues", "When there are concerns about the security of the website, such as potential data breaches, malware or hacking, users should submit a ticket to report the issue and alert the website's administrators immediately. This is crucial to prevent further damage and protect user data from being compromised. The ticket should include details about the suspected security breach, any unusual activity or changes noticed on the website, and any relevant information that may help identify the source of the breach. The website's administrators can then investigate the issue, take necessary actions to address the breach, and notify affected users as needed to ensure their safety and security.", 'Closed', 3, 4, 1, '2023-04-23 03:50:00');
 INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) 
 VALUES (17, "Promo code not working", "When a user attempts to use a promotional code or discount but it is not being applied properly to their order. This could be due to expired codes, restrictions on usage, or technical issues with the website's promo code system.", 'Open', 9, 5, 1, '2023-04-23 02:44:00');
-INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) 
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID,  AgentID, DepartmentID, Date) 
 VALUES (18, "Unsatisfactory product quality", "When a user receives a product that does not meet their expectations in terms of quality or performance. This could be due to issues with manufacturing or quality control processes, or inaccurate product descriptions on the website.", 'Open', 8, 6, 1, '2023-04-23 02:40:00');
 INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) 
 VALUES (19, "Difficulty canceling an order", "When a user wants to cancel an order but is having trouble doing so through the website or customer service channels. This could be due to a lack of clear cancellation policies, technical issues with the website's order management system, or unresponsive customer service.", 'Closed', 11, 7, 1, '2023-04-23 01:50:00');
@@ -471,3 +476,5 @@ INSERT INTO FAQ (Question, Answer)
 VALUES ('What do I do if I am not receiving push notifications?', 'If you are not receiving push notifications, please check your settings or contact our support team for assistance.');
 INSERT INTO FAQ (Question, Answer) 
 VALUES ('How do I change the language settings?', 'You can change the language settings by going to your account settings and selecting "language."');    
+
+COMMIT;
