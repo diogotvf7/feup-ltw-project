@@ -70,3 +70,7 @@ export function getParameterByName(parameter) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(parameter);
 }
+
+export function sleep(milliseconds) {  
+  return new Promise(resolve => setTimeout(resolve, milliseconds));  
+}  
