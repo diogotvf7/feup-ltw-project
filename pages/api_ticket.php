@@ -88,6 +88,15 @@
                     $ret['comments'][$i]['documents'] = array_column(Comment::getDocuments($db, $ret['comments'][$i]['CommentID']), 'Path');
                 $ret['updates'] = Ticket::getUpdates($db, $_GET['id']);
                 break;
+            case 'delete_ticket':
+                if (!isset($_GET['id'])) {
+                    $ret['error'] = 'No id provided!';
+                    break;
+                }
+                if (!Ticket::deleteTicket($db, $_GET['id']))
+                    $ret['error'] = 'Couldn\'t delete ticket!';
+                $ret['message'] = 'Ticket deleted successfully!';
+                break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;

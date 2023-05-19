@@ -9,7 +9,7 @@
     padding: 2em;
 }
 
-#faq-page h1 {
+#faq-page h1, #faq-page h2 {
     font-family: 'Montserrat', sans-serif;
 }
 
