@@ -527,7 +527,6 @@ main {
 }
 
 
-<<<<<<< HEAD
 /*          My account page          */ 
 
 #my-account-page input[readonly] {
@@ -574,7 +573,8 @@ main {
     display: flex;
     flex-direction: row;
     gap: 1em;
-=======
+}
+
 .mult-select-tag {
     display: flex;
     width:100%;
@@ -748,5 +748,4 @@ main {
     align-self: center;
     max-width: 80%;
     height: auto;
->>>>>>> main
 }

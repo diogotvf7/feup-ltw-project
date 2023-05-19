@@ -116,9 +116,6 @@
         </form>
     </main>
     <script src="../javascript/new_ticket.js"></script>
-    <!-- <script>
-        new MultiSelectTag('tags');
-    </script> -->
 <?php } ?>
 
 <?php function drawFiltersBar() { ?>

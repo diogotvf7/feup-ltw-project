@@ -34,3 +34,17 @@
         </p>
     </li>
 <?php } ?>
+
+<?php function drawNewFaqPage() { ?>
+    <main id="new-faq-page">
+        <form id="new-faq" method="post" action="../actions/submit_faq.php"> 
+            <h3>New faq</h3>
+            <fieldset>
+                <legend id = description>Fill in the following fields to create a new faq</legend>
+                <input placeholder="Question" type="text" name="faq_question" tabindex="1" maxlength="27" required autofocus>
+                <textarea placeholder="Type the answer here...." name="faq_answer" tabindex="2" required></textarea>
+                <button id="submit" type="submit" >Submit</button>
+            </fieldset>        
+        </form>
+    </main>
+<?php } ?>

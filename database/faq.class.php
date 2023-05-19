@@ -13,15 +13,6 @@
         $this->answer = $answer;
     }
 
-    // function save($db) {
-    //   $stmt = $db->prepare('
-    //     UPDATE Client SET Username = ?
-    //     WHERE ClientID = ?
-    //   ');
-
-    //   $stmt->execute(array($this->username, $this->id));
-    // }
-    
     static function fetchFAQs(PDO $db, int $ammount, int $page) {
       $stmt = $db->prepare('
         SELECT FAQID, Question, Answer
@@ -60,6 +51,15 @@
         $faq['Question'],
         $faq['Answer'],
       );
+    }
+
+    static function createFaq(PDO $db, string $question, string $answer) {
+      $stmt = $db->prepare('
+        INSERT INTO FAQ (Question, Answer)
+        VALUES (?, ?)
+      ');
+
+      $stmt->execute(array($question, $answer));
     }
 
     function toJson() {
