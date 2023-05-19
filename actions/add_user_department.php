@@ -9,18 +9,21 @@
 
     session_start();
     $db = getDatabaseConnection();
-    
-    $data = json_decode(file_get_contents('php://input'), true);
 
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
-    if ($_SERVER["REQUEST_METHOD"] != "POST")
-        exit("POST request expected");
 
-    $userID = $data['userID'];
-    $departmentID = $data['departmentID'];
+    if ($_SESSION['PERMISSIONS'] != 'Admin'){
+        die(header('Location: /pages/my_tickets.php'));
+    }
+
+    $data = json_decode(file_get_contents('php://input'), true);
     /*
-    User::removeUserFromDepartment($db, $userID, $departmentID);
+    foreach ($data['newMembers'] as $member){
+        $user = User::getClientByUsername($db, $member);
+        $departmentID = Department::getDepartmentByName($db, $data['departmentName']);
+        User::addUsertoDeparment($db, $user->id, $departmentID);
+    }
     */
-    
+
 ?>

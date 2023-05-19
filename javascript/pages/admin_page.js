@@ -1,9 +1,8 @@
+const TeamInfo = document.querySelectorAll('[class="team-info"]');
 
 window.onload = async function() {
-  
   await loadDepartments();
   const teamButton = document.querySelectorAll('[class="team-button"]');
-  const TeamInfo = document.querySelectorAll('[class="team-info"]');
   /* create deparment form */
   const create_department_button = document.getElementById('create-department');
   const cancel_creation_department = document.getElementById('cancel-creation-department');
@@ -14,18 +13,16 @@ window.onload = async function() {
   /* assign to department form */
   const submit_assign_button = document.getElementById('submit_assign');
   const cancel_assign_department_button = document.getElementById('cancel-assign-department');
-  submit_assign_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none"; });
   cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
+  const tableRows = document.querySelectorAll('.department-table-row');
 
   for (const button of teamButton) {
     button.addEventListener('click', function() {
       let team_Info = button.nextSibling;
       if (team_Info.hasAttribute('hidden') === true) {
-        console.log('hey');
         team_Info.toggleAttribute('hidden');
       } 
       else if (team_Info.hasAttribute('hidden') === false) {
-        console.log('clicked to false');
         team_Info.setAttribute('hidden', true);
       }
     });
@@ -39,10 +36,10 @@ window.onload = async function() {
       }
     });
   }
-
+  
   const minusIcon = document.querySelectorAll('[id="minus-icon"]');
   for (const icon of minusIcon) {
-    icon.addEventListener('click', function() {
+    icon.addEventListener('click', function(){
       let member_info = icon.parentNode;
       
       let userID = member_info.id;
@@ -65,30 +62,134 @@ window.onload = async function() {
             }
           }); 
           
-        });  
-  }
+        });
+      }
+
+
   const addMemberButton = document.querySelectorAll('[id="add-member"]');
       
   for (const button of addMemberButton) {
-    button.addEventListener('click', function() {
+    let departmentID = button.parentNode.id; 
+    let departmentName = button.parentNode.parentNode.parentNode.firstChild.textContent;
+    button.addEventListener('click', async function(){
       document.getElementById('add-member-popup').style.display = "block";
       let department_nm = "";
       for (const btn of teamButton){
         let team_Info = btn.nextSibling;
         if (team_Info.hasAttribute('hidden') === false) {
-          department_nm = team_Info.
+          department_nm = team_Info;
           team_Info.setAttribute('hidden', true);
         }
       }
-      document.getElementById('assign-header').value += 
+      const select = document.getElementById('assign-dropdown');
+      select.innerHTML = "";
+      select.parentNode.setAttribute('departmentID',departmentID);
+      const form = document.getElementById('addtoDepartmentForm');
+      const input = form.querySelector('#department-name');
+      input.value = departmentName;
+      const response = await fetchAllAgents();
+      let agents = response['agents'];
+      for (const agent of agents){
+        const res = await fetchAgentInfo(agent['id']);
+        const agent_departments = res['departments'];
+        const departmentIDs = agent_departments.map(obj => obj.DepartmentID);
+        const condition = (element) => element == departmentID;
+        const result = departmentIDs.some(condition);
+        if (result == true) continue;
+        const op = document.createElement('option');
+        op.classList.add('agent');
+        op.textContent = agent['username'];
+        op.title = agent['email'];
+        select.appendChild(op);
+      }
     });
   }
+
+  const submit_assign = document.getElementById('submit_assign');
+  submit_assign.addEventListener('click', async function(e){
+    if (document.getElementById('assign-dropdown').selectedOptions.length === 0) {e.preventDefault(); return false;};
+    let newMembers = Array.from(document.getElementById('assign-dropdown').selectedOptions).map(el => el.value);
+    let departmentName =document.getElementById('addtoDepartmentForm').querySelector('#department-name').value;    
+    let data = {
+      newMembers: newMembers,
+      departmentName: departmentName
+    };
+    
+    document.getElementById("add-member-popup").style.display = "none";
+
+    fetch('../actions/add_user_department.php', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          }
+    }).then(function(response) {
+      tableRows.forEach( async row => {
+        const departmentCell = row.querySelector('td:first-child');
+        if (departmentCell.textContent === departmentName) {
+          const team = row.querySelector('td:nth-child(2)').querySelector('.team-info');
+          for (const memberName of newMembers) {
+            const teamMember = document.createElement('div');
+            let member = document.createElement('p');
+            const agentInfo = await fetchAgentInfo_username(memberName);
+            member.setAttribute('id', agentInfo['id']);
+            member.classList.add('space-between');
+            member.textContent = memberName;
+            member.title = agentInfo['email'];
+            const minus_icon = document.createElement('i');
+            minus_icon.id = "minus-icon";
+            minus_icon.title = 'Remove ' + agentInfo['name'] + ' from ' + departmentName;
+            minus_icon.classList.add('fa-solid', 'fa-minus');
+
+            
+            member.appendChild(minus_icon);
+            teamMember.appendChild(member);
+            let addMemberButton = team.querySelector('#add-member');
+            addMemberButton.parentNode.insertBefore(teamMember, addMemberButton);
+          }
+        }
+      });
+    });
+
+
+    
+  });
 }
 
+async function fetchAllAgents(){
+  const response = await fetch('../pages/api_user.php?' + encodeForAjax({
+    func: 'getAgents',
+}));
+const agents = await response.json();
+return agents;
+}
 
+async function fetchDepartmentInfo(_id){
+  const response = await fetch('../pages/api_department.php?' + encodeForAjax({
+      func: 'getDepartmentInfo',
+      id: _id,
+  }));
+  const departmentInfo = await response.json();
+  return departmentInfo;
+}
 
+async function fetchAgentInfo(id) {
+  const response = await fetch('../pages/api_user.php?' + encodeForAjax({
+      func: 'getAgentInfo',
+      id : id
+  }));
+  const res = await response.json();
+  return res;
+}
 
-
+async function fetchAgentInfo_username(username) {
+  const response = await fetch('../pages/api_user.php?' + encodeForAjax({
+      func: 'getAgentInfo',
+      username : username
+  }));
+  const res = await response.json();
+  return res;
+}
 
 async function fetchDepartments() {
   const response = await fetch('../pages/api_department.php?' + encodeForAjax({
@@ -114,6 +215,7 @@ async function loadDepartments() {
   if (departments.length !== 0) {
       for (const department of departments) {
         const usersInDepartment = await fetchUsersInDepartment(department['Name']);
+        console.log("usersinDepartment", usersInDepartment);
         if (usersInDepartment !== 0){
 
           const tr = document.createElement('tr');
@@ -131,7 +233,9 @@ async function loadDepartments() {
         icon.classList.add('fa-solid', 'fa-people-group');
         const teamInfo = document.createElement('div');
         teamInfo.setAttribute('class', 'team-info');
+        teamInfo.id = department.DepartmentID;
         for (const user of usersInDepartment) {
+          console.log("user", user);
           const teamMember = document.createElement('div');
           const member = document.createElement('p');
           member.setAttribute('id', user['ClientID']);
@@ -139,16 +243,25 @@ async function loadDepartments() {
           
           member.title = user['Email'];
           member.textContent = user['Name'];
+          console.log(member);
           
           const minus_icon = document.createElement('i');
           minus_icon.id = "minus-icon";
           minus_icon.title = 'Remove ' + user['Name'] + ' from ' + department['Name'];
           minus_icon.classList.add('fa-solid', 'fa-minus');
+
+          console.log(minus_icon);
           
           member.appendChild(minus_icon);
           
+          console.log(member);
+
+          
           teamMember.appendChild(member);
+          console.log(teamMember);
           teamInfo.appendChild(member);
+          console.log(teamInfo);
+          console.log("teamInfo", teamInfo);
         }
         const addMember = document.createElement('button');
         addMember.setAttribute('id', 'add-member');
@@ -160,8 +273,10 @@ async function loadDepartments() {
         button.appendChild(icon);
         departmentInfo.appendChild(button);
         departmentInfo.appendChild(teamInfo);
+        console.log("departmentInfo", departmentInfo)
         tr.appendChild(departmentInfo);
         departmentTable.appendChild(tr);
+        console.log("departmentTable", departmentTable);
       }
       }
   }
@@ -173,6 +288,7 @@ function encodeForAjax(data) {
       return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
   }).join('&')
 }
+
 
 
 

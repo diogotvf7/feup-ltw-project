@@ -274,5 +274,13 @@
       ');
       $stmt->execute(array($id));
     }
+
+  static function addUsertoDeparment($db, $id, $departmentID){
+    $stmt = $db->prepare('
+      INSERT INTO Agent_Department
+      VALUES (?, ?);
+    ');
+    $stmt->execute(array($id, $departmentID));
   }
+}
 ?>

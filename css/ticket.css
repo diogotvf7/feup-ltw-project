@@ -827,3 +827,25 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+
+/* No ticket Page */ 
+.noTickets{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.noTickets h2{
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    font-family: 'Open Sans';
+}
+
+.panda {
+    padding-top: 1.5rem;
+    align-self: center;
+    max-width: 80%;
+    height: auto;
+}
