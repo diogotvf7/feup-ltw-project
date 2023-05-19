@@ -19,8 +19,8 @@
 
     $userID = $data['userID'];
     $departmentID = $data['departmentID'];
-    /*
+    
     User::removeUserFromDepartment($db, $userID, $departmentID);
-    */
+    
     
 ?>
