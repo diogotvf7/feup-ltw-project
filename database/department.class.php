@@ -36,7 +36,7 @@
 
       $stmt->execute([$name]);
       $department = $stmt->fetch();
-      
+      if ($department == null) return null; // doesnt exist
       return $department['DepartmentID'];
     }
     
@@ -88,7 +88,7 @@
     
     static function getUsersInDepartments(PDO $db, int $id) {
       $stmt = $db->prepare('
-      SELECT Client.ClientID, Client.Name, Client.Email FROM Department JOIN Agent_Department ON Department.DepartmentID = Agent_Department.DepartmentID JOIN Agent ON Agent_Department.AgentID = Agent.ClientID JOIN Client on Client.ClientID = Agent.ClientID
+      SELECT Client.ClientID, Client.Name, Client.Username, Client.Email FROM Department JOIN Agent_Department ON Department.DepartmentID = Agent_Department.DepartmentID JOIN Agent ON Agent_Department.AgentID = Agent.ClientID JOIN Client on Client.ClientID = Agent.ClientID
       WHERE Department.DepartmentID = ?
       ');
       $stmt->execute([$id]);

@@ -16,6 +16,7 @@ window.onload = async function() {
   cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
   const tableRows = document.querySelectorAll('.department-table-row');
   let currentOpenTab = null;
+  /*
   for (const button of teamButton) {
     button.addEventListener('click', function() {
       let team_Info = button.nextSibling;
@@ -26,30 +27,71 @@ window.onload = async function() {
         team_Info.toggleAttribute('hidden');
       }
     });
-    button.addEventListener('touchend', function() {
-      let team_Info = button.nextSibling;
-      if (team_Info.hasAttribute('hidden') === true) {
-        team_Info.toggleAttribute('hidden');
-      } 
-      else if (team_Info.hasAttribute('hidden') === false) {
-        team_Info.setAttribute('hidden', false);
-      }
-    });
   }
+  */
+
+
+
+
   /* create deparment  */
-  submit_button.addEventListener('click',function() {
+
+  submit_button.addEventListener('click', async function() {
     let departmentName = document.getElementById("department-name").value;
     let data = {
       departmentName: departmentName
     };
+    console.log(departmentName)
+
+    fetch('../actions/create_department.php', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    }).then(async function(response) {
+        let res = await response.json();
+        console.log(res.status)
+      if (res.status == 'success') {
+        const table = document.querySelector('[class="department-table"]');
+        const row = document.createElement('tr');
+        row.id = res['departmentID'];
+        row.classList.add('department-table-row');
+
+        let department_name = document.createElement('td');
+        department_name.textContent = departmentName;
+
+        row.appendChild(department_name);
+
+        let department_members = document.createElement('td');
+        department_members.classList.add('department-table-info');
+        let team_button = document.createElement('button');
+        team_button.classList.add('team-button');
+        team_button.title = 'Team Members';
+        let team_icon = document.createElement('i');
+        team_icon.classList.add('fa-solid','fa-people-group');
+        team_button.appendChild(team_icon);
+        department_members.appendChild(team_button);
+        let team_info = document.createElement('div');
+        team_info.classList.add('team-info');
+        team_info.setAttribute('hidden', true);
+        team_info.id = res['departmentID'];
+        department_members.appendChild(team_info);
+        row.appendChild(department_members);
+        table.appendChild(row);
+        console.log(row);
+      }
+    });
 
     document.getElementById("myForm").style.display = "none"; 
     document.getElementById("department-name").value = "";
   });
 
+
+  /* remove user from department */
   const departmentTable = document.querySelector('[class="department-table"]');
 
   departmentTable.addEventListener('click', function(event) {
+    /* click on minus icon*/
     const target = event.target;
         if (target.id === 'minus-icon') {
           let icon = target;
@@ -73,11 +115,21 @@ window.onload = async function() {
             if (response.ok) {
               member_info.remove();
             }
-          });
-           
+          });  
+        }
+        if (target.id == 'list-members'){
+          let icon = target;
+          let list_members = icon.nextSibling;
+          if (list_members.hasAttribute('hidden') === true) {
+            list_members.toggleAttribute('hidden');
+          } 
+          else if (list_members.hasAttribute('hidden') === false) {
+            list_members.toggleAttribute('hidden');
+          }
+          console.log(list_members);
+          
         }
   });  
-
 
   const addMemberButton = document.querySelectorAll('[id="add-member"]');
       
@@ -85,7 +137,6 @@ window.onload = async function() {
     let departmentID = button.parentNode.id; 
     let departmentName = button.parentNode.parentNode.parentNode.firstChild.textContent;
     button.addEventListener('click', async function(event){
-      const target = event.target;
       document.getElementById('add-member-popup').style.display = "block";
       let department_nm = "";
       for (const btn of teamButton){
@@ -145,7 +196,6 @@ window.onload = async function() {
         if (departmentCell.textContent === departmentName) {
           const team = row.querySelector('td:nth-child(2)').querySelector('.team-info');
           for (const memberName of newMembers) {
-            //const teamMember = document.createElement('div');
             let member = document.createElement('p');
             const agentInfo = await fetchAgentInfo_username(memberName);
             member.setAttribute('id', agentInfo['id']);
@@ -159,7 +209,6 @@ window.onload = async function() {
 
             
             member.appendChild(minus_icon);
-            //teamMember.appendChild(member);
             let addMemberButton = team.querySelector('#add-member');
             addMemberButton.parentNode.insertBefore(member, addMemberButton);
           }
@@ -242,6 +291,7 @@ async function loadDepartments() {
         const departmentInfo = document.createElement('td');
         departmentInfo.setAttribute('class', 'department-table-info');
         const button = document.createElement('button');
+        button.id = 'list-members';
         button.setAttribute('class', 'team-button');
         button.title = 'Team members';
         const icon = document.createElement('i');
@@ -249,6 +299,7 @@ async function loadDepartments() {
         const teamInfo = document.createElement('div');
         teamInfo.setAttribute('class', 'team-info');
         teamInfo.id = department.DepartmentID;
+
         for (const user of usersInDepartment) {
           const teamMember = document.createElement('div');
           const member = document.createElement('p');
@@ -256,7 +307,7 @@ async function loadDepartments() {
           member.classList.add('space-between');
           
           member.title = user['Email'];
-          member.textContent = user['Name'];
+          member.textContent = user['Username'];
           
           const minus_icon = document.createElement('i');
           minus_icon.id = "minus-icon";

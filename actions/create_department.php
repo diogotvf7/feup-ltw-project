@@ -9,17 +9,34 @@
   $db = getDatabaseConnection();
   session_start();
   
-  $departmentName = $_POST['department-name'];
+  if (!Session::isLoggedIn())
+    die(header('Location: ../pages/login.php'));
 
+
+  $data = json_decode(file_get_contents('php://input'), true);
+
+  $departmentName = $data['departmentName'];
   
   $ret = Department::getDepartmentbyName($db, $departmentName);
   if ($ret != null) {
     $_SESSION['ERROR'] = "Department already exists";
-    header('Location: ../pages/admin_page.php');
+    $response = array('status' => 'error', 'msg' => "Department already exists");
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    //header('Location: ../pages/admin_page.php');
     die();
   }
+  /*
   Department::addDepartment($db, $departmentName);
 
-  header('Location: ../pages/admin_page.php');
+  $id = Department::getDepartmentbyName($db, $departmentName);
+
+  $response = array('status' => 'success', 'departmentID' => $id);
+  */
+  $response = array('status' => 'success', 'departmentID' => 100);
+  header('Content-Type: application/json');
+  echo json_encode($response);
+
+  //header('Location: ../pages/admin_page.php');
   
   ?>
