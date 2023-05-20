@@ -127,7 +127,6 @@ cancel.addEventListener("click", async function() {
         if (!checkbox.checked) continue;
         let id = row.cells[1].textContent;
         let user = await fetch_user_api({func: 'getSingleUser', id: id});
-        // let user = await fetchUserInfo(id);
         row.cells[2].textContent = user['name'];
         row.cells[2].setAttribute("contentEditable", "false");
         row.cells[2].style.backgroundColor = row.cells[0].style.backgroundColor;
