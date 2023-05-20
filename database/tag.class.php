@@ -63,6 +63,7 @@
     }
 
     static function addTag(PDO $db, $ticketId, $name) {
+      $name = htmlspecialchars($name);
       $stmt = $db->prepare('
         INSERT INTO Ticket_Tag (TicketID, TagID)
         VALUES (?, (
@@ -75,6 +76,7 @@
     }
 
     static function removeTag(PDO $db, $ticketId, $name) {
+      $name = htmlspecialchars($name);
       $stmt = $db->prepare('
         DELETE FROM Ticket_Tag
         WHERE TicketID = ? AND TagID = (
@@ -87,6 +89,7 @@
     }
 
     static function tagExists(PDO $db, $name) {
+      $name = htmlspecialchars($name);
       $stmt = $db->prepare('
         SELECT *
         FROM Tag
@@ -97,6 +100,7 @@
     }
 
     static function createTag(PDO $db, $name) {
+      $name = htmlspecialchars($name);
       $stmt = $db->prepare('
         INSERT INTO Tag (Name)
         VALUES (?)

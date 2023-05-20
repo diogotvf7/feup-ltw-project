@@ -19,10 +19,10 @@
     if (!isset($ret['error'])) {
         switch ($_GET['func']) {
             case 'tags':
-                $ret = Tag::getTags($db);
+                $ret = array_map('decodeTag', Tag::getTags($db));
                 break;
             case 'user_tags':
-                $ret = Tag::getUserTags($db);
+                $ret = array_map('decodeTag', Tag::getUserTags($db));
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
@@ -32,3 +32,8 @@
 
     echo json_encode($ret);
 ?>
+
+<?php function decodeTag($tag) {
+    $tag['Name'] = htmlspecialchars_decode($tag['Name']);
+    return $tag;
+} ?>

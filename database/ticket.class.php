@@ -212,6 +212,8 @@
     }
 
     static function addTicket(PDO $db, string $ticket_title, string $ticket_description, string $status, int $ClientID, $departmentID, string $now) : string {
+      $ticket_title = htmlspecialchars($ticket_title);
+      $ticket_description = htmlspecialchars($ticket_description);
       $stmt = $db->prepare('
         INSERT INTO Ticket (Title, Description, Status, ClientID, DepartmentID, Date)
         VALUES (?, ?, ?, ?, ?, ?)');
@@ -219,7 +221,7 @@
       return $db->lastInsertId();
     }
 
-    static function deleteTicket(PDO $db, int $TicketID){
+    static function deleteTicket(PDO $db, int $TicketID) {
       $stmt = $db->prepare('
         DELETE FROM Ticket_Document
         WHERE TicketID = ?');
@@ -301,14 +303,14 @@
       $stmt->execute([$departmentID, $id]);
     }
 
-    static function addTicketTag(PDO $db, int $TicketID, int $TagID){
+    static function addTicketTag(PDO $db, int $TicketID, int $TagID) {
       $stmt = $db->prepare('
         INSERT INTO Ticket_Tag (TicketID, TagID)
         VALUES (?, ?)');
       $stmt->execute([$TicketID, $TagID]);
     }
 
-    static function changeTicketDepartment(PDO $db, int $TicketID, int $departmentID){
+    static function changeTicketDepartment(PDO $db, int $TicketID, int $departmentID) {
       $stmt = $db->prepare('
         UPDATE Ticket
         SET DepartmentID = ?

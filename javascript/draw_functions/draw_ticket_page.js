@@ -54,7 +54,7 @@ export async function drawTicketPage(ticket) {
         const option = document.createElement('option');
         option.selected = true;
         option.value = ticket['agentId'];
-        option.textContent = '@' + ticket['agentName'];
+        option.textContent = '@' + ticket['assignee'];
         _agent.appendChild(option);
     } else {
         const option = document.createElement('option');

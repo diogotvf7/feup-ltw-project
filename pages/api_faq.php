@@ -49,3 +49,9 @@
 
     echo json_encode($ret);
 ?>
+
+<?php function decodeComment($faq) {
+    $faq['Question'] = htmlspecialchars_decode($faq['Question']);
+    $faq['Answer'] = htmlspecialchars_decode($faq['Answer']);
+    return $faq;
+} ?>

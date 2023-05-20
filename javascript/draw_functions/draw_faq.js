@@ -68,13 +68,3 @@ export async function drawFaq(faq) {
     faqList.appendChild(faqElement);
 }
 
-// function handleCheckboxChange(event) {
-//     if (event.target.checked) {
-//         icon.classList.remove('fa-chevron-down');
-//         icon.classList.add('fa-chevron-up');
-//     } else {
-//         icon.classList.remove('fa-chevron-up');
-//         icon.classList.add('fa-chevron-down');
-//     }
-// }
-

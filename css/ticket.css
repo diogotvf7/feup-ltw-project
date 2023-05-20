@@ -218,14 +218,11 @@ select {
     background-color: transparent;
 }
 
-#description {
+#ticket-page #description {
     width: 100%;
     min-height: 7em;
     resize: none;
     overflow: auto;
-}
-
-#description {
     padding: 1em;
     border-left: var(--black) solid 2px;
     border-bottom: var(--black) solid 2px;
