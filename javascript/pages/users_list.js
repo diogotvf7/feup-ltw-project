@@ -106,9 +106,10 @@ save.addEventListener("click", async function() {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
-        })
-    });
-    
+    })
+});
+
+
 selectAll.addEventListener("click", function() {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
         checkbox.checked = true;

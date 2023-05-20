@@ -27,7 +27,7 @@
       );
     }
 
-    static function getDepartmentbyName(PDO $db, string $name) : int {
+    static function getDepartmentbyName(PDO $db, string $name) {
       $stmt = $db->prepare('
         SELECT *
         FROM Department
@@ -41,13 +41,19 @@
     }
     
     static function addDepartment(PDO $db, string $name){
-      if (self::getDepartment($db, $name) != null) return false; // already exists
+      if (self::getDepartmentbyName($db, $name) != null) return false; // already exists
       $stmt = $db->prepare('
-        INSERT INTO Department(Name)
-        VALUES (?)
+        SELECT DepartmentID
+        FROM Department order by 1 desc');
+        $stmt->execute();
+        $lastID = $stmt->fetch();
+        $lastID = $lastID['DepartmentID'];
+      $stmt = $db->prepare('
+        INSERT INTO Department(DepartmentID, Name)
+        VALUES (?,?)
       ');
-
-      $stmt->execute([$name]);
+      $lastID += 1;
+      $stmt->execute([$lastID,$name]);
     }
 
     static function removeDepartment(PDO $db, string $name) : bool{
@@ -77,6 +83,15 @@
         WHERE ClientID = ?
       ');
       $stmt->execute([$_SESSION['IDUSER']]);
+      return $stmt->fetchAll();
+    }
+    
+    static function getUsersInDepartments(PDO $db, int $id) {
+      $stmt = $db->prepare('
+      SELECT Client.ClientID, Client.Name, Client.Email FROM Department JOIN Agent_Department ON Department.DepartmentID = Agent_Department.DepartmentID JOIN Agent ON Agent_Department.AgentID = Agent.ClientID JOIN Client on Client.ClientID = Agent.ClientID
+      WHERE Department.DepartmentID = ?
+      ');
+      $stmt->execute([$id]);
       return $stmt->fetchAll();
     }
   }

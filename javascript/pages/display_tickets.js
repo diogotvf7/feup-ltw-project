@@ -3,8 +3,6 @@ import { loadDepartments, loadTags } from '../api/load_from_api.js'
 import { drawTicketPreview } from '../draw_functions/draw_ticket_preview.js'
 import { setTagsColor } from '../util.js'
 
-const list = document.getElementById('ticket-list');
-
 window.onload = async function() {
     const session = await fetch_session_api();
     loadDepartments({
@@ -25,6 +23,7 @@ window.onload = async function() {
 const filterForm = document.getElementById('filter-form');    
 
 filterForm.addEventListener('submit', async function (event) {
+    const list = document.getElementById('ticket-list');
     event.preventDefault();
     const formData = new FormData(filterForm);
     console.log(formData);
@@ -38,6 +37,21 @@ filterForm.addEventListener('submit', async function (event) {
         sort: formData.get('sort')
     });
     list.innerHTML = '';
+    if (tickets['tickets'].length === 0) {
+        const noTickets = document.createElement('div');
+        noTickets.classList.add('noTickets');
+        const image = document.createElement('img');
+        image.src = '../docs/panda.jpg';
+        image.classList.add('panda');
+        const textPostPanda = document.createElement('h2');
+        textPostPanda.textContent = 'No tickets yet, just a panda eating bamboo';
+        textPostPanda.classList.add('text-post-panda');
+        noTickets.appendChild(image);
+        noTickets.appendChild(textPostPanda);
+        console.log(noTickets);
+        list.appendChild(noTickets);
+        console.log(list);
+    }
     for (const ticket of tickets['tickets'])
         drawTicketPreview(ticket);
     setTagsColor();
