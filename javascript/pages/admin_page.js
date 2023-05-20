@@ -9,10 +9,10 @@ window.onload = async function() {
   const submit_button = document.getElementById('submit_create_department');
   create_department_button.addEventListener('click', function() {document.getElementById("myForm").style.display = "block";});
   cancel_creation_department.addEventListener('click', function() {document.getElementById("myForm").style.display = "none"; document.getElementById("department-name").value = "";});
-  submit_button.addEventListener('click',function() {document.getElementById("myForm").style.display = "none"; document.getElementById("department-name").value = "";});
   /* assign to department form */
   const submit_assign_button = document.getElementById('submit_assign');
   const cancel_assign_department_button = document.getElementById('cancel-assign-department');
+  
   cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
   const tableRows = document.querySelectorAll('.department-table-row');
   let currentOpenTab = null;
@@ -36,21 +36,34 @@ window.onload = async function() {
       }
     });
   }
-  
-  const minusIcon = document.querySelectorAll('[id="minus-icon"]');
-  for (const icon of minusIcon) {
-    icon.addEventListener('click', function(){
-      let member_info = icon.parentNode;
-      
-      let userID = member_info.id;
-      let departmentID = member_info.parentNode.parentNode.parentNode.id;
-      
-      let data = {
-        userID: userID,
-        departmentID: departmentID
-      };
+  /* create deparment  */
+  submit_button.addEventListener('click',function() {
+    let departmentName = document.getElementById("department-name").value;
+    let data = {
+      departmentName: departmentName
+    };
 
-      fetch('../actions/remove_user_department.php', {
+    document.getElementById("myForm").style.display = "none"; 
+    document.getElementById("department-name").value = "";
+  });
+
+  const departmentTable = document.querySelector('[class="department-table"]');
+
+  departmentTable.addEventListener('click', function(event) {
+    const target = event.target;
+        if (target.id === 'minus-icon') {
+          let icon = target;
+          let member_info = icon.parentNode;
+      
+          let userID = member_info.id;
+          let departmentID = member_info.parentNode.parentNode.parentNode.id;
+          
+          let data = {
+            userID: userID,
+            departmentID: departmentID
+          };
+          
+          fetch('../actions/remove_user_department.php', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -60,10 +73,10 @@ window.onload = async function() {
             if (response.ok) {
               member_info.remove();
             }
-          }); 
-          
-        });
-      }
+          });
+           
+        }
+  });  
 
 
   const addMemberButton = document.querySelectorAll('[id="add-member"]');
@@ -71,7 +84,8 @@ window.onload = async function() {
   for (const button of addMemberButton) {
     let departmentID = button.parentNode.id; 
     let departmentName = button.parentNode.parentNode.parentNode.firstChild.textContent;
-    button.addEventListener('click', async function(){
+    button.addEventListener('click', async function(event){
+      const target = event.target;
       document.getElementById('add-member-popup').style.display = "block";
       let department_nm = "";
       for (const btn of teamButton){
@@ -105,6 +119,8 @@ window.onload = async function() {
     });
   }
 
+  /* add member to department */
+
   const submit_assign = document.getElementById('submit_assign');
   submit_assign.addEventListener('click', async function(e){
     if (document.getElementById('assign-dropdown').selectedOptions.length === 0) {e.preventDefault(); return false;};
@@ -129,7 +145,7 @@ window.onload = async function() {
         if (departmentCell.textContent === departmentName) {
           const team = row.querySelector('td:nth-child(2)').querySelector('.team-info');
           for (const memberName of newMembers) {
-            const teamMember = document.createElement('div');
+            //const teamMember = document.createElement('div');
             let member = document.createElement('p');
             const agentInfo = await fetchAgentInfo_username(memberName);
             member.setAttribute('id', agentInfo['id']);
@@ -143,9 +159,9 @@ window.onload = async function() {
 
             
             member.appendChild(minus_icon);
-            teamMember.appendChild(member);
+            //teamMember.appendChild(member);
             let addMemberButton = team.querySelector('#add-member');
-            addMemberButton.parentNode.insertBefore(teamMember, addMemberButton);
+            addMemberButton.parentNode.insertBefore(member, addMemberButton);
           }
         }
       });
@@ -217,8 +233,8 @@ async function loadDepartments() {
         const usersInDepartment = await fetchUsersInDepartment(department['Name']);
         if (usersInDepartment !== 0){
 
-          const tr = document.createElement('tr');
-          tr.setAttribute('id',department['DepartmentID']);
+        const tr = document.createElement('tr');
+        tr.setAttribute('id',department['DepartmentID']);
         const departmentName = document.createElement('td');
         tr.setAttribute('class', 'department-table-row');
         departmentName.textContent = department.Name;

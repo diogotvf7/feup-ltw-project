@@ -277,7 +277,7 @@
 
   static function addUsertoDeparment($db, $id, $departmentID){
     $stmt = $db->prepare('
-      INSERT INTO Agent_Department
+      INSERT INTO Agent_Department (AgentID, DepartmentID)
       VALUES (?, ?);
     ');
     $stmt->execute(array($id, $departmentID));

@@ -46,7 +46,7 @@
                 <label for="department-name"><b>Department Name</b></label>
                 <input type="text" placeholder="Enter new department name" id="department-name" name="department-name" required>
             
-                <button type="submit" id="submit_create_department" class="btn">Create new department</button>
+                <button type="button" id="submit_create_department" class="btn">Create new department</button>
                 <button type="button" id="cancel-creation-department" class="btn cancel">Close</button>
             </form>
         </div>
