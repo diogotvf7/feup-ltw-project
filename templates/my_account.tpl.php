@@ -2,6 +2,7 @@
 <?php function drawMyAccountPage() { ?>
     <main id="my-account-page">
         <form method="post" action="../actions/edit_account.php">
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <h1>My Account</h1>
             <fieldset>
                 <div>    

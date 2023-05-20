@@ -7,7 +7,9 @@
   include_once('../utils/util_funcs.php');
 
   session_start();
-
+  if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    header('Location: /pages/login.php');
+  }
   $db = getDatabaseConnection();
   
   var_dump($_POST);

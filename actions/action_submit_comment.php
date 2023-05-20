@@ -8,10 +8,6 @@
     session_start();
     $db = getDatabaseConnection();
 
-    var_dump($_POST);
-    echo "<br><br><br><br>";
-    var_dump($_FILES);    
-
     if (!Session::isLoggedIn())
         die(header('Location: /pages/login.php'));
     if ($_SERVER["REQUEST_METHOD"] != "POST")

@@ -54,6 +54,8 @@
     }
 
     static function createFaq(PDO $db, string $question, string $answer) {
+      $question = htmlspecialchars($question);
+      $answer = htmlspecialchars($answer);
       $stmt = $db->prepare('
         INSERT INTO FAQ (Question, Answer)
         VALUES (?, ?)

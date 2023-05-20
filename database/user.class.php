@@ -109,6 +109,7 @@
     }
 
     static function getClientByUsername(PDO $db, string $username) : User {
+      $username = htmlspecialchars($username);
       $stmt = $db->prepare("
         SELECT ClientID, Name, Username, Email,
         CASE 
