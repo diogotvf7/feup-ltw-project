@@ -90,26 +90,25 @@ save.addEventListener("click", async function() {
                 rowData[j] = currentOption;
             }
         }
-    }
-
-    const data = {
-        id : rowData[1],
-        name: rowData[2],
-        username: rowData[3],
-        email: rowData[4],
-        newRole: rowData[5]
-    };
-    
-    fetch('../actions/update_data.php', {
+        const data = {
+            id : rowData[1],
+            name: rowData[2],
+            username: rowData[3],
+            email: rowData[4],
+            newRole: rowData[5]
+        };        
+        fetch('../actions/update_data.php', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
-    })
+        })
+    }
+
+
 });
-
-
+    
 selectAll.addEventListener("click", function() {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
         checkbox.checked = true;
@@ -128,7 +127,6 @@ cancel.addEventListener("click", async function() {
         if (!checkbox.checked) continue;
         let id = row.cells[1].textContent;
         let user = await fetch_user_api({func: 'getSingleUser', id: id});
-        // let user = await fetchUserInfo(id);
         row.cells[2].textContent = user['name'];
         row.cells[2].setAttribute("contentEditable", "false");
         row.cells[2].style.backgroundColor = row.cells[0].style.backgroundColor;

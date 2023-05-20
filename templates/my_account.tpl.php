@@ -36,5 +36,8 @@
             <button type="button">Edit</button>
             <button type="submit" hidden>Save</button>
         </form>
+        <button type="button" class="delete-button">
+            <i class="fa-solid fa-trash"></i> Delete account
+        </button>
     </main>
 <?php } ?>

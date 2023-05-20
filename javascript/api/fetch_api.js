@@ -28,6 +28,12 @@ export async function fetch_ticket_api(params) {
     return tickets;
 }
 
+export async function fetch_faq_api(params) {
+    const response = await fetch('../pages/api_faq.php?' + encodeForAjax(params));
+    const faqs = await response.json();
+    return faqs;
+}
+
 function encodeForAjax(data) {
     return Object.keys(data).map(function(k){
         if (data[k] === null || data[k] === undefined) return;
