@@ -74,6 +74,9 @@
             case 'getAccountInfo':
                 $ret = User::getUser($db, $_SESSION['IDUSER']);
                 break;
+            case 'deleteAccount':
+                User::RemoveUser($db, $_SESSION['IDUSER']);
+                break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;

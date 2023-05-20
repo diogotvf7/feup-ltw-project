@@ -47,7 +47,7 @@ CREATE TABLE Agent
 
 CREATE TABLE Department 
 (   
-    DepartmentID INTEGER PRIMARY KEY,
+    DepartmentID INTEGER PRIMARY KEY AUTOINCREMENT,
     Name varchar(255) NOT NULL
 );
 
@@ -124,6 +124,8 @@ CREATE TABLE FAQ
     Question varchar(255) NOT NULL,
     Answer varchar(255) NOT NULL
 );
+
+COMMIT;
 
 -- populate database
 
@@ -476,5 +478,3 @@ INSERT INTO FAQ (Question, Answer)
 VALUES ('What do I do if I am not receiving push notifications?', 'If you are not receiving push notifications, please check your settings or contact our support team for assistance.');
 INSERT INTO FAQ (Question, Answer) 
 VALUES ('How do I change the language settings?', 'You can change the language settings by going to your account settings and selecting "language."');    
-
-COMMIT;

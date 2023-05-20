@@ -172,4 +172,5 @@ main {
 
 .delete-button:hover {
     color: var(--red);
+    cursor: pointer;
 }

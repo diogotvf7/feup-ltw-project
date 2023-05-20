@@ -9,6 +9,7 @@ const confirmNewPassword = document.querySelector('input[name=confirm-new-passwo
 const confirmNewPasswordLabel = document.querySelector('label[for=confirm-new-password]');
 const checkbox = document.querySelector('input[type=checkbox]');
 const checkboxLabel = document.querySelector('label[for=change-password]');
+const deleteButton = document.querySelector('.delete-button');
 
 window.onload = () => {
     fillInputsWithDatabaseInfo();
@@ -60,3 +61,13 @@ async function fillInputsWithDatabaseInfo() {
     _username.value = data.username;
     _email.value = data.email;
 }
+
+deleteButton.addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete your account?')) {
+        fetch('../pages/api_user.php?func=deleteAccount').then(response => {
+            if (response.ok) {    
+                window.location.href = '../actions/action_logout.php';
+            }
+        });
+    }
+});

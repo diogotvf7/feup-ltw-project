@@ -90,24 +90,24 @@ save.addEventListener("click", async function() {
                 rowData[j] = currentOption;
             }
         }
-    }
-
-    const data = {
-        id : rowData[1],
-        name: rowData[2],
-        username: rowData[3],
-        email: rowData[4],
-        newRole: rowData[5]
-    };
-    
-    fetch('../actions/update_data.php', {
+        const data = {
+            id : rowData[1],
+            name: rowData[2],
+            username: rowData[3],
+            email: rowData[4],
+            newRole: rowData[5]
+        };        
+        fetch('../actions/update_data.php', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
         })
-    });
+    }
+
+
+});
     
 selectAll.addEventListener("click", function() {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {

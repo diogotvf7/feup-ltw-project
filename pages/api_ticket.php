@@ -55,8 +55,6 @@
                         'date' => $ticketData->date,
                         'documents' => array_column(Ticket::getDocuments($db, $id), 'Path'),
                         'tags' => array_column(Ticket::getTicketTags($db, $id), 'Name'),
-                        // 'error1' => $ticketData->clientId != null,
-                        // 'error' => $ticketData->agentId != null,
                         'author' => $ticketData->clientId != null ?  User::getUser($db, $ticketData->clientId)->username : '',
                         'assignee' => $ticketData->agentId != null ? User::getUser($db, $ticketData->agentId)->username : '',
                     );
