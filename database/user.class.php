@@ -260,6 +260,13 @@
       return $stmt->fetchAll();
     }
 
+    static function removeUserFromDepartment(PDO $db, int $clientID, int $departmentID) {
+      $stmt = $db->prepare('
+      DELETE FROM Agent_Department
+      WHERE AgentID = ? AND DepartmentID = ?;
+      ');
+      $stmt->execute(array($clientID, $departmentID));
+    }
     static function RemoveUser($db, $id){
       $stmt = $db->prepare('
           DELETE FROM Client 
@@ -267,5 +274,13 @@
       ');
       $stmt->execute(array($id));
     }
+
+  static function addUsertoDeparment($db, $id, $departmentID){
+    $stmt = $db->prepare('
+      INSERT INTO Agent_Department
+      VALUES (?, ?);
+    ');
+    $stmt->execute(array($id, $departmentID));
   }
+}
 ?>

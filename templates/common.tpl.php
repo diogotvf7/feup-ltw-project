@@ -58,7 +58,7 @@
 
 <?php function drawAdminNavBar() { ?>
     <li class="nav-item">
-            <a href="../pages/admins.php" class="nav-link">
+            <a href="../pages/admin_page.php" class="nav-link">
             <i class="fa-solid fa-gear fa-lg"></i>
             <!-- <span class="link-text">Users</span> -->
             <span class="link-text">Admin Page</span>

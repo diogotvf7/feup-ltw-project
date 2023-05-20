@@ -25,8 +25,14 @@
                 }
                 $ret = Department::getAllDepartments($db);
                 break;
-            case 'user_departments':
-                $ret = Department::getUserDepartments($db);
+            case 'getDepartmentInfo':
+                $departmentInfo = Department::getDepartment($db, $_GET['id']);
+                $ret['id'] = $departmentInfo->id;
+                $ret['name'] = $departmentInfo->name;
+                break;
+            case 'users_in_departments':
+                $id = Department::getDepartmentbyName($db,$_GET['departmentName']);
+                $ret = Department::getUsersInDepartments($db,$id);
                 break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';

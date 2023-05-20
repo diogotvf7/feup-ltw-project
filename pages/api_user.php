@@ -47,12 +47,19 @@
                     $ret['error'] = 'You don\'t have permission to access this data!';
                     break;  
                 }
-                if (!isset($_GET['id'])) {
-                    $ret['error'] = 'No client id provided!';
+                if (!isset($_GET['id']) && isset($_GET['username'])) {
+                    $username = $_GET['username'];
+                    $id = User::getClientByUsername($db, $username)->id;
+                }
+                else if (!isset($_GET['id']) && !isset($_GET['username'])) {
+                    $ret['error'] = 'No client id or username provided!';
                     break;
                 }
-                $id = $_GET['id'];
+                else {$id = $_GET['id'];}
                 $ret['id'] = $id;
+                $ret['name'] = User::getUser($db, $id)->name;
+                if (!isset($_GET['username'])) $ret['username'] = User::getUser($db, $id)->username;
+                $ret['email'] = User::getUser($db, $id)->email;
                 $ret['departments'] = User::getDepartment($db, $id);
                 $ret['responsible'] = User::getTicketsResponsible($db, $id);
                 $ret['open'] = User::getTicketsOpen($db, $id);
