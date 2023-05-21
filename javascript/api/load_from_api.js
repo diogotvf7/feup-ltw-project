@@ -2,7 +2,7 @@ import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api, 
 import { createDepartmentTableRow } from '../draw_functions/admin_page.js'
 
 export async function loadDepartmentsTable(params) {
-    const departmentsTable = document.querySelector('table');
+    const departmentsTable = document.querySelector('tbody');
     const departments = await fetch_department_api(params);
     if (departments.length !== 0) {
         for (const department of departments) {
