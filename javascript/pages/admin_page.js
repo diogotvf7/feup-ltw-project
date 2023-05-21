@@ -7,13 +7,24 @@ window.onload = async function() {
   const create_department_button = document.getElementById('create-department');
   const cancel_creation_department = document.getElementById('cancel-creation-department');
   const submit_button = document.getElementById('submit_create_department');
-  create_department_button.addEventListener('click', function() {document.getElementById("myForm").style.display = "block";});
-  cancel_creation_department.addEventListener('click', function() {document.getElementById("myForm").style.display = "none"; document.getElementById("department-name").value = "";});
+
+  create_department_button.addEventListener('click', function() {
+    document.getElementById("myForm").style.display = "block";
+  });
+
+  cancel_creation_department.addEventListener('click', function() {
+    document.getElementById("myForm").style.display = "none"; 
+    document.getElementById("department-name").value = "";
+  });
+
   /* assign to department form */
   const submit_assign_button = document.getElementById('submit_assign');
   const cancel_assign_department_button = document.getElementById('cancel-assign-department');
   
-  cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
+  cancel_assign_department_button.addEventListener('click', function() {
+    document.getElementById("add-member-popup").style.display = "none";
+  });
+
   const tableRows = document.querySelectorAll('.department-table-row');
 
   /* create faq */
@@ -102,65 +113,65 @@ window.onload = async function() {
   /* remove user from department */
   const departmentTable = document.querySelector('[class="department-table"]');
 
-  departmentTable.addEventListener('click', function(event) {
-    /* click on minus icon*/
-    const target = event.target;
-        if (target.id === 'minus-icon') {
-          let icon = target;
-          let member_info = icon.parentNode;
+  // departmentTable.addEventListener('click', function(event) {
+  //   /* click on minus icon*/
+  //   const target = event.target;
+  //       if (target.id === 'minus-icon') {
+  //         let icon = target;
+  //         let member_info = icon.parentNode;
       
-          let userID = member_info.id;
-          let departmentID = member_info.parentNode.parentNode.parentNode.id;
+  //         let userID = member_info.id;
+  //         let departmentID = member_info.parentNode.parentNode.parentNode.id;
           
-          let data = {
-            userID: userID,
-            departmentID: departmentID
-          };
+  //         let data = {
+  //           userID: userID,
+  //           departmentID: departmentID
+  //         };
           
-          fetch('../actions/remove_user_department.php', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8'
-            }
-          }).then(function(response) {
-            if (response.ok) {
-              member_info.remove();
-            }
-          });  
-        }
-        if (target.id == 'list-members'){
-          let icon = target;
-          let list_members = icon.nextSibling;
-          if (list_members.hasAttribute('hidden') === true) {
-            list_members.toggleAttribute('hidden');
-          } 
-          else if (list_members.hasAttribute('hidden') === false) {
-            list_members.toggleAttribute('hidden');
-          }
-        }
-        if (target.id == 'elim-department-btn'){
-          let icon = target;
-          let department = icon.parentNode.parentNode;
-          let departmentID = department.id;
-          let data = {
-            departmentID: departmentID
-          };
+  //         fetch('../actions/remove_user_department.php', {
+  //           method: 'POST',
+  //           body: JSON.stringify(data),
+  //           headers: {
+  //             'Content-type': 'application/json; charset=UTF-8'
+  //           }
+  //         }).then(function(response) {
+  //           if (response.ok) {
+  //             member_info.remove();
+  //           }
+  //         });  
+  //       }
+  //       if (target.id == 'list-members'){
+  //         let icon = target;
+  //         let list_members = icon.nextSibling;
+  //         if (list_members.hasAttribute('hidden') === true) {
+  //           list_members.toggleAttribute('hidden');
+  //         } 
+  //         else if (list_members.hasAttribute('hidden') === false) {
+  //           list_members.toggleAttribute('hidden');
+  //         }
+  //       }
+  //       if (target.id == 'elim-department-btn'){
+  //         let icon = target;
+  //         let department = icon.parentNode.parentNode;
+  //         let departmentID = department.id;
+  //         let data = {
+  //           departmentID: departmentID
+  //         };
 
-          fetch('../../actions/delete_department.php', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8'
-            }
-          }).then(async function(response) {
-            let res = await response.json();
-            if (res.status == 'success') {
-              department.remove();
-            }
-          });
-        }
-  });  
+  //         fetch('../../actions/delete_department.php', {
+  //           method: 'POST',
+  //           body: JSON.stringify(data),
+  //           headers: {
+  //             'Content-type': 'application/json; charset=UTF-8'
+  //           }
+  //         }).then(async function(response) {
+  //           let res = await response.json();
+  //           if (res.status == 'success') {
+  //             department.remove();
+  //           }
+  //         });
+  //       }
+  // });  
 
   const addMemberButton = document.querySelectorAll('[id="add-member"]');
       
@@ -332,8 +343,8 @@ async function fetchDepartments() {
 
 async function fetchUsersInDepartment(departmentName) {
   const response = await fetch('../pages/api_department.php?' + encodeForAjax({
-      func: 'users_in_departments',
-      departmentName: departmentName
+      func: 'users_in_department',
+      name: departmentName
   }));
   const usersInDepartment = await response.json();
   return usersInDepartment;

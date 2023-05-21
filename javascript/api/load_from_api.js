@@ -1,7 +1,21 @@
 import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api } from './fetch_api.js'
+import { createDepartmentTableRow } from '../draw_functions/admin_page.js'
 
 export async function loadDepartmentsTable(params) {
-    
+    const departmentsTable = document.querySelector('table');
+    const departments = await fetch_department_api(params);
+    if (departments.length !== 0) {
+        for (const department of departments) {
+            let usersInDepartment = await fetch_department_api({
+                func: 'users_in_department',
+                name: department.Name
+            });
+            const departmentRow = createDepartmentTableRow(department, usersInDepartment);
+            departmentsTable.appendChild(departmentRow);
+        }
+    } else {
+        departmentsTable.remove();
+    }
 }
 
 export async function loadDepartmentsSelect(params, select = null) {

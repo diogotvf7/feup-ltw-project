@@ -1,66 +1,202 @@
-<main class="content" >
+<main class="content">
     <div class="page">
-    <div class="column">
-        <div class = "dropdown" hidden>
-            <button name="dropbtn" class="dropbtn" > <i class="fa-sharp fa-solid fa-plus"></i> Create </button>
-            <div class="dropdown-content" hidden>
-                <button class="dropdown-button" id="create-department" type="button">Create Department</button>
-                <button class="dropdown-button" id="create-status" type="button">Create Status</button>
-                <button class="dropdown-button" id="create-faq" type="button">Create FAQ</button>
+        <div class="column">
+            <div class="dropdown">
+                <button name="dropbtn" class="dropbtn"> <i class="fa-sharp fa-solid fa-plus"></i> Create </button>
+                <div class="dropdown-content" hidden="">
+                    <button class="dropdown-button" id="create-department" type="button">Create Department</button>
+                    <button class="dropdown-button" id="create-status" type="button">Create Status</button>
+                    <button class="dropdown-button" id="create-faq" type="button">Create FAQ</button>
+                </div>
             </div>
-        </div>
-        <div class="table" hidden>
-            <table class="department-table" >
-                <tbody class="table-body">
-                    <tr id="table-header">
-                        <th>Name of Department</th>
+            <div class="table">
+                <table class="department-table">
+                    <tbody class="table-body">
+                        <tr id="table-header">
+                            <th>Name of Department</th>
+                        </tr>
+                    </tbody>
+                    <tr id="1" class="department-table-row">
+                        <td>Informática</td>
+                        <td class="department-table-info">
+                            <button id="list-members" class="team-button" title="Team members">
+                                <i class="fa-solid fa-people-group"></i>
+                            </button>
+                            <div class="team-info" id="1" hidden="true">
+                                <p id="3" class="space-between" title="hhh@gmail.com">tripleHHH<i id="minus-icon"
+                                        title="Remove Triple H from Informática" class="fa-solid fa-minus"></i></p>
+                                <p id="5" class="space-between" title="bjohnson@example.com">bjohnson<i id="minus-icon"
+                                        title="Remove Bob Johnson from Informática" class="fa-solid fa-minus"></i></p>
+                                <p id="6" class="space-between" title="alee@example.com">alee<i id="minus-icon"
+                                        title="Remove Alice Lee from Informática" class="fa-solid fa-minus"></i></p>
+                                <p id="7" class="space-between" title="dkim@example.com">dkim<i id="minus-icon"
+                                        title="Remove David Kim from Informática" class="fa-solid fa-minus"></i></p>
+                                <button id="add-member" title="Add member to Informática" class="fa-solid fa-plus">Add
+                                    member</button>
+                            </div>
+                        </td>
+                        <td id="elim-department" title="Delete Informática"><button class="elim-department-btn"
+                                id="elim-department-btn"><i class="fas fa-trash" aria-hidden="true"></i></button></td>
                     </tr>
-                </tbody>
-            </table>
+                    <tr id="2" class="department-table-row">
+                        <td>Mecânica</td>
+                        <td class="department-table-info"><button id="list-members" class="team-button"
+                                title="Team members"><i class="fa-solid fa-people-group"></i></button>
+                            <div class="team-info" id="2" hidden="true">
+                                <p id="3" class="space-between" title="hhh@gmail.com">tripleHHH<i id="minus-icon"
+                                        title="Remove Triple H from Mecânica" class="fa-solid fa-minus"></i></p>
+                                <p id="4" class="space-between" title="admin@admin.com">admin<i id="minus-icon"
+                                        title="Remove admin from Mecânica" class="fa-solid fa-minus"></i></p>
+                                <p id="7" class="space-between" title="dkim@example.com">dkim<i id="minus-icon"
+                                        title="Remove David Kim from Mecânica" class="fa-solid fa-minus"></i></p><button
+                                    id="add-member" title="Add member to Mecânica" class="fa-solid fa-plus">Add
+                                    member</button>
+                            </div>
+                        </td>
+                        <td id="elim-department" title="Delete Mecânica"><button class="elim-department-btn"
+                                id="elim-department-btn"><i class="fas fa-trash" aria-hidden="true"></i></button></td>
+                    </tr>
+                    <tr id="3" class="department-table-row">
+                        <td>Minas</td>
+                        <td class="department-table-info"><button id="list-members" class="team-button"
+                                title="Team members"><i class="fa-solid fa-people-group"></i></button>
+                            <div class="team-info" id="3" hidden="true">
+                                <p id="4" class="space-between" title="admin@admin.com">admin<i id="minus-icon"
+                                        title="Remove admin from Minas" class="fa-solid fa-minus"></i></p>
+                                <p id="7" class="space-between" title="dkim@example.com">dkim<i id="minus-icon"
+                                        title="Remove David Kim from Minas" class="fa-solid fa-minus"></i></p><button
+                                    id="add-member" title="Add member to Minas" class="fa-solid fa-plus">Add
+                                    member</button>
+                            </div>
+                        </td>
+                        <td id="elim-department" title="Delete Minas"><button class="elim-department-btn"
+                                id="elim-department-btn"><i class="fas fa-trash" aria-hidden="true"></i></button></td>
+                    </tr>
+                    <tr id="4" class="department-table-row">
+                        <td>asdasdsad</td>
+                        <td class="department-table-info"><button id="list-members" class="team-button"
+                                title="Team members"><i class="fa-solid fa-people-group"></i></button>
+                            <div class="team-info" id="4" hidden="true"><button id="add-member"
+                                    title="Add member to asdasdsad" class="fa-solid fa-plus">Add member</button></div>
+                        </td>
+                        <td id="elim-department" title="Delete asdasdsad"><button class="elim-department-btn"
+                                id="elim-department-btn"><i class="fas fa-trash" aria-hidden="true"></i></button></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="column">
-        <div id="kpis">
-        <h1> Website KPIs </h1>
-            <div class="boxes">
-                <div class="box">
-                    <h2>Tickets</h2>
-                        <div class ="tickets-box">
-                            <p id="number-of-tickets-open">Open today:</p>
-                            <p id="number-of-tickets-closed">Closed today:</p>
+        <div class="column">
+            <div id="kpis" style="display: block;">
+                <h1> Website KPIs </h1>
+                <div class="boxes">
+                    <div class="box">
+                        <h2>Tickets</h2>
+                        <div class="tickets-box">
+                            <p id="number-of-tickets-open">Open today: 8</p>
+                            <p id="number-of-tickets-closed">Closed today: 0</p>
                         </div>
-                </div>
-                <div class="box">
-                    <h2>Most used tags</h2>
-                    <ul id="most-used-tags">
-                    </ul>
+                    </div>
+                    <div class="box">
+                        <h2>Most used tags</h2>
+                        <ul id="most-used-tags">
+                            <li class="tag">Product</li>
+                            <li class="tag">Billing</li>
+                            <li class="tag">Technical</li>
+                            <li class="tag">Sales</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div class="form-popup" id="myForm">
         <form action="../actions/create_department.php" id="newDepartmentForm" class="form-container" method="post">
             <h1>New Department</h1>
 
             <label for="department-name"><b>Department Name</b></label>
-            <input type="text" placeholder="Enter new department name" id="department-name" name="department-name" required>
-        
+            <input type="text" placeholder="Enter new department name" id="department-name" name="department-name"
+                required="">
+
             <button type="button" id="submit_create_department" class="btn">Create new department</button>
             <button type="button" id="cancel-creation-department" class="btn cancel">Close</button>
         </form>
     </div>
     <div class="form-popup" id="add-member-popup">
         <form action="../actions/add_user_department.php" id="addtoDepartmentForm" class="form-container" method="post">
-            <h1 id="assign-header" >Assign members</h1>
+            <h1 id="assign-header">Assign members</h1>
             <label for="department-name"><b>Department</b></label>
-            <input type="text" id="department-name" disabled></input>
+            <input type="text" id="department-name" disabled="">
             <label for="department-name"><b>Members</b></label>
-            <select name='members[]' id="assign-dropdown" required multiple>
+            <select name="members[]" id="assign-dropdown" required="" multiple="">
             </select>
-        
+
             <button type="button" id="submit_assign" class="btn">Assign to department</button>
             <button type="button" id="cancel-assign-department" class="btn cancel">Close</button>
         </form>
     </div>
 </main>
+
+<div id="popup" hidden="">
+    <h3> Department created </h3>
+    <p> Assign members now!</p>
+</div>
+
+<nav class="navbar">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="../pages/index.php" class="nav-link">
+                <img src="../docs/simple-logo.png" alt="up tickets logo">
+                <span class="logo-text">UP Tickets</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/admin_page.php" class="nav-link">
+                <i class="fa-solid fa-gear fa-lg"></i>
+                <!-- <span class="link-text">Users</span> -->
+                <span class="link-text">Admin Page</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/agents.php" class="nav-link">
+                <i class="fa-solid fa-briefcase fa-lg"></i>
+                <span class="link-text">Agents</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/users.php" class="nav-link">
+                <i class="fa-solid fa-users fa-lg"></i>
+                <span class="link-text">Clients</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/display_tickets.php" class="nav-link">
+                <i class="fa-solid fa-list-check fa-lg"></i>
+                <span class="link-text">Tickets queues</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/my_account.php" class="nav-link">
+                <i class="fa-solid fa-user fa-lg"></i>
+                <span class="link-text">My account</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/my_tickets.php" class="nav-link">
+                <i class="fa-solid fa-ticket fa-lg"></i>
+                <span class="link-text">My tickets</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../pages/faq.php" class="nav-link">
+                <i class="fa-solid fa-circle-question fa-lg"></i>
+                <span class="link-text">FAQ</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="../actions/action_logout.php" class="nav-link">
+                <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                <span class="link-text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</nav>

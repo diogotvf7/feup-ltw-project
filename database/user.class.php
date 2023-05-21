@@ -261,13 +261,6 @@
       return $stmt->fetchAll();
     }
 
-    static function removeUserFromDepartment(PDO $db, int $clientID, int $departmentID) {
-      $stmt = $db->prepare('
-      DELETE FROM Agent_Department
-      WHERE AgentID = ? AND DepartmentID = ?;
-      ');
-      $stmt->execute(array($clientID, $departmentID));
-    }
     static function RemoveUser($db, $id){
       $stmt = $db->prepare('
           DELETE FROM Client 

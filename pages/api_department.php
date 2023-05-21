@@ -30,9 +30,39 @@
                 $ret['id'] = $departmentInfo->id;
                 $ret['name'] = $departmentInfo->name;
                 break;
-                case 'user_departments':
-                    $ret = Department::getUserDepartments($db);
+            case 'users_in_department':
+                $id = Department::getDepartmentbyName($db,$_GET['name']);
+                $ret = Department::getUsersInDepartments($db,$id);
+                break;
+            case 'user_departments':
+                $ret = Department::getUserDepartments($db);
+                break;
+            case 'remove_user':
+                if ($_SESSION['PERMISSIONS'] != 'Admin') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
                     break;
+                }
+                if (!isset($_GET['userID'])) {
+                    $ret['error'] = 'No userID provided!';
+                    break;
+                }
+                if (!isset($_GET['departmentID'])) {
+                    $ret['error'] = 'No departmentID provided!';
+                    break;
+                }
+                $ret = Department::removeUserFromDepartment($db, $_GET['userID'], $_GET['departmentID']);  
+                break;
+            case 'remove_department':
+                if ($_SESSION['PERMISSIONS'] != 'Admin') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
+                    break;
+                }
+                if (!isset($_GET['departmentID'])) {
+                    $ret['error'] = 'No departmentID provided!';
+                    break;
+                }
+                $ret = Department::deleteDepartment($db, $_GET['departmentID']);
+                break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;
