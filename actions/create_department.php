@@ -23,20 +23,15 @@
     $response = array('status' => 'error', 'msg' => "Department already exists");
     header('Content-Type: application/json');
     echo json_encode($response);
-    //header('Location: ../pages/admin_page.php');
     die();
   }
-  /*
+  
   Department::addDepartment($db, $departmentName);
 
   $id = Department::getDepartmentbyName($db, $departmentName);
 
   $response = array('status' => 'success', 'departmentID' => $id);
-  */
-  $response = array('status' => 'success', 'departmentID' => 100);
-  header('Content-Type: application/json');
-  echo json_encode($response);
-
-  //header('Location: ../pages/admin_page.php');
   
+  header('Content-Type: application/json');
+  echo json_encode($response);  
   ?>

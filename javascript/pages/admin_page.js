@@ -15,22 +15,16 @@ window.onload = async function() {
   
   cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
   const tableRows = document.querySelectorAll('.department-table-row');
-  let currentOpenTab = null;
-  /*
-  for (const button of teamButton) {
-    button.addEventListener('click', function() {
-      let team_Info = button.nextSibling;
-      if (team_Info.hasAttribute('hidden') === true) {
-        team_Info.toggleAttribute('hidden');
-      } 
-      else if (team_Info.hasAttribute('hidden') === false) {
-        team_Info.toggleAttribute('hidden');
-      }
+
+  /* create faq */
+
+  var createFaqButton = document.getElementById('create-faq');
+
+    // Add a click event listener to the button
+    createFaqButton.addEventListener('click', function() {
+        // Redirect to the desired page
+        window.location.href = 'new_faq.php';
     });
-  }
-  */
-
-
 
 
   /* create deparment  */
@@ -75,8 +69,20 @@ window.onload = async function() {
         team_info.classList.add('team-info');
         team_info.setAttribute('hidden', true);
         team_info.id = res['departmentID'];
-        department_members.appendChild(team_info);
+
+        const elim_department = document.createElement('td');
+        const elim_department_btn = document.createElement('button');
+        elim_department_btn.classList.add('elim-department-btn');
+        elim_department_btn.id = 'elim-department-btn';
+        const elim_department_i = document.createElement('i');
+        elim_department_i.classList.add('fas', 'fa-trash');
+        elim_department_btn.appendChild(elim_department_i);
+        elim_department.id = 'elim-department';
+        elim_department.title = 'Delete ' + departmentName;
+        elim_department.appendChild(elim_department_btn);
+        department_members.appendChild(team_info);        
         row.appendChild(department_members);
+        row.appendChild(elim_department);
         table.appendChild(row);
         console.log(row);
       }
@@ -93,6 +99,7 @@ window.onload = async function() {
   departmentTable.addEventListener('click', function(event) {
     /* click on minus icon*/
     const target = event.target;
+    console.log(target)
         if (target.id === 'minus-icon') {
           let icon = target;
           let member_info = icon.parentNode;
@@ -126,8 +133,30 @@ window.onload = async function() {
           else if (list_members.hasAttribute('hidden') === false) {
             list_members.toggleAttribute('hidden');
           }
-          console.log(list_members);
-          
+        }
+        if (target.id == 'elim-department-btn'){
+          let icon = target;
+          let department = icon.parentNode.parentNode;
+          console.log(department);
+          let departmentID = department.id;
+          console.log(departmentID);
+          let data = {
+            departmentID: departmentID
+          };
+
+          fetch('../../actions/delete_department.php', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8'
+            }
+          }).then(async function(response) {
+            let res = await response.json();
+            console.log(res)
+            if (res.status == 'success') {
+              department.remove();
+            }
+          });
         }
   });  
 
@@ -206,8 +235,6 @@ window.onload = async function() {
             minus_icon.id = "minus-icon";
             minus_icon.title = 'Remove ' + agentInfo['name'] + ' from ' + departmentName;
             minus_icon.classList.add('fa-solid', 'fa-minus');
-
-            
             member.appendChild(minus_icon);
             let addMemberButton = team.querySelector('#add-member');
             addMemberButton.parentNode.insertBefore(member, addMemberButton);
@@ -219,8 +246,46 @@ window.onload = async function() {
 
     
   });
+
+  let most_used_tags = document.getElementById('most-used-tags');
+    let tags = await fetchTags();
+    console.log(tags);
+    let limit = tags.length > 5 ? 5 : tags.length;
+    for (let i = 0; i < limit; i++) {
+      let tag = tags[i];
+      let tag_element = document.createElement('li');
+      tag_element.classList.add('tag');
+      tag_element.textContent = tag['Name'];
+      most_used_tags.appendChild(tag_element);
+    }
+  let tickets_open = document.getElementById('number-of-tickets-open');
+  let tickets_closed = document.getElementById('number-of-tickets-closed');
+
+  let res_nropentickets = await fetchTicketsOpen();
+  let nr_opentickets = res_nropentickets['Open']['OpenTicketsToday'];
+  tickets_open.textContent +=  ' ' + nr_opentickets;
+
+  let res_nrclosedtickets = await fetchTicketsClosed();
+  let nr_closedtickets = res_nrclosedtickets['Closed']['ClosedTicketsToday'];
+  tickets_closed.textContent += ' ' + nr_closedtickets;
+  
 }
 
+async function fetchTicketsOpen(){
+  const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
+    func: 'getTicketsStats',
+    status: 'Open'}));
+  const tickets = await response.json();
+  return tickets;
+}
+
+async function fetchTicketsClosed(){
+  const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
+    func: 'getTicketsStats',
+    status: 'Closed'}));
+  const tickets = await response.json();
+  return tickets;
+}
 async function fetchAllAgents(){
   const response = await fetch('../pages/api_user.php?' + encodeForAjax({
     func: 'getAgents',
@@ -271,6 +336,14 @@ async function fetchUsersInDepartment(departmentName) {
   }));
   const usersInDepartment = await response.json();
   return usersInDepartment;
+}
+
+async function fetchTags(){
+  const response = await fetch('../pages/api_tag.php?' + encodeForAjax({
+    func: 'getMostUsedTags',
+  }));
+  const tags = await response.json();
+  return tags;
 }
 
 async function loadDepartments() {
@@ -329,11 +402,31 @@ async function loadDepartments() {
         button.appendChild(icon);
         departmentInfo.appendChild(button);
         departmentInfo.appendChild(teamInfo);
+
+        const elim_department = document.createElement('td');
+        const elim_department_btn = document.createElement('button');
+        elim_department_btn.classList.add('elim-department-btn');
+        elim_department_btn.id = 'elim-department-btn';
+        const elim_department_i = document.createElement('i');
+        elim_department_i.classList.add('fas', 'fa-trash');
+        elim_department_btn.appendChild(elim_department_i);
+        elim_department.id = 'elim-department';
+        elim_department.title = 'Delete ' + department['Name'];
+        elim_department.appendChild(elim_department_btn);
+
         tr.appendChild(departmentInfo);
+        tr.appendChild(elim_department);
         departmentTable.appendChild(tr);
       }
       }
   }
+  /* to appear evertything at once */
+  const t = document.querySelector('[class="dropdown"]');
+  t.toggleAttribute('hidden');
+  const t2 = document.querySelector('[class="table"]');
+  t2.toggleAttribute('hidden');
+  const kpis = document.getElementById('kpis');
+  kpis.style.display = "block";
 }
 
 function encodeForAjax(data) {

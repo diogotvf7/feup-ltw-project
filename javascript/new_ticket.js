@@ -25,7 +25,7 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
         await initOptions()
         enableItemSelection()
         setValues()
-
+        document.getElementById('tags').style.display = 'none';
         button.addEventListener('click', () => {
             if(drawer.classList.contains('hidden')) {
                 initOptions()

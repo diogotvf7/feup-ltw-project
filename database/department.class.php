@@ -56,14 +56,11 @@
       $stmt->execute([$lastID,$name]);
     }
 
-    static function removeDepartment(PDO $db, string $name) : bool{
-      if (self::getDepartment($db, $name) == null) return false; // doesnt exist
+    static function deleteDepartment(PDO $db, int $id){
       $stmt = $db->prepare('
         DELETE FROM Department
-        WHERE Name = ?');
-
-      $stmt->execute([$name]);
-      return true;
+        WHERE DepartmentID = ?');
+      $stmt->execute([$id]);
     }
 
     static function getAllDepartments(PDO $db) {
