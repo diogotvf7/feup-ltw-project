@@ -18,41 +18,41 @@ window.onload = async function() {
     for (const ticket of tickets['tickets'])
         drawTicketPreview(ticket, session);
     setTagsColor();
+
+    filterForm.addEventListener('submit', async function (event) {
+        const list = document.getElementById('ticket-list');
+        event.preventDefault();
+        const formData = new FormData(filterForm);
+        console.log(formData);
+        let tickets = await fetch_ticket_api({
+            func: 'display_tickets',
+            dateLowerBound: formData.get('dateLowerBound'),
+            dateUpperBound: formData.get('dateUpperBound'),
+            status: formData.get('status'),
+            departments: formData.get('department'),
+            tags: formData.getAll('tag'),
+            sort: formData.get('sort')
+        });
+        list.innerHTML = '';
+        if (tickets['tickets'].length === 0) {
+            const noTickets = document.createElement('div');
+            noTickets.classList.add('noTickets');
+            const image = document.createElement('img');
+            image.src = '../docs/panda.jpg';
+            image.classList.add('panda');
+            const textPostPanda = document.createElement('h2');
+            textPostPanda.textContent = 'No tickets yet, just a panda eating bamboo';
+            textPostPanda.classList.add('text-post-panda');
+            noTickets.appendChild(image);
+            noTickets.appendChild(textPostPanda);
+            console.log(noTickets);
+            list.appendChild(noTickets);
+            console.log(list);
+        }
+        for (const ticket of tickets['tickets'])
+            drawTicketPreview(ticket, session);
+        setTagsColor();
+    });   
 }
 
 const filterForm = document.getElementById('filter-form');    
-
-filterForm.addEventListener('submit', async function (event) {
-    const list = document.getElementById('ticket-list');
-    event.preventDefault();
-    const formData = new FormData(filterForm);
-    console.log(formData);
-    let tickets = await fetch_ticket_api({
-        func: 'display_tickets',
-        dateLowerBound: formData.get('dateLowerBound'),
-        dateUpperBound: formData.get('dateUpperBound'),
-        status: formData.get('status'),
-        departments: formData.get('department'),
-        tags: formData.getAll('tag'),
-        sort: formData.get('sort')
-    });
-    list.innerHTML = '';
-    if (tickets['tickets'].length === 0) {
-        const noTickets = document.createElement('div');
-        noTickets.classList.add('noTickets');
-        const image = document.createElement('img');
-        image.src = '../docs/panda.jpg';
-        image.classList.add('panda');
-        const textPostPanda = document.createElement('h2');
-        textPostPanda.textContent = 'No tickets yet, just a panda eating bamboo';
-        textPostPanda.classList.add('text-post-panda');
-        noTickets.appendChild(image);
-        noTickets.appendChild(textPostPanda);
-        console.log(noTickets);
-        list.appendChild(noTickets);
-        console.log(list);
-    }
-    for (const ticket of tickets['tickets'])
-        drawTicketPreview(ticket);
-    setTagsColor();
-});   

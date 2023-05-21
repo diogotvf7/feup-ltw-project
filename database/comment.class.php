@@ -18,6 +18,7 @@
     }
 
     static function createTicketComment(PDO $db, $ticketId, $clientId, $comment) {
+      $comment = htmlspecialchars($comment);
       $stmt = $db->prepare('
         INSERT INTO Ticket_Comment (TicketID, ClientID, Comment, Date)
         VALUES (?, ?, ?, ?)
