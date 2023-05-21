@@ -10,6 +10,7 @@ const selects = document.querySelectorAll('select');
 const tagsSearch = document.getElementById('tags-search');
 const tags = document.getElementById('tags');
 const addTagButton = document.getElementById('add-tag'); 
+const commentForm = document.getElementById('new-comment');
 
 window.onload = async function() { 
     const ticketInfo = await fetch_ticket_api({
@@ -17,6 +18,7 @@ window.onload = async function() {
         id: getParameterByName('id')
     });
     loadStatus({}, ticketInfo['status']);
+    if (ticketInfo['status'] == 'Closed') commentForm.remove();
     drawTicketPage(ticketInfo);
     setTagsColor();
 

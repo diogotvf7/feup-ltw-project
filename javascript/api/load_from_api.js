@@ -52,7 +52,6 @@ export async function loadAgents(params, select = null) {
 export async function loadStatus(params, select = null) {
     const statusSelect = document.getElementById('status-select');
     const statusList = await fetch_status_api('GET', params);
-    console.log(statusList);
     if (statusList.length !== 0) {
         for (let i = 0; i < statusList.length; i++) {
             const option = document.createElement('option');
