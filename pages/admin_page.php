@@ -27,7 +27,7 @@
                 <button name="dropbtn" class="dropbtn" > <i class="fa-sharp fa-solid fa-plus"></i> Create </button>
                 <div class="dropdown-content" hidden>
                     <button class="dropdown-button" id="create-department" type="button">Create Department</button>
-                    <button class="dropdown-button" id0"create-status" type="button">Create Status</button>
+                    <button class="dropdown-button" id="create-status" type="button">Create Status</button>
                     <button class="dropdown-button" id="create-faq" type="button">Create FAQ</button>
                 </div>
             </div>

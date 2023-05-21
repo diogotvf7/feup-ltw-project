@@ -225,7 +225,6 @@ select {
     overflow: auto;
     padding: 1em;
     border-left: var(--black) solid 2px;
-    border-bottom: var(--black) solid 2px;
 }
 
 #tags {

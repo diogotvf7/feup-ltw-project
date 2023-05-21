@@ -8,7 +8,7 @@ export async function drawTicketPage(ticket) {
     const _form = document.getElementById('ticket-form');
     const _title = document.getElementById('title');
     const _description = document.getElementById('description');
-    const _status = document.getElementById('status');
+    const _status = document.getElementById('status-select');
     const _tags = document.getElementById('tags');
     const _department = document.getElementById('department-select');
     const _author = document.getElementById('author');
@@ -27,13 +27,6 @@ export async function drawTicketPage(ticket) {
     _title.value = ticket['title'];
 
     _description.textContent = ticket['description'];
-
-    if (ticket['status'] == 'Open') 
-        _status.children[0].selected = true;            
-    else if (ticket['status'] == 'Closed') 
-        _status.children[1].selected = true;
-    else if (ticket['status'] == 'In Progress')
-        _status.children[2].selected = true;
 
     if (ticket['departmentId'] != null) {
         const option = document.createElement('option');

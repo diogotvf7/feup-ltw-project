@@ -27,11 +27,8 @@
             <header>
                 <input type="text" name="title" id="title" maxlength="27" disabled required></input>
                 <div class="flex align-center">
-                    <label for="status">Status:</label>
-                    <select id="status" name="status" disabled>
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
-                        <option value="In progress">In progress</option>
+                    <label for="status-select">Status:</label>
+                    <select id="status-select" name="status" disabled>
                     </select>
                 </div>
                 <p id="date"></p>
@@ -49,14 +46,12 @@
                     <div class="flex align-center">
                         <label for="department-select">Department:</label>
                         <select id="department-select" name="department" disabled>
-                            <option value="">-</option>
                         </select>
                     </div>
                     <p id="author"></p>
                     <div class="flex align-center">
                         <label for="agent-select">Agent:</label>
                         <select id="agent-select" name="agent" disabled>
-                            <option value="">-</option>
                         </select>
                     </div>
                 </div>
