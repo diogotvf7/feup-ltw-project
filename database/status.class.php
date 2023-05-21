@@ -20,6 +20,7 @@
 
     static function addStatus(PDO $db, $name) {
         $name = htmlspecialchars($name);
+        if (self::findStatus($db, $name) != null) return false;
         $stmt = $db->prepare('
             INSERT INTO Status (Name)
             VALUES (?)
@@ -34,6 +35,17 @@
         ');
         return $stmt->execute([$name]);
     }
+
+    static function findStatus(PDO $db, $name) {
+        $stmt = $db->prepare('
+            SELECT *
+            FROM Status
+            WHERE Name = ?
+        ');
+        $stmt->execute([$name]);
+        return $stmt->fetch();
+    }
+
   }
 
     function decodeStatus($status) {

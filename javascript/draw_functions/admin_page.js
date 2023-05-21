@@ -191,6 +191,9 @@ async function drawAssignToDepartmentForm(department, membersList) {
 }
 
 export function createAddDepartmentForm() {
+    let previousForm = document.querySelector('form');
+    if (previousForm) previousForm.remove();
+
     const form = document.createElement('form');
     form.action = '../actions/create_department.php';
     form.id = 'newDepartmentForm';
@@ -220,6 +223,59 @@ export function createAddDepartmentForm() {
     const cancelButton = document.createElement('button');
     cancelButton.type = 'button';
     cancelButton.id = 'cancel-creation-department';
+    cancelButton.classList.add('btn', 'cancel');
+    cancelButton.textContent = 'Close';
+    
+    cancelButton.addEventListener('click', () => {
+        form.remove();
+    });
+
+    form.addEventListener('submit', () => {
+        location.reload();
+    });
+
+    form.appendChild(header);
+    form.appendChild(nameLabel);
+    form.appendChild(nameInput);
+    form.appendChild(submitButton);
+    form.appendChild(cancelButton);
+
+    return form;
+}
+
+export function createAddStatusForm() {
+    let previousForm = document.querySelector('form');
+    if (previousForm) previousForm.remove();
+
+    const form = document.createElement('form');
+    form.action = '../actions/create_status.php';
+    form.id = 'newStatusForm';
+    form.classList.add('form-container');
+    form.method = 'post';
+
+    const header = document.createElement('h1');
+    header.textContent = 'New Status';
+    
+    const nameLabel = document.createElement('label');
+    nameLabel.for = 'status-name';
+    nameLabel.textContent = 'Status Name';
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'Enter new status name';
+    nameInput.id = 'status-name';
+    nameInput.name = 'statusName';
+    nameInput.required = true;
+
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.id = 'submit_create_status';
+    submitButton.classList.add('btn');
+    submitButton.textContent = 'Create new status';
+
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.id = 'cancel-creation-status';
     cancelButton.classList.add('btn', 'cancel');
     cancelButton.textContent = 'Close';
     

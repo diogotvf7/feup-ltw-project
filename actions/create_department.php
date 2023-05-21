@@ -15,8 +15,6 @@
   var_dump($_POST);
   $departmentName = $_POST['departmentName'];
   
-  // $ret = Department::getDepartmentbyName($db, $departmentName);
-  
   if ($id = Department::addDepartment($db, $departmentName))
     $response = array('status' => 'success', 'departmentID' => $id);
   else 

@@ -1,5 +1,5 @@
 import { loadDepartmentsTable, loadMostUsedTags, loadTicketsStats } from "../api/load_from_api.js"
-import { createAddDepartmentForm } from "../draw_functions/admin_page.js"
+import { createAddDepartmentForm, createAddStatusForm } from "../draw_functions/admin_page.js"
 
 const dropButton = document.getElementById('create-button');
 const dropContent = document.getElementById('drop-content');
@@ -22,11 +22,11 @@ window.onload = async function() {
         main.appendChild(form);
     });
 
-    // createStatusButton.addEventListener('click', async () => {
-    //     const main = document.querySelector('main');
-    //     const form = await createAddStatuForm();
-    //     main.appendChild(form);
-    // });
+    createStatusButton.addEventListener('click', async () => {
+        const main = document.querySelector('main');
+        const form = await createAddStatusForm();
+        main.appendChild(form);
+    });
 
     createFaqButton.addEventListener('click', function() {
         window.location.href = 'new_faq.php';
