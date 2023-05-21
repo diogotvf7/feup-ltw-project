@@ -7,17 +7,14 @@ const fetchMore = document.querySelector('.fetch-more');
 let counter = 0;
 
 window.onload = async function() {
-    console.log('1');
     let faqs = await fetch_faq_api({
         functionname: 'fetchfaqs', 
         n: 10, 
         page: counter
     });
     if (faqs['result'].length == 0) {
-        console.log('2');
         fetchMore.setAttribute('hidden', 'true');
     } else {
-        console.log('3');
         counter++;
         faqs['result'].forEach((faq) => drawFaq(faq));
     }

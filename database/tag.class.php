@@ -41,15 +41,6 @@
       $stmt->fetch();
     }
 
-
-
-    // static function getTag(PDO $db, int $id) : Tag {
-    //   $stmt = $db->prepare('
-    //     SELECT TagID, Name
-    //     FROM Tag
-    //     WHERE TagID = ?
-    //   ');
-
     static function getUserTags(PDO $db) {
       $stmt = $db->prepare('
         SELECT DISTINCT TagID, Name
@@ -107,6 +98,17 @@
       ');
       $stmt->execute([$name]);
       return $db->lastInsertId();
+    }
+
+    static function getMostUsedTags(PDO $db){
+      $stmt = $db->prepare('
+      SELECT Tag.Name , COUNT(*) AS Count
+      FROM Ticket_Tag JOIN TAG on Tag.TagID = Ticket_Tag.TagID
+      GROUP BY Tag.TagID
+      ORDER BY 2 DESC;      
+      ');
+      $stmt->execute();
+      return $stmt->fetchAll();
     }
   }
 ?>

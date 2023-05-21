@@ -93,6 +93,14 @@
                     $ret['error'] = 'Couldn\'t delete ticket!';
                 $ret['message'] = 'Ticket deleted successfully!';
                 break;
+            case 'getTicketsStats':
+                if ($_GET['status'] == 'Open'){
+                    $ret['Open'] = Ticket::getTicketsOpenToday($db);
+                }
+                else if ($_GET['status'] == 'Closed'){
+                    $ret['Closed'] = Ticket::getTicketsClosedToday($db);
+                }
+                break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;

@@ -24,6 +24,9 @@
             case 'user_tags':
                 $ret = array_map('decodeTag', Tag::getUserTags($db));
                 break;
+            case 'getMostUsedTags':
+                $ret = array_map('decodeTag',Tag::getMostUsedTags($db));
+                break; 
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;
