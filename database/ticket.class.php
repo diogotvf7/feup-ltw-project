@@ -320,16 +320,19 @@
 
     static function getTicketsOpenToday(PDO $db) {
       $stmt = $db->prepare("
-      SELECT COUNT(*) AS OpenTicketsToday
-      FROM Ticket
-      WHERE Status = 'Open' AND DATE(Date) = Date('now');");
+        SELECT COUNT(*) AS OpenTicketsToday
+        FROM Ticket
+        WHERE Status = 'Open' AND DATE(Date) = Date('now');
+      ");
       $stmt->execute();
       return $stmt->fetch();
     }
 
     static function getTicketsClosedToday(PDO $db){
-      $stmt = $db->prepare("SELECT COUNT(*) AS ClosedTicketsToday FROM Ticket_Update
-      WHERE Message = 'Ticket marked as closed' AND DATE(Date) = Date('now');");
+      $stmt = $db->prepare("
+        SELECT COUNT(*) AS ClosedTicketsToday FROM Ticket_Update
+        WHERE Message = 'Ticket marked as Closed.' AND DATE(Date) = Date('now');
+      ");
       $stmt->execute();
       return $stmt->fetch();
     }

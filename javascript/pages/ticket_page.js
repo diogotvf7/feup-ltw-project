@@ -1,5 +1,5 @@
 import { fetch_ticket_api, fetch_session_api } from '../api/fetch_api.js'
-import { loadAgents, loadDepartments } from '../api/load_from_api.js';
+import { loadAgents, loadDepartmentsSelect, loadStatus } from '../api/load_from_api.js';
 import { drawTicketPage } from '../draw_functions/draw_ticket_page.js'
 import { setTagsColor, getParameterByName } from '../util.js'
 
@@ -10,12 +10,15 @@ const selects = document.querySelectorAll('select');
 const tagsSearch = document.getElementById('tags-search');
 const tags = document.getElementById('tags');
 const addTagButton = document.getElementById('add-tag'); 
+const commentForm = document.getElementById('new-comment');
 
 window.onload = async function() { 
     const ticketInfo = await fetch_ticket_api({
         func: 'get_ticket',
         id: getParameterByName('id')
     });
+    loadStatus({}, ticketInfo['status']);
+    if (ticketInfo['status'] == 'Closed') commentForm.remove();
     drawTicketPage(ticketInfo);
     setTagsColor();
 
@@ -26,22 +29,19 @@ window.onload = async function() {
             case 'Admin':
                 const departmentId = document.getElementById('department-select').value;
                 const agentId = document.getElementById('agent-select').value;
-                cancelEditButton.toggleAttribute('hidden');
-                editButton.toggleAttribute('hidden');
-                saveButton.toggleAttribute('hidden');
                 selects.forEach(select => {
-                    if (select.id !== 'status') {
+                    if (select.id !== 'status-select') {
                         select.innerHTML = '';
                         const option = document.createElement('option');
                         option.value = '';
-                        option.textContent = '';
+                        option.textContent = '-';
                         select.appendChild(option);
                     }    
                     select.toggleAttribute('disabled');
                 });
                 tagsSearch.toggleAttribute('hidden');
                 addTagButton.toggleAttribute('hidden');
-                loadDepartments({
+                loadDepartmentsSelect({
                     func: 'departments'
                 }, departmentId);
                 loadAgents({
@@ -61,11 +61,11 @@ window.onload = async function() {
                 const description = document.getElementById('description');
                 title.toggleAttribute('disabled');
                 description.toggleAttribute('disabled');
-                cancelEditButton.toggleAttribute('hidden');
-                editButton.toggleAttribute('hidden');
-                saveButton.toggleAttribute('hidden');
                 break;
         }
+        cancelEditButton.toggleAttribute('hidden');
+        editButton.toggleAttribute('hidden');
+        saveButton.toggleAttribute('hidden');
     });
     
     cancelEditButton.addEventListener('click', function() {

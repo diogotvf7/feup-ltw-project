@@ -4,14 +4,14 @@
 
     require_once(__DIR__ . '/../database/ticket.class.php');
     require_once(__DIR__ . '/../database/comment.class.php');
+    require_once(__DIR__ . '/../database/status.class.php');
     require_once(__DIR__ . '/../database/user.class.php');
 
     echo '<br><br><br><br>';
 
+    Status::addStatus($db, '!"#$%&/()=?*_:;><¹@£§½¬{[]}');
 
-    for ($i = 1; $i <= 15; $i++) {
-        echo $i . '   ' . User::getUser($db, $i)->username . '<br>';
-    }
+    var_dump(Status::getStatus($db));
 
     // $user = User::getUser($db, 1)->username;
     // var_dump($user);

@@ -40,20 +40,14 @@
       return $department['DepartmentID'];
     }
     
-    static function addDepartment(PDO $db, string $name){
+    static function addDepartment(PDO $db, string $name) {
       if (self::getDepartmentbyName($db, $name) != null) return false; // already exists
       $stmt = $db->prepare('
-        SELECT DepartmentID
-        FROM Department order by 1 desc');
-        $stmt->execute();
-        $lastID = $stmt->fetch();
-        $lastID = $lastID['DepartmentID'];
-      $stmt = $db->prepare('
-        INSERT INTO Department(DepartmentID, Name)
-        VALUES (?,?)
+        INSERT INTO Department(Name)
+        VALUES (?)
       ');
-      $lastID += 1;
-      $stmt->execute([$lastID,$name]);
+      $stmt->execute([$name]);
+      return $db->lastInsertId();
     }
 
     static function deleteDepartment(PDO $db, int $id){
@@ -90,6 +84,22 @@
       ');
       $stmt->execute([$id]);
       return $stmt->fetchAll();
+    }
+
+    static function removeUserFromDepartment(PDO $db, int $clientID, int $departmentID) {
+      $stmt = $db->prepare('
+        DELETE FROM Agent_Department
+        WHERE AgentID = ? AND DepartmentID = ?;
+      ');
+      $stmt->execute(array($clientID, $departmentID));
+    }
+
+    static function addUsertoDeparment($db, $id, $departmentID){
+      $stmt = $db->prepare('
+        INSERT INTO Agent_Department (AgentID, DepartmentID)
+        VALUES (?, ?);
+      ');
+      $stmt->execute(array($id, $departmentID));
     }
   }
 ?>

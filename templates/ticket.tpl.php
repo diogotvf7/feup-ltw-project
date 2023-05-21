@@ -14,24 +14,21 @@
 } ?>
 
 <?php function drawTicketsList() { ?>
-        <ul id="ticket-list">
-        </ul>
+        <div id="ticket-list">
+        </div>
 <?php } ?>
 
 <?php function drawTicketPage() { ?>
     <main id="ticket-page">
         <button id="edit-ticket"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button id="cancel-edit-ticket" type="" hidden><i class="fa-solid fa-xmark"></i></button>
+        <button id="cancel-edit-ticket" type="button" hidden><i class="fa-solid fa-xmark"></i></button>
         <form id="ticket-form" action="../actions/edit_ticket.php" method="post">
             <button id="save-ticket" hidden><i class="fa-solid fa-floppy-disk"></i></button>
             <header>
                 <input type="text" name="title" id="title" maxlength="27" disabled required></input>
                 <div class="flex align-center">
-                    <label for="status">Status:</label>
-                    <select id="status" name="status" disabled>
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
-                        <option value="In progress">In progress</option>
+                    <label for="status-select">Status:</label>
+                    <select id="status-select" name="status" disabled>
                     </select>
                 </div>
                 <p id="date"></p>
@@ -47,16 +44,14 @@
                         <button id="add-tag" type="button" hidden><i class="fa-solid fa-plus"></i></button>
                     </div>
                     <div class="flex align-center">
-                        <label for="department">Department:</label>
+                        <label for="department-select">Department:</label>
                         <select id="department-select" name="department" disabled>
-                            <option value=""></option>
                         </select>
                     </div>
                     <p id="author"></p>
                     <div class="flex align-center">
-                        <label for="agent">Agent:</label>
+                        <label for="agent-select">Agent:</label>
                         <select id="agent-select" name="agent" disabled>
-                            <option value=""></option>
                         </select>
                     </div>
                 </div>
@@ -124,19 +119,19 @@
             <h3>Filters</h3>
             <form method="get" id="filter-form">
                 <div class="space-between">
-                    <label for="from">From: </label>
-                    <input id="date-input" type="date" id="from" name="dateLowerBound">
+                    <label for="date-input-lb">From: </label>
+                    <input id="date-input-lb" type="date" id="from" name="dateLowerBound">
                 </div>
                 <div class="space-between">
-                    <label for="to">To: </label>
-                    <input id="date-input" type="date" id="to" name="dateUpperBound">
+                    <label for="date-input-ub">To: </label>
+                    <input id="date-input-ub" type="date" id="to" name="dateUpperBound">
                 </div>
-                <label for="status">Status:</label>
+                <label for="status-select">Status:</label>
                 <select id="status-select" name="status">
                     <option value="">All</option>
-                    <option value="Open">Open</option>
+                    <!-- <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
-                    <option value="In progress">In progress</option>
+                    <option value="In progress">In progress</option> -->
                 </select> 
                 <label for="department-select">Department:</label>
                 <select id="department-select" name="department">
@@ -147,7 +142,7 @@
                 </select> 
                 <label for="sort">Sort by:</label>
                 <select id="sort" name="sort">
-                    <option value=""></option>
+                    <option value="">-</option>
                     <option value="DESC" selected>Most recent first</option>
                     <option value="ASC">Oldest first</option>
                 </select> 

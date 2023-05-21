@@ -1,6 +1,24 @@
-import { fetch_department_api, fetch_tag_api, fetch_user_api } from './fetch_api.js'
+import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api, fetch_ticket_api } from './fetch_api.js'
+import { createDepartmentTableRow } from '../draw_functions/admin_page.js'
 
-export async function loadDepartments(params, select = null) {
+export async function loadDepartmentsTable(params) {
+    const departmentsTable = document.querySelector('tbody');
+    const departments = await fetch_department_api(params);
+    if (departments.length !== 0) {
+        for (const department of departments) {
+            let usersInDepartment = await fetch_department_api({
+                func: 'users_in_department',
+                name: department.Name
+            });
+            const departmentRow = createDepartmentTableRow(department, usersInDepartment);
+            departmentsTable.appendChild(departmentRow);
+        }
+    } else {
+        departmentsTable.remove();
+    }
+}
+
+export async function loadDepartmentsSelect(params, select = null) {
     const departmentsSelect = document.getElementById('department-select');
     const departments = await fetch_department_api(params);
     if (departments.length !== 0) {
@@ -47,4 +65,41 @@ export async function loadAgents(params, select = null) {
             agentsSelect.appendChild(option);
         }
     }
+}
+
+export async function loadStatus(params, select = null) {
+    const statusSelect = document.getElementById('status-select');
+    const statusList = await fetch_status_api('GET', params);
+    if (statusList.length !== 0) {
+        for (let i = 0; i < statusList.length; i++) {
+            const option = document.createElement('option');
+            option.value = statusList[i]['Name'];
+            option.textContent = statusList[i]['Name'];
+            if (select == statusList[i]['Name'])
+                option.selected = true;
+            statusSelect.appendChild(option);
+        }
+    }
+}
+
+export async function loadMostUsedTags(params) {
+    const tags = await fetch_tag_api(params);
+    const tagsList = document.getElementById('popular-tags');
+    if (tags.length !== 0) {
+        for (const tag of tags) {
+            const li = document.createElement('li');
+            li.textContent = tag.Name;
+            tagsList.appendChild(li);
+        }
+    } else {
+        tagsList.parentElement.remove();
+    }
+}
+
+export async function loadTicketsStats(params) {
+    const tickets = await fetch_ticket_api(params);
+    const ticketsOpenToday = document.getElementById('tickets-open-today');
+    const ticketsClosedToday = document.getElementById('tickets-closed-today');
+    ticketsOpenToday.textContent += ' ' + tickets['Open']['OpenTicketsToday'];
+    ticketsClosedToday.textContent += ' ' + tickets['Closed']['ClosedTicketsToday'];
 }

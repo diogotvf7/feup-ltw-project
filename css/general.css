@@ -147,6 +147,10 @@ main {
     color: var(--dark-blue);
 }
 
+.nav-link img {
+    width: 100%;
+}
+
 .link-text {
     display: none;
     margin-left: 1rem;

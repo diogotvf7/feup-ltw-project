@@ -18,11 +18,11 @@ nameInput.required = false;
 usernameInput.required = true;
 passwordInput.required = true;
 confirmPasswordInput.required = false;
-const password_min_length_icon = document.querySelector('[name=password_min_length_icon]');
-const password_lowercase_icon = document.querySelector('[name=password_lowercase_icon]');
-const password_uppercase_icon = document.querySelector('[name=password_uppercase_icon]');
-const password_number_icon = document.querySelector('[name=password_number_icon]');
-const password_special_icon = document.querySelector('[name=password_special_icon]');
+const password_min_length_icon = document.getElementById('password_min_length_icon');
+const password_lowercase_icon = document.getElementById('password_lowercase_icon');
+const password_uppercase_icon = document.getElementById('password_uppercase_icon');
+const password_number_icon = document.getElementById('password_number_icon');
+const password_special_icon = document.getElementById('password_special_icon');
 
 window.onload = function() {
   let popup = document.getElementById('wrong-credentials');

@@ -25,7 +25,7 @@
             $db, 
             $_POST['id'], 
             'Status', 
-            'Status marked as ' . $_POST['status'] . '.'
+            'Ticket marked as ' . $_POST['status'] . '.'
         );
     }
 

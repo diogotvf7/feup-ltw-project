@@ -30,11 +30,11 @@ export async function drawFaq(faq) {
 
     checkbox.classList.add('faq-element-checkbox');
 
-    const index = document.createElement('h2'); // Index
+    const index = document.createElement('p'); // Index
     index.classList.add('faq-element-index');
     index.textContent = faq.id + '.';
 
-    const question = document.createElement('h2'); // Question
+    const question = document.createElement('p'); // Question
     question.classList.add('faq-element-question');
     question.textContent = faq.question;
 

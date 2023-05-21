@@ -14,9 +14,14 @@ DROP TABLE IF EXISTS Agent;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS Client;
 DROP TABLE IF EXISTS Tag;
+DROP TABLE IF EXISTS Status;
 
 -- database schema
 
+CREATE TABLE Status 
+(
+    Name varchar(50) PRIMARY KEY
+);
 
 CREATE TABLE Tag 
 (
@@ -71,7 +76,8 @@ CREATE TABLE Ticket
     Date datetime NOT NULL,
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE SET NULL,
     FOREIGN KEY (AgentID) REFERENCES Agent(ClientID) ON DELETE SET NULL,
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE SET NULL
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE SET NULL,
+    FOREIGN KEY (Status) REFERENCES Status(Name) ON DELETE SET NULL
 );
 
 CREATE TABLE Ticket_Tag  
@@ -127,6 +133,12 @@ CREATE TABLE FAQ
 COMMIT;
 
 -- populate database
+
+-- Populating Status table
+INSERT INTO Status (Name) VALUES ('Open');
+INSERT INTO Status (Name) VALUES ('Closed');
+INSERT INTO Status (Name) VALUES ('In Progress');
+INSERT INTO Status (Name) VALUES ('Waiting for Client');
 
 -- Populating Department table
 INSERT INTO Department (DepartmentID, Name) VALUES (1, 'Informática');
@@ -223,6 +235,8 @@ INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, Dep
 VALUES (21, "Issues using website with mobile data", "When I am connected to mobile data my connection to the website takes considerably longer.", 'Open', 15, NULL, NULL, '2022-01-05 12:00:00');
 INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) 
 VALUES (22, "Ticket full of images", "This ticket's content isn't really important. I just want to test the css in cases where the ticket has a lot of images. Hope it works OK!", 'Open', 15, NULL, 3, '1999-01-05 06:20:33');
+INSERT INTO Ticket (TicketID, Title, Description, Status, ClientID, AgentID, DepartmentID, Date) 
+VALUES (23, "Ticket made today", "This ticket was made today. When is today? It doesn't matter. All that matters is that this ticket was made today. Perhaps!", 'Open', 15, NULL, 3, '2023-05-21 06:20:33');
 
 -- Populating Ticket_Tag table
 INSERT INTO Ticket_Tag (TicketID, TagID) VALUES (1, 1);

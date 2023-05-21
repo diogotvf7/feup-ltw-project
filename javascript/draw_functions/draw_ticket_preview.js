@@ -75,11 +75,13 @@ export async function drawTicketPreview(ticket, session) {
     agent.classList.add('agent');
     bottomDiv.appendChild(agent);
 
-    const department = document.createElement('p'); // department
-    department.textContent = ticket.departmentName;
-    department.classList.add('department');
-    bottomDiv.appendChild(department);
-
+    if (ticket.departmentId) {
+        const department = document.createElement('p'); // department
+        department.textContent = ticket.departmentName;
+        department.classList.add('department');
+        bottomDiv.appendChild(department);
+    }
+    
     ticketPreview.appendChild(bottomDiv);
 
     list.appendChild(ticketPreview);

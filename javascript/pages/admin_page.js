@@ -7,13 +7,24 @@ window.onload = async function() {
   const create_department_button = document.getElementById('create-department');
   const cancel_creation_department = document.getElementById('cancel-creation-department');
   const submit_button = document.getElementById('submit_create_department');
-  create_department_button.addEventListener('click', function() {document.getElementById("myForm").style.display = "block";});
-  cancel_creation_department.addEventListener('click', function() {document.getElementById("myForm").style.display = "none"; document.getElementById("department-name").value = "";});
+
+  create_department_button.addEventListener('click', function() {
+    document.getElementById("myForm").style.display = "block";
+  });
+
+  cancel_creation_department.addEventListener('click', function() {
+    document.getElementById("myForm").style.display = "none"; 
+    document.getElementById("department-name").value = "";
+  });
+
   /* assign to department form */
   const submit_assign_button = document.getElementById('submit_assign');
   const cancel_assign_department_button = document.getElementById('cancel-assign-department');
   
-  cancel_assign_department_button.addEventListener('click', function(){document.getElementById("add-member-popup").style.display = "none";});
+  cancel_assign_department_button.addEventListener('click', function() {
+    document.getElementById("add-member-popup").style.display = "none";
+  });
+
   const tableRows = document.querySelectorAll('.department-table-row');
 
   /* create faq */
@@ -332,8 +343,8 @@ async function fetchDepartments() {
 
 async function fetchUsersInDepartment(departmentName) {
   const response = await fetch('../pages/api_department.php?' + encodeForAjax({
-      func: 'users_in_departments',
-      departmentName: departmentName
+      func: 'users_in_department',
+      name: departmentName
   }));
   const usersInDepartment = await response.json();
   return usersInDepartment;

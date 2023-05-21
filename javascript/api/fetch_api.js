@@ -34,6 +34,24 @@ export async function fetch_faq_api(params) {
     return faqs;
 }
 
+export async function fetch_status_api(method, params) {
+    let response;
+    switch (method) {
+        case 'GET':
+            response = await fetch('../pages/api_status.php?' + encodeForAjax(params));
+            break;
+        default:
+            response = await fetch('../pages/api_status.php?', {
+                method: method,
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: encodeForAjax(params)
+            })
+    }
+    return await response.json();
+}
+
 function encodeForAjax(data) {
     return Object.keys(data).map(function(k){
         if (data[k] === null || data[k] === undefined) return;
