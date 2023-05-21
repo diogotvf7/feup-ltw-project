@@ -1,6 +1,7 @@
 PRAGMA foreign_keys = ON;
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS Status;
 DROP TABLE IF EXISTS FAQ;
 DROP TABLE IF EXISTS Comment_Document;
 DROP TABLE IF EXISTS Ticket_Update;
@@ -17,6 +18,10 @@ DROP TABLE IF EXISTS Tag;
 
 -- database schema
 
+CREATE TABLE Status 
+(
+    Name varchar(30) PRIMARY KEY
+);
 
 CREATE TABLE Tag 
 (
@@ -71,7 +76,8 @@ CREATE TABLE Ticket
     Date datetime NOT NULL,
     FOREIGN KEY (ClientID) REFERENCES Client(ClientID) ON DELETE SET NULL,
     FOREIGN KEY (AgentID) REFERENCES Agent(ClientID) ON DELETE SET NULL,
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE SET NULL
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID) ON DELETE SET NULL,
+    FOREIGN KEY (Status) REFERENCES Status(Name) ON DELETE SET NULL
 );
 
 CREATE TABLE Ticket_Tag  
@@ -127,6 +133,12 @@ CREATE TABLE FAQ
 COMMIT;
 
 -- populate database
+
+-- Populating Status table
+INSERT INTO Status (Name) VALUES ('Open');
+INSERT INTO Status (Name) VALUES ('Closed');
+INSERT INTO Status (Name) VALUES ('In Progress');
+INSERT INTO Status (Name) VALUES ('Waiting for Client');
 
 -- Populating Department table
 INSERT INTO Department (DepartmentID, Name) VALUES (1, 'Informática');

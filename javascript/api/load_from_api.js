@@ -1,4 +1,4 @@
-import { fetch_department_api, fetch_tag_api, fetch_user_api } from './fetch_api.js'
+import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api } from './fetch_api.js'
 
 export async function loadDepartments(params, select = null) {
     const departmentsSelect = document.getElementById('department-select');
@@ -45,6 +45,21 @@ export async function loadAgents(params, select = null) {
             if (select == agent['id'])
                 option.selected = true;
             agentsSelect.appendChild(option);
+        }
+    }
+}
+
+export async function loadStatus(params, select = null) {
+    const statusSelect = document.getElementById('status-select');
+    const statusList = await fetch_status_api('GET', params);
+    if (statusList.length !== 0) {
+        for (let i = 0; i < statusList.length; i++) {
+            const option = document.createElement('option');
+            option.value = statusList[i]['Name'];
+            option.textContent = statusList[i]['Name'];
+            if (select == statusList[i]['Name'])
+                option.selected = true;
+            statusSelect.appendChild(option);
         }
     }
 }

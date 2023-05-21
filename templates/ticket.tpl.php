@@ -134,9 +134,9 @@
                 <label for="status-select">Status:</label>
                 <select id="status-select" name="status">
                     <option value="">All</option>
-                    <option value="Open">Open</option>
+                    <!-- <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
-                    <option value="In progress">In progress</option>
+                    <option value="In progress">In progress</option> -->
                 </select> 
                 <label for="department-select">Department:</label>
                 <select id="department-select" name="department">
