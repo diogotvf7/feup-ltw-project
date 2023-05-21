@@ -90,6 +90,7 @@ export async function drawTicketPage(ticket) {
         for (const doc of ticket['documents']) {
             const docListElement = document.createElement('img');
             docListElement.src = '../' + doc;
+            docListElement.alt = 'Ticket ' + ticket.id + 'attached document' + doc;
             docListElement.classList.add('document');
             _documentList.appendChild(docListElement);
         }

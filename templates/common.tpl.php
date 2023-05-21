@@ -16,7 +16,7 @@
                     echo '<link rel="stylesheet" href="../css/' . $css . '.css">';
                 } ?>
                 <?php foreach ($scripts as $script) { 
-                    echo '<script type="module" src="../javascript/pages/', $script, '.js" defer></script>';
+                    echo '<script type="module" src="../javascript/pages/', $script, '.js"></script>';
                 } ?>
                 <script src="https://kit.fontawesome.com/7fdc1f36c9.js" crossorigin="anonymous"></script>
             </head>
@@ -33,7 +33,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a href="../pages/index.php" class="nav-link">
-                    <img src="../docs/simple-logo.png" width="100%" />
+                    <img src="../docs/simple-logo.png" alt="up tickets logo" />
                     <span class="logo-text">UP Tickets</span>
                 </a>
             </li>

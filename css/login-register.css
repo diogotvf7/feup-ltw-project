@@ -113,11 +113,11 @@ button[type=submit]:hover {
     color: var(--black);
 }
 
-form span {
+form #bottom {
     display: inline ruby;
 }
 
-form span button {
+form #bottom button {
     background-color: transparent;
     border: none;
     color: var(--white);

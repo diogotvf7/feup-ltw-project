@@ -19,19 +19,19 @@
                 </div>
                 <div>
                     <label for="password" hidden>Password: </label>
-                    <input type="password" name="password" placeholder="Password" readonly hidden required>
+                    <input id="password" type="password" name="password" placeholder="Password" readonly hidden required>
                 </div>
                 <div id="change-password-div">
-                    <label for="change-password" hidden>Change password:</label>
-                    <input type="checkbox" name="change-password" hidden>
+                    <label for="checkbox" hidden>Change password:</label>
+                    <input id="checkbox" type="checkbox" name="change-password" hidden>
                 </div>
                 <div>
                     <label for="new-password" hidden>New password: </label>
-                    <input type="password" name="new-password" placeholder="New password" readonly hidden>
+                    <input id="new-password" type="password" name="new-password" placeholder="New password" readonly hidden>
                 </div>
                 <div>
                     <label for="confirm-new-password" hidden>Confirm new password: </label>
-                    <input type="password" name="confirm-new-password" placeholder="Confirm new password" readonly hidden>
+                    <input id="confirm-new-password" type="password" name="confirm-new-password" placeholder="Confirm new password" readonly hidden>
                 </div>
             </fieldset>
             <button type="button">Edit</button>
