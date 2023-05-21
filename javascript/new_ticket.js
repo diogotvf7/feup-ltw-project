@@ -148,7 +148,6 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
     function initOptions(val = null) {
         ul.innerHTML = '';
         var optionFound = false;
-        console.log("initOptions ->" , options);
         for (var option of options) {
             if (option.selected) {
                 !isTagSelected(option.value) && createTag(option);
@@ -251,8 +250,6 @@ async function MultiSelectTag (el, customs = {shadow: false, rounded:true}) {
         }
     }
     function setValues() {
-        console.log("setValues -> options", options);
-        console.log("setValues -> element.options", element.options);
         for(var i = 0; i < options.length; i++) {
             element.options[i].selected = options[i].selected
      
@@ -271,7 +268,6 @@ async function fetchTags() {
         
         const tagsSelect = document.getElementById('tags');
         const tags = await fetchTags();
-        console.log("tags" , tags);
 
         options = Array.from(tags).map((option) => ({
             value: option.Name,
@@ -279,7 +275,6 @@ async function fetchTags() {
             selected: false,
             default: true,
         }));
-        console.log(options);
         for (var i = 0; i < options.length; i++){
             addOption(options[i]);
         }

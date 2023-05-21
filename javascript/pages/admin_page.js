@@ -34,7 +34,6 @@ window.onload = async function() {
     let data = {
       departmentName: departmentName
     };
-    console.log(departmentName)
 
     fetch('../actions/create_department.php', {
       method: 'POST',
@@ -44,7 +43,6 @@ window.onload = async function() {
       }
     }).then(async function(response) {
         let res = await response.json();
-        console.log(res.status)
       if (res.status == 'success') {
         const table = document.querySelector('[class="department-table"]');
         const row = document.createElement('tr');
@@ -84,7 +82,6 @@ window.onload = async function() {
         row.appendChild(department_members);
         row.appendChild(elim_department);
         table.appendChild(row);
-        console.log(row);
       }
     });
 
@@ -99,7 +96,6 @@ window.onload = async function() {
   departmentTable.addEventListener('click', function(event) {
     /* click on minus icon*/
     const target = event.target;
-    console.log(target)
         if (target.id === 'minus-icon') {
           let icon = target;
           let member_info = icon.parentNode;
@@ -137,9 +133,7 @@ window.onload = async function() {
         if (target.id == 'elim-department-btn'){
           let icon = target;
           let department = icon.parentNode.parentNode;
-          console.log(department);
           let departmentID = department.id;
-          console.log(departmentID);
           let data = {
             departmentID: departmentID
           };
@@ -152,7 +146,6 @@ window.onload = async function() {
             }
           }).then(async function(response) {
             let res = await response.json();
-            console.log(res)
             if (res.status == 'success') {
               department.remove();
             }
@@ -249,7 +242,6 @@ window.onload = async function() {
 
   let most_used_tags = document.getElementById('most-used-tags');
     let tags = await fetchTags();
-    console.log(tags);
     let limit = tags.length > 5 ? 5 : tags.length;
     for (let i = 0; i < limit; i++) {
       let tag = tags[i];

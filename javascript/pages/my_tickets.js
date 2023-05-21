@@ -25,7 +25,6 @@ window.onload = async function() {
     filterForm.addEventListener('submit', async function (event) {
         event.preventDefault();
         const formData = new FormData(filterForm);
-        console.log(formData);
         let tickets = await fetch_ticket_api({
             func: 'my_tickets',
             dateLowerBound: formData.get('dateLowerBound'),
@@ -36,7 +35,6 @@ window.onload = async function() {
             sort: formData.get('sort')
         });
         list.innerHTML = '';
-        console.log(tickets['tickets']);
         if (tickets['tickets'].length === 0) {
             const noTickets = document.createElement('div');
             noTickets.classList.add('noTickets');
@@ -48,9 +46,7 @@ window.onload = async function() {
             textPostPanda.classList.add('text-post-panda');
             noTickets.appendChild(image);
             noTickets.appendChild(textPostPanda);
-            console.log(noTickets);
             list.appendChild(noTickets);
-            console.log(list);
         }
         for (const ticket of tickets['tickets'])
             drawTicketPreview(ticket, session);

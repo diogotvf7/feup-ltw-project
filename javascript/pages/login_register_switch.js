@@ -100,7 +100,6 @@ function matchPassword() {
     if (state === 1){
 
       if (passwordInput.value.length == 0){
-        //requirements_list.setAttribute('hidden', true);
         requirements_list.toggleAttribute('hidden');
       }
       else if (requirements_list.getAttribute('hidden') == false && passwordInput.value.length > 0){

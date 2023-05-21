@@ -21,9 +21,7 @@ window.onload = async function() {
                 let departments = "";
                 for (let j = 0; j < agentInfo['departments'].length; j++) {
                     if (j != 0) departments += ", ";
-                    console.log(agentInfo['departments'][j]['DepartmentID']);
                     let departmentInfo = await fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
-                    console.log(departmentInfo)
                     departments += departmentInfo['name'];
                 }
                 row.cells[6].textContent = departments = "" ? '-' : departments;
