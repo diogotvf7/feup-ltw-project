@@ -99,8 +99,8 @@ drawHeader(['login_register_switch'], ['login-register']);
       <p>Don't have an account yet?</p>
       <button type="button" id="switch-state">Sign Up</button>
     </span>
-  </form>
-  <h1 class="down">UP Tickets</h1>
+    </form>
+    <h1 class="down">UP Tickets</h1>
 </main>
 <?php
 drawFooter();

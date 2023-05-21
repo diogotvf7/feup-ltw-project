@@ -86,6 +86,11 @@
             </form>
         </div>
     </main>
+    
+    <div id="popup" hidden>
+            <h3> Department created </h3>
+            <p> Assign members now!</p>
+        </div>
 
     <?php
     drawNavBar($_SESSION['PERMISSIONS']);

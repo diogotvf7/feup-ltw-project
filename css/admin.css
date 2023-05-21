@@ -261,9 +261,16 @@
   margin-bottom: 0.3em;
 }
 
+#kpis h1
+{
+  color: var(--dark-blue);
+  font-family: 'Montserrat', sans-serif;
+}
+
 
 .box h2{
   text-align: center;
+  font-family: 'Mont'
 }
 
 .box p{
@@ -273,4 +280,18 @@
 
 #most-used-tags{
   list-style-type: none;
+}
+
+#popup{
+  text-align: center;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  border-radius: 10px;
+  width: 25%;
+  height: 10%;
+  position: absolute;
+  padding: 2em;
+  top: 40%;
+  left: 35%;
 }

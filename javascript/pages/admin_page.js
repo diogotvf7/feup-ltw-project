@@ -87,9 +87,18 @@ window.onload = async function() {
 
     document.getElementById("myForm").style.display = "none"; 
     document.getElementById("department-name").value = "";
+    const a = document.getElementById('popup');
+    document.getElementById('popup').style.display = "block";
+    await delay(1500);
+    document.getElementById('popup').style.display = "none";
+
   });
 
-
+  function delay(milliseconds){
+    return new Promise(resolve => {
+      setTimeout(resolve,milliseconds)
+    });
+  }
   /* remove user from department */
   const departmentTable = document.querySelector('[class="department-table"]');
 
@@ -165,7 +174,7 @@ window.onload = async function() {
         let team_Info = btn.nextSibling;
         if (team_Info.hasAttribute('hidden') === false) {
           department_nm = team_Info;
-          team_Info.setAttribute('hidden', true);
+          team_Info.toggleAttribute('hidden');
         }
       }
       const select = document.getElementById('assign-dropdown');
