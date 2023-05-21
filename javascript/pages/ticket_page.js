@@ -1,5 +1,5 @@
 import { fetch_ticket_api, fetch_session_api } from '../api/fetch_api.js'
-import { loadAgents, loadDepartments, loadStatus } from '../api/load_from_api.js';
+import { loadAgents, loadDepartmentsSelect, loadStatus } from '../api/load_from_api.js';
 import { drawTicketPage } from '../draw_functions/draw_ticket_page.js'
 import { setTagsColor, getParameterByName } from '../util.js'
 
@@ -41,7 +41,7 @@ window.onload = async function() {
                 });
                 tagsSearch.toggleAttribute('hidden');
                 addTagButton.toggleAttribute('hidden');
-                loadDepartments({
+                loadDepartmentsSelect({
                     func: 'departments'
                 }, departmentId);
                 loadAgents({

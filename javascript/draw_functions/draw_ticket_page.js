@@ -104,11 +104,13 @@ export async function drawTicketPage(ticket) {
             _log.appendChild(createCommentElement(ticket['comments'][j++]));
     }
 
-    const newCommentInput = document.createElement('input');
-    newCommentInput.type = 'hidden';
-    newCommentInput.name = 'ticket_id';
-    newCommentInput.value = ticket['id'];
-    _newCommentForm.appendChild(newCommentInput);
+    if (_newCommentForm) {
+        const newCommentInput = document.createElement('input');
+        newCommentInput.type = 'hidden';
+        newCommentInput.name = 'ticket_id';
+        newCommentInput.value = ticket['id'];
+        _newCommentForm.appendChild(newCommentInput);
+    }
 }
 
 function createCommentElement(commentInfo) {

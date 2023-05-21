@@ -9,7 +9,7 @@ const match = pattern.exec(window.location.href);
 switch (match[1]) {
     case 'display_tickets': case 'my_tickets':
         window.onload = async function() {
-            loadDepartments();
+            loadDepartmentsSelect();
             loadTags();
             const response = await fetch('../pages/api_ticket.php?' + encodeForAjax({
                 func: currentPage.substring(0, currentPage.length - 4),

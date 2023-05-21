@@ -1,122 +1,66 @@
-<!DOCTYPE html>
-<html lang="en-US"><head>
-    <title>UP Tickets</title>
-    <link rel="icon" type="image/x-icon" href="../docs/favicon.ico">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/general.css"><link rel="stylesheet" href="../css/ticket.css">                <script type="module" src="../javascript/pages/ticket_page.js"></script>                </head>
-<body>
-<nav class="navbar"> 
-<ul class="navbar-nav">
-<li class="nav-item">
-    <a href="../pages/index.php" class="nav-link">
-        <img src="../docs/simple-logo.png" alt="up tickets logo">
-        <span class="logo-text">UP Tickets</span>
-    </a>
-</li>
-    <li class="nav-item">
-<a href="../pages/admin_page.php" class="nav-link">
-<i class="fa-solid fa-gear fa-lg"></i>
-<!-- <span class="link-text">Users</span> -->
-<span class="link-text">Admin Page</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="../pages/agents.php" class="nav-link">
-<i class="fa-solid fa-briefcase fa-lg"></i>
-<span class="link-text">Agents</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="../pages/users.php" class="nav-link">
-<i class="fa-solid fa-users fa-lg"></i>
-<span class="link-text">Clients</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="../pages/display_tickets.php" class="nav-link">
-<i class="fa-solid fa-list-check fa-lg"></i>
-<span class="link-text">Tickets queues</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="../pages/my_account.php" class="nav-link">
-<i class="fa-solid fa-user fa-lg"></i>
-<span class="link-text">My account</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="../pages/my_tickets.php" class="nav-link">
-<i class="fa-solid fa-ticket fa-lg"></i>
-<span class="link-text">My tickets</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="../pages/faq.php" class="nav-link">
-<i class="fa-solid fa-circle-question fa-lg"></i>
-<span class="link-text">FAQ</span>
-</a>
-</li>
-<li class="nav-item">
-    <a href="../actions/action_logout.php" class="nav-link">
-        <i class="fa-solid fa-right-from-bracket fa-lg"></i>
-        <span class="link-text">Logout</span>
-    </a>
-</li> 
-</ul>
-</nav> 
-
-<main id="ticket-page">
-<button id="edit-ticket" hidden=""><i class="fa-solid fa-pen-to-square"></i></button>
-<button id="cancel-edit-ticket" type="button"><i class="fa-solid fa-xmark"></i></button>
-<form id="ticket-form" action="../actions/edit_ticket.php" method="post">
-<button id="save-ticket"><i class="fa-solid fa-floppy-disk"></i></button>
-<header>
-    <input type="text" name="title" id="title" maxlength="27" disabled="" required="">
-    <div class="flex align-center">
-        <label for="status-select">Status:</label>
-        <select id="status-select" name="status">
-        <option value="Open">Open</option><option value="Closed">Closed</option><option value="In Progress">In Progress</option><option value="Waiting for Client">Waiting for Client</option></select>
-    </div>
-    <p id="date">Created 28 days ago</p>
-</header>
-
-    <textarea name="description" id="description" disabled="" required="">When there are concerns about the security of the website, such as potential data breaches, malware or hacking, users should submit a ticket to report the issue and alert the website's administrators immediately. This is crucial to prevent further damage and protect user data from being compromised. The ticket should include details about the suspected security breach, any unusual activity or changes noticed on the website, and any relevant information that may help identify the source of the breach. The website's administrators can then investigate the issue, take necessary actions to address the breach, and notify affected users as needed to ensure their safety and security.</textarea>
-    <div class="space-between align-center">
-        <div id="tags"></div>
-        <div>
-            <div class="autocomplete">
-                <input id="tags-search" type="text" placeholder="Tag">
+<main class="content" >
+    <div class="page">
+    <div class="column">
+        <div class = "dropdown" hidden>
+            <button name="dropbtn" class="dropbtn" > <i class="fa-sharp fa-solid fa-plus"></i> Create </button>
+            <div class="dropdown-content" hidden>
+                <button class="dropdown-button" id="create-department" type="button">Create Department</button>
+                <button class="dropdown-button" id="create-status" type="button">Create Status</button>
+                <button class="dropdown-button" id="create-faq" type="button">Create FAQ</button>
             </div>
-            <button id="add-tag" type="button"><i class="fa-solid fa-plus"></i></button>
         </div>
-        <div class="flex align-center">
-            <label for="department-select">Department:</label>
-            <select id="department-select" name="department"><option value="">-</option><option value="1">Informática</option><option value="2">Mecânica</option><option value="3">Minas</option></select>
-        </div>
-        <p id="author">By: @tripleHHH</p>
-        <div class="flex align-center">
-            <label for="agent-select">Agent:</label>
-            <select id="agent-select" name="agent"><option value="">-</option><option value="3">@tripleHHH</option><option value="4">@admin</option><option value="5">@bjohnson</option><option value="6">@alee</option><option value="7">@dkim</option></select>
+        <div class="table" hidden>
+            <table class="department-table" >
+                <tbody class="table-body">
+                    <tr id="table-header">
+                        <th>Name of Department</th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-     
-
-<input type="hidden" name="id" value="16"></form>
-<footer>
-<div id="log">
-<div class="comment"><p class="comment-body">We have investigated the issue and determined that a fix is required. Our development team is working on a resolution and we will update you as soon as possible.</p><div class="comment-bottom"><p class="comment-author">@dkim</p><p class="comment-date">5 months ago</p></div></div><div class="comment"><p class="comment-body">Thank you for contacting us. Our support team will review your ticket and provide an update as soon as possible.</p><div class="comment-bottom"><p class="comment-author">@dkim</p><p class="comment-date">7 days ago</p></div></div><div class="update"><p class="update-body">Status marked as Waiting for Client.</p><p class="update-date">just now</p></div><div class="update"><p class="update-body">Ticket status updated to: In Progress.</p><p class="update-date">just now</p></div></div>
-<form id="new-comment" method="post" enctype="multipart/form-data" action="../actions/action_submit_comment.php">
-    <textarea placeholder="Type your Message Here...." name="comment" required=""></textarea>
-    <div>
-        <input type="file" id="submitted-files" name="files[]" accept="application/pdf, image/png, image/jpeg, image/gif" multiple="">
-        <button id="submit" name="files_submitted" type="submit" data-submit="...Sending">Submit</button>
+    <div class="column">
+        <div id="kpis">
+        <h1> Website KPIs </h1>
+            <div class="boxes">
+                <div class="box">
+                    <h2>Tickets</h2>
+                        <div class ="tickets-box">
+                            <p id="number-of-tickets-open">Open today:</p>
+                            <p id="number-of-tickets-closed">Closed today:</p>
+                        </div>
+                </div>
+                <div class="box">
+                    <h2>Most used tags</h2>
+                    <ul id="most-used-tags">
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-<input type="hidden" name="ticket_id" value="16"></form>
-</footer>
+    </div>
+    <div class="form-popup" id="myForm">
+        <form action="../actions/create_department.php" id="newDepartmentForm" class="form-container" method="post">
+            <h1>New Department</h1>
 
-
+            <label for="department-name"><b>Department Name</b></label>
+            <input type="text" placeholder="Enter new department name" id="department-name" name="department-name" required>
+        
+            <button type="button" id="submit_create_department" class="btn">Create new department</button>
+            <button type="button" id="cancel-creation-department" class="btn cancel">Close</button>
+        </form>
+    </div>
+    <div class="form-popup" id="add-member-popup">
+        <form action="../actions/add_user_department.php" id="addtoDepartmentForm" class="form-container" method="post">
+            <h1 id="assign-header" >Assign members</h1>
+            <label for="department-name"><b>Department</b></label>
+            <input type="text" id="department-name" disabled></input>
+            <label for="department-name"><b>Members</b></label>
+            <select name='members[]' id="assign-dropdown" required multiple>
+            </select>
+        
+            <button type="button" id="submit_assign" class="btn">Assign to department</button>
+            <button type="button" id="cancel-assign-department" class="btn cancel">Close</button>
+        </form>
+    </div>
 </main>
-
-
-</body></html>

@@ -1,5 +1,5 @@
 import { fetch_session_api, fetch_ticket_api } from '../api/fetch_api.js'
-import { loadDepartments, loadTags } from '../api/load_from_api.js'
+import { loadDepartmentsSelect, loadTags } from '../api/load_from_api.js'
 import { drawTicketPreview } from '../draw_functions/draw_ticket_preview.js'
 import { setTagsColor } from '../util.js'
 
@@ -8,7 +8,7 @@ const filterForm = document.getElementById('filter-form');
 
 window.onload = async function() {
     const session = await fetch_session_api();
-    loadDepartments({
+    loadDepartmentsSelect({
         func: 'user_departments'
     });
     loadTags({

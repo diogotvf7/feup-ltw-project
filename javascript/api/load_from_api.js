@@ -1,6 +1,10 @@
 import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api } from './fetch_api.js'
 
-export async function loadDepartments(params, select = null) {
+export async function loadDepartmentsTable(params) {
+    
+}
+
+export async function loadDepartmentsSelect(params, select = null) {
     const departmentsSelect = document.getElementById('department-select');
     const departments = await fetch_department_api(params);
     if (departments.length !== 0) {
