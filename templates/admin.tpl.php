@@ -1,7 +1,7 @@
 <?php function drawAdminPage() { ?>
-    <main class="admin-page">
+    <main id="admin-page">
         <div id="left">
-            <div class="dropdown">
+            <div id="dropdown">
                 <button class="dropdown-button" id="create-button"> <i class="fa-sharp fa-solid fa-plus"></i>Create</button>
                 <div id="drop-content" hidden>
                     <button class="dropdown-button" id="create-department" type="button">Create Department</button>

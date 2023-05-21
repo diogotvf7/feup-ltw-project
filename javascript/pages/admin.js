@@ -19,12 +19,14 @@ window.onload = async function() {
     createDepartmentButton.addEventListener('click', async () => {
         const main = document.querySelector('main');
         const form = await createAddDepartmentForm();
+        dropContent.toggleAttribute('hidden');
         main.appendChild(form);
     });
 
     createStatusButton.addEventListener('click', async () => {
         const main = document.querySelector('main');
         const form = await createAddStatusForm();
+        dropContent.toggleAttribute('hidden');
         main.appendChild(form);
     });
 

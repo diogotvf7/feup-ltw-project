@@ -24,7 +24,7 @@ export function createDepartmentTableRow(department, usersInDepartment) {
 
     for (const user of usersInDepartment) {
         const member = document.createElement('p');
-        member.classList.add('member');
+        member.classList.add('member', 'space-between');
         member.title = user.Email;
         member.textContent = user.Username;
 
@@ -50,8 +50,8 @@ export function createDepartmentTableRow(department, usersInDepartment) {
     }
 
     const newMember = document.createElement('p');
-    newMember.classList.add('new-member');
-    newMember.textContent = 'Add new member';
+    newMember.classList.add('new-member', 'space-between');
+    newMember.textContent = 'Add member';
 
     const addMemberButton = document.createElement('button');
     addMemberButton.classList.add('add-member');
