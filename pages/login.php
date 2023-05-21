@@ -12,7 +12,6 @@ include_once('../utils/util_funcs.php');
 $db = getDatabaseConnection();
 
 if (isset($_SESSION['IDUSER'])) {
-  // Redirect to home page if user is already logged in
   if ($_SESSION['PERMISSIONS'] == 'Admin' || $_SESSION['PERMISSIONS'] == 'Agent') {
     header('Location: /pages/display_tickets.php');
   } else {

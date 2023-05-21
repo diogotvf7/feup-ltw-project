@@ -1,7 +1,6 @@
 PRAGMA foreign_keys = ON;
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS Status;
 DROP TABLE IF EXISTS FAQ;
 DROP TABLE IF EXISTS Comment_Document;
 DROP TABLE IF EXISTS Ticket_Update;
@@ -15,12 +14,13 @@ DROP TABLE IF EXISTS Agent;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS Client;
 DROP TABLE IF EXISTS Tag;
+DROP TABLE IF EXISTS Status;
 
 -- database schema
 
 CREATE TABLE Status 
 (
-    Name varchar(30) PRIMARY KEY
+    Name varchar(50) PRIMARY KEY
 );
 
 CREATE TABLE Tag 
