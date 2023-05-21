@@ -47,10 +47,7 @@ switch (match[1]) {
                 formData.get('sort')
             );
             list.innerHTML = '';
-            console.log("here");
-            console.log(tickets['tickets'].length);
             if (tickets['tickets'].length === 0) {
-                console.log("uau");
                 const noTickets = document.createElement('div');
                 noTickets.classList.add('noTickets');
                 const image = document.createElement('img');
@@ -61,7 +58,6 @@ switch (match[1]) {
                 textPostPanda.classList.add('text-post-panda');
                 noTickets.appendChild(image);
                 noTickets.appendChild(textPostPanda);
-                console.log(noTickets);
                 list.appendChild(noTickets);
             }
             for (const ticket of tickets['tickets'])

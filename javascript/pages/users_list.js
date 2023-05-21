@@ -18,12 +18,10 @@ window.onload = async function() {
                 break;
             case 10:
                 let agentInfo = await fetch_user_api({func: 'getAgentInfo', id: id});
-
                 let departments = "";
                 for (let j = 0; j < agentInfo['departments'].length; j++) {
                     if (j != 0) departments += ", ";
-                    console.log(agentInfo['departments'][j]['DepartmentID'] + " " + departments);
-                    let departmentInfo = fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
+                    let departmentInfo = await fetchDepartmentInfo(agentInfo['departments'][j]['DepartmentID']);
                     departments += departmentInfo['name'];
                 }
                 row.cells[6].textContent = departments = "" ? '-' : departments;

@@ -2,7 +2,6 @@ import { fetch_faq_api, fetch_session_api } from "../api/fetch_api.js";
 
 export async function drawFaq(faq) {
     const session = await fetch_session_api();
-    console.log(session.permissions);
     const faqList = document.getElementById('faq-list');
 
     const faqElement = document.createElement('li'); // Container

@@ -36,7 +36,7 @@
 
       $stmt->execute([$name]);
       $department = $stmt->fetch();
-      
+      if ($department == null) return null; // doesnt exist
       return $department['DepartmentID'];
     }
     
@@ -56,14 +56,11 @@
       $stmt->execute([$lastID,$name]);
     }
 
-    static function removeDepartment(PDO $db, string $name) : bool{
-      if (self::getDepartment($db, $name) == null) return false; // doesnt exist
+    static function deleteDepartment(PDO $db, int $id){
       $stmt = $db->prepare('
         DELETE FROM Department
-        WHERE Name = ?');
-
-      $stmt->execute([$name]);
-      return true;
+        WHERE DepartmentID = ?');
+      $stmt->execute([$id]);
     }
 
     static function getAllDepartments(PDO $db) {
@@ -88,7 +85,7 @@
     
     static function getUsersInDepartments(PDO $db, int $id) {
       $stmt = $db->prepare('
-      SELECT Client.ClientID, Client.Name, Client.Email FROM Department JOIN Agent_Department ON Department.DepartmentID = Agent_Department.DepartmentID JOIN Agent ON Agent_Department.AgentID = Agent.ClientID JOIN Client on Client.ClientID = Agent.ClientID
+      SELECT Client.ClientID, Client.Name, Client.Username, Client.Email FROM Department JOIN Agent_Department ON Department.DepartmentID = Agent_Department.DepartmentID JOIN Agent ON Agent_Department.AgentID = Agent.ClientID JOIN Client on Client.ClientID = Agent.ClientID
       WHERE Department.DepartmentID = ?
       ');
       $stmt->execute([$id]);

@@ -1,3 +1,5 @@
+const { func } = require("prop-types");
+
 const form = document.querySelector('form');
 const h2 = document.querySelector('h2'); 
 const emailInput = document.querySelector('[name=email]');
@@ -21,6 +23,11 @@ const password_lowercase_icon = document.getElementById('password_lowercase_icon
 const password_uppercase_icon = document.getElementById('password_uppercase_icon');
 const password_number_icon = document.getElementById('password_number_icon');
 const password_special_icon = document.getElementById('password_special_icon');
+
+window.onload = function() {
+  let popup = document.getElementById('wrong-credentials');
+  popup.style.display = "none";
+}
 
 switchState.addEventListener('click', () => {
     switch (state) {
@@ -71,36 +78,27 @@ switchState.addEventListener('click', () => {
 });
 
 
+function incrementSeconds(seconds){
+  seconds += 1;
+  return seconds;
+}
+
 function matchPassword() {  
     var pw1 = document.getElementById("password").value;  
     var pw2 = document.getElementById("confirm-password").value;
     if(pw1 !== pw2)  
     {   
-      alert("Passwords do not match");
-        return false;
+      //alert("Passwords do not match");
+      return false;
     } else {  
-      alert("Passwords match");  
       return true;
     }  
   }
-
-  function validatePassword() {
-    const password = document.getElementById("password").value;
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-    if (pattern.test(password)) {
-      console.log("Valid password");
-
-    } else {
-      console.log("Invalid password");
-  }
-}
 
   passwordInput.addEventListener('input', () => {
     if (state === 1){
 
       if (passwordInput.value.length == 0){
-        //requirements_list.setAttribute('hidden', true);
         requirements_list.toggleAttribute('hidden');
       }
       else if (requirements_list.getAttribute('hidden') == false && passwordInput.value.length > 0){
