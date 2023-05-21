@@ -12,26 +12,15 @@
   if (!Session::isLoggedIn())
     die(header('Location: ../pages/login.php'));
 
-
-  $data = json_decode(file_get_contents('php://input'), true);
-
-  $departmentName = $data['departmentName'];
+  var_dump($_POST);
+  $departmentName = $_POST['departmentName'];
   
-  $ret = Department::getDepartmentbyName($db, $departmentName);
-  if ($ret != null) {
-    $_SESSION['ERROR'] = "Department already exists";
-    $response = array('status' => 'error', 'msg' => "Department already exists");
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    die();
-  }
+  // $ret = Department::getDepartmentbyName($db, $departmentName);
   
-  Department::addDepartment($db, $departmentName);
-
-  $id = Department::getDepartmentbyName($db, $departmentName);
-
-  $response = array('status' => 'success', 'departmentID' => $id);
+  if ($id = Department::addDepartment($db, $departmentName))
+    $response = array('status' => 'success', 'departmentID' => $id);
+  else 
+    $response = array('status' => 'error', 'message' => 'Department already exists!');
   
-  header('Content-Type: application/json');
-  echo json_encode($response);  
-  ?>
+  header('Location: /pages/admin_page.php');
+?>

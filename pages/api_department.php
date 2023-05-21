@@ -63,6 +63,21 @@
                 }
                 $ret = Department::deleteDepartment($db, $_GET['departmentID']);
                 break;
+            case 'add_user_to_department':
+                if ($_SESSION['PERMISSIONS'] != 'Admin') {
+                    $ret['error'] = 'You don\'t have permission to access this data!';
+                    break;
+                }
+                if (!isset($_GET['userID'])) {
+                    $ret['error'] = 'No userID provided!';
+                    break;
+                }
+                if (!isset($_GET['departmentID'])) {
+                    $ret['error'] = 'No departmentID provided!';
+                    break;
+                }
+                $ret = Department::addUsertoDeparment($db, $_GET['userID'], $_GET['departmentID']);
+                break;
             default:
                 $ret['error'] = 'Couldn\'t find function '.$_GET['functionname'].'!';
                 break;

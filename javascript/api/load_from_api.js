@@ -1,4 +1,4 @@
-import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api } from './fetch_api.js'
+import { fetch_department_api, fetch_tag_api, fetch_user_api, fetch_status_api, fetch_ticket_api } from './fetch_api.js'
 import { createDepartmentTableRow } from '../draw_functions/admin_page.js'
 
 export async function loadDepartmentsTable(params) {
@@ -80,4 +80,26 @@ export async function loadStatus(params, select = null) {
             statusSelect.appendChild(option);
         }
     }
+}
+
+export async function loadMostUsedTags(params) {
+    const tags = await fetch_tag_api(params);
+    const tagsList = document.getElementById('popular-tags');
+    if (tags.length !== 0) {
+        for (const tag of tags) {
+            const li = document.createElement('li');
+            li.textContent = tag.Name;
+            tagsList.appendChild(li);
+        }
+    } else {
+        tagsList.parentElement.remove();
+    }
+}
+
+export async function loadTicketsStats(params) {
+    const tickets = await fetch_ticket_api(params);
+    const ticketsOpenToday = document.getElementById('tickets-open-today');
+    const ticketsClosedToday = document.getElementById('tickets-closed-today');
+    ticketsOpenToday.textContent += ' ' + tickets['Open']['OpenTicketsToday'];
+    ticketsClosedToday.textContent += ' ' + tickets['Closed']['ClosedTicketsToday'];
 }

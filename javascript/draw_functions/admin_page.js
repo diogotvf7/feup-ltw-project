@@ -1,4 +1,4 @@
-import { fetch_department_api } from '../api/fetch_api.js';
+import { fetch_department_api, fetch_user_api } from '../api/fetch_api.js';
 
 export function createDepartmentTableRow(department, usersInDepartment) {
     const tr = document.createElement('tr'); // row
@@ -49,6 +49,27 @@ export function createDepartmentTableRow(department, usersInDepartment) {
         membersList.appendChild(member);
     }
 
+    const newMember = document.createElement('p');
+    newMember.classList.add('new-member');
+    newMember.textContent = 'Add new member';
+
+    const addMemberButton = document.createElement('button');
+    addMemberButton.classList.add('add-member');
+    addMemberButton.title = `Add member to ${department.Name}`;
+    
+    const addIcon = document.createElement('i');
+    addIcon.classList.add('fa-solid', 'fa-plus');
+    addMemberButton.appendChild(addIcon);
+
+    addMemberButton.addEventListener('click', async () => {
+        const main = document.querySelector('main');
+        const form = await drawAssignToDepartmentForm(department, membersList);
+        main.appendChild(form);
+    });
+
+    newMember.appendChild(addMemberButton);
+    membersList.appendChild(newMember);
+
     teamButton.addEventListener('click', () => {
         membersList.toggleAttribute('hidden');
     });
@@ -81,4 +102,140 @@ export function createDepartmentTableRow(department, usersInDepartment) {
     tr.appendChild(tdDeleteDepartment);
 
     return tr;
+}
+
+async function drawAssignToDepartmentForm(department, membersList) {
+    const agents = await fetch_user_api({func: 'getAgents'});
+
+    const form = document.createElement('form');
+    form.action = '../actions/add_user_department.php';
+    form.id = 'addtoDepartmentForm';
+    form.classList.add('form-container');
+    form.method = 'post';
+
+    const header = document.createElement('h1');
+    header.id = 'assign-header';
+    header.textContent = 'Assign members';
+
+    const departmentLabel = document.createElement('label');
+    departmentLabel.for = 'department-name';
+    departmentLabel.textContent = 'Department';
+
+    const departmentInput = document.createElement('input');
+    departmentInput.type = 'text';
+    departmentInput.id = 'department-name';
+    departmentInput.disabled = true;
+    departmentInput.value = department.Name;
+
+    const membersLabel = document.createElement('label');
+    membersLabel.for = 'department-name';
+    membersLabel.textContent = 'Members';
+
+    const membersDropdown = document.createElement('select');
+    membersDropdown.name = 'members[]';
+    membersDropdown.id = 'assign-dropdown';
+    membersDropdown.required = true;
+    membersDropdown.multiple = true;
+
+    for (const agent of agents['agents']) {
+        const option = document.createElement('option');
+        option.value = agent.id;
+        option.textContent = agent.username;
+        console.log(membersList.textContent)
+        if (membersList.textContent.includes(agent.username)) {
+            option.disabled = true;
+        }
+        membersDropdown.appendChild(option);
+    }
+    
+    const submitButton = document.createElement('button');
+    submitButton.type = 'button';
+    submitButton.id = 'submit_assign';
+    submitButton.classList.add('btn');
+    submitButton.textContent = 'Assign to department';
+
+    submitButton.addEventListener('click', () => {
+        const selected = Array.from(membersDropdown.selectedOptions);
+        const members = selected.map(option => option.value);
+        const departmentID = department.DepartmentID;
+
+        for (const member of members) {
+            fetch_department_api({
+                func: 'add_user_to_department',
+                departmentID: departmentID,
+                userID: member
+            });
+        }
+        location.reload();
+    });
+
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.id = 'cancel-assign-department';
+    cancelButton.classList.add('btn', 'cancel');
+    cancelButton.textContent = 'Close';
+
+    cancelButton.addEventListener('click', () => {
+        form.remove();
+    });
+
+    form.appendChild(header);
+    form.appendChild(departmentLabel);
+    form.appendChild(departmentInput);
+    form.appendChild(membersLabel);
+    form.appendChild(membersDropdown);
+    form.appendChild(submitButton);
+    form.appendChild(cancelButton);
+
+    return form;
+}
+
+export function createAddDepartmentForm() {
+    const form = document.createElement('form');
+    form.action = '../actions/create_department.php';
+    form.id = 'newDepartmentForm';
+    form.classList.add('form-container');
+    form.method = 'post';
+
+    const header = document.createElement('h1');
+    header.textContent = 'New Department';
+    
+    const nameLabel = document.createElement('label');
+    nameLabel.for = 'department-name';
+    nameLabel.textContent = 'Department Name';
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'Enter new department name';
+    nameInput.id = 'department-name';
+    nameInput.name = 'departmentName';
+    nameInput.required = true;
+
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.id = 'submit_create_department';
+    submitButton.classList.add('btn');
+    submitButton.textContent = 'Create new department';
+
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.id = 'cancel-creation-department';
+    cancelButton.classList.add('btn', 'cancel');
+    cancelButton.textContent = 'Close';
+    
+    cancelButton.addEventListener('click', () => {
+        form.remove();
+    });
+
+    form.addEventListener('submit', () => {
+        location.reload();
+    });
+
+    form.appendChild(header);
+    form.appendChild(nameLabel);
+    form.appendChild(nameInput);
+    form.appendChild(submitButton);
+    form.appendChild(cancelButton);
+
+    return form;
 }

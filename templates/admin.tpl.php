@@ -2,8 +2,8 @@
     <main class="admin-page">
         <div id="left">
             <div class="dropdown">
-                <button name="dropbtn" class="dropbtn"> <i class="fa-sharp fa-solid fa-plus"></i>Create</button>
-                <div class="dropdown-content">
+                <button class="dropdown-button" id="create-button"> <i class="fa-sharp fa-solid fa-plus"></i>Create</button>
+                <div id="drop-content" hidden>
                     <button class="dropdown-button" id="create-department" type="button">Create Department</button>
                     <button class="dropdown-button" id="create-status" type="button">Create Status</button>
                     <button class="dropdown-button" id="create-faq" type="button">Create FAQ</button>
@@ -26,8 +26,8 @@
             <div id="statistics-box">
                 <h2>Tickets</h2>
                 <div id="statistics">
-                    <p id="tickets-open">Open today:</p>
-                    <p id="tickets-closed">Closed today:</p>
+                    <p id="tickets-open-today">Open today:</p>
+                    <p id="tickets-closed-today">Closed today:</p>
                 </div>
             </div>
             <div id="popular-tags-box">
