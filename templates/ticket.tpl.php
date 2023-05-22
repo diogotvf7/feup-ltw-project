@@ -114,6 +114,8 @@
 <?php } ?>
 
 <?php function drawFiltersBar() { ?>
+    <input type="checkbox" id="hamburger">
+    <label class="hamburger" for="hamburger"><i class="fa-solid fa-bars"></i></label>
     <div id="filters-bar">
         <div id="top-side">
             <h3>Filters</h3>

@@ -18,7 +18,7 @@
         die(header('Location: /pages/login.php'));
     if ($_SESSION['PERMISSIONS'] != 'Admin') 
         die(header('Location: /pages/my_tickets.php'));
-    drawHeader(['admin'], ['general','admin']);
+    drawHeader(['admin'], ['general', 'admin']);
     drawAdminPage();
     drawNavBar($_SESSION['PERMISSIONS']);
 
