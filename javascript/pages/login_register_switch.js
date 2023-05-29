@@ -1,5 +1,3 @@
-const { func } = require("prop-types");
-
 const form = document.querySelector('form');
 const h2 = document.querySelector('h2'); 
 const emailInput = document.querySelector('[name=email]');
